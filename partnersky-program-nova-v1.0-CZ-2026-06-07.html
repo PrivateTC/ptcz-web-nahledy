@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Partnerský program — nový vzhled (CZ) k revizi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#1E88B5;--blue-dark:#176f93;--blue-soft:#e8f2f7;--ink:#1C1C2E;--text2:#454552;--muted:#6b7280;--text3:#8a8f99;
+  --line:#e7eaee;--line-strong:#d3d9e0;--soft:#f4f7f9;--bg:#fbfcfd;--surface:#fff;--gold:#f5b400;--success:#1a9e55;
+  --font-sans:"Inter Tight",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --font-serif:"Source Serif 4","EB Garamond",Georgia,serif;
+  --r-card:16px;--r-img:12px;--r-pill:100px;--sh1:0 1px 2px rgba(28,28,46,.05);--sh2:0 8px 24px rgba(28,28,46,.08);--sh-cta:0 4px 16px rgba(30,136,181,.30)
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-sans);font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
+a{color:var(--blue-dark);text-decoration:none}img{display:block;max-width:100%}
+.frame{max-width:1080px;margin:0 auto;background:#fff;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.devnote{max-width:1080px;margin:0 auto}
+.devnote summary{cursor:pointer;list-style:none;background:#1c1c2e;color:#fff;font-size:13px;font-weight:700;padding:10px 18px;display:flex;gap:8px;align-items:center}
+.devnote summary::-webkit-details-marker{display:none}.devnote summary::before{content:"📋"}
+.devnote .dn{padding:16px 18px;background:#fbfcfd;border-bottom:1px solid var(--line);font-size:13px;color:var(--text2)}
+.devnote code{background:#fff;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:12px}
+/* header */
+.sh{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:11px 24px}
+.sh .logo img{height:30px;display:block}
+.sh nav{display:flex;gap:14px;align-items:center;font-size:13.5px;color:var(--text2);font-weight:500}.sh nav a:hover{color:var(--blue-dark)}
+.sh nav .plan{background:var(--blue);color:#fff;border-radius:var(--r-pill);padding:7px 14px;font-weight:700}
+.sh nav .langsel,.sh nav .cursel{border:1px solid var(--line);border-radius:var(--r-pill);padding:6px 11px;font-size:12.5px;font-weight:600;color:var(--text2);cursor:pointer}
+.sh nav .langsel:hover,.sh nav .cursel:hover{border-color:var(--blue);color:var(--blue-dark)}
+@media(max-width:760px){.sh nav .hidem{display:none}}
+/* hero */
+.phero{position:relative;background:linear-gradient(135deg,#1C1C2E 0%,#176f93 100%);color:#fff;padding:56px 28px 50px;overflow:hidden}
+.phero .kick{display:inline-flex;gap:8px;align-items:center;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#bfe2f1;margin-bottom:14px}
+.phero .kick .dot{width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.phero h1{font-size:clamp(32px,5vw,52px);line-height:1.05;letter-spacing:-.03em;font-weight:800;margin:0 0 14px;max-width:760px}
+.phero h1 .em{font-family:var(--font-serif);font-style:italic;font-weight:400;color:#ffd970}
+.phero p{font-size:18px;color:rgba(255,255,255,.9);max-width:580px;margin:0 0 24px}
+.phero .cta{display:flex;gap:12px;flex-wrap:wrap}
+.btn-pri{background:var(--gold);color:#3a2c00;border-radius:var(--r-pill);padding:13px 26px;font-weight:700;border:none;font-size:15px;cursor:pointer}
+.btn-gho{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:var(--r-pill);padding:13px 24px;font-weight:600;font-size:15px;cursor:pointer}
+/* trust strip */
+.trust{display:flex;gap:30px;flex-wrap:wrap;justify-content:center;padding:16px 28px;border-bottom:1px solid var(--line);background:var(--soft);font-size:14px;color:var(--text2)}
+.trust b{color:var(--ink)}.trust .stars{color:var(--gold)}
+/* sections */
+section{padding:42px 28px}
+.sttl{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--blue-dark);margin:0 0 6px}
+.shd{font-size:28px;font-weight:800;letter-spacing:-.02em;margin:0 0 24px;max-width:640px}
+.shd .em{font-family:var(--font-serif);font-style:italic;font-weight:400;color:var(--blue-dark)}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+@media(max-width:760px){.steps{grid-template-columns:1fr 1fr}}
+.step .n{font-family:var(--font-serif);font-style:italic;font-size:30px;color:var(--blue);line-height:1}
+.step h4{margin:8px 0 4px;font-size:16px}
+.step p{margin:0;font-size:14px;color:var(--text2)}
+/* who cards */
+.who{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:760px){.who{grid-template-columns:1fr 1fr}}
+.wcard{border:1px solid var(--line);border-radius:var(--r-card);padding:20px 18px;background:#fff;box-shadow:var(--sh1)}
+.wcard .ic{font-size:26px;margin-bottom:10px}
+.wcard h4{margin:0 0 4px;font-size:16px}
+.wcard p{margin:0;font-size:13.5px;color:var(--text2)}
+/* benefits */
+.benefits{background:var(--soft)}
+.bgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+@media(max-width:760px){.bgrid{grid-template-columns:1fr}}
+.bitem{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px}
+.bitem .ck{flex:0 0 auto;width:24px;height:24px;border-radius:50%;background:var(--blue-soft);color:var(--blue-dark);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+.bitem b{display:block;margin-bottom:2px}.bitem span{font-size:13.5px;color:var(--text2)}
+/* form */
+.formwrap{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
+@media(max-width:820px){.formwrap{grid-template-columns:1fr}}
+.formintro h2{font-size:30px;font-weight:800;letter-spacing:-.02em;margin:0 0 10px}
+.formintro h2 .em{font-family:var(--font-serif);font-style:italic;font-weight:400;color:var(--blue-dark)}
+.formintro p{color:var(--text2);font-size:15.5px}
+.formintro .note{font-size:13px;color:var(--text3);border-left:3px solid var(--line-strong);padding-left:12px;margin-top:16px}
+.card-form{border:1px solid var(--line);border-radius:var(--r-card);padding:22px;background:#fff;box-shadow:var(--sh2)}
+.fld{margin-bottom:14px}
+.fld label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:5px}
+.fld input,.fld select,.fld textarea{width:100%;border:1px solid var(--line-strong);border-radius:10px;padding:11px 12px;font-family:var(--font-sans);font-size:14.5px;color:var(--ink);outline:none;background:#fff}
+.fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--blue)}
+.fld .opt{color:var(--text3);font-weight:400}
+.fld textarea{resize:vertical;min-height:90px}
+.consent{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;color:var(--text2);margin:6px 0 16px}
+.consent input{margin-top:3px}
+.submit{width:100%;background:var(--blue);color:#fff;border:none;border-radius:var(--r-pill);padding:14px;font-family:var(--font-sans);font-weight:700;font-size:15.5px;cursor:pointer;box-shadow:var(--sh-cta)}
+.submit:hover{background:var(--blue-dark)}
+/* faq */
+.faqs{max-width:760px}
+details.faq{border:1px solid var(--line);border-radius:12px;margin:8px 0;overflow:hidden}
+details.faq>summary{cursor:pointer;list-style:none;font-weight:600;padding:14px 44px 14px 16px;position:relative}
+details.faq>summary::-webkit-details-marker{display:none}
+details.faq>summary::after{content:"+";position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:20px;color:var(--text3)}
+details.faq[open]>summary::after{content:"×"}
+details.faq .a{padding:0 16px 14px;color:var(--text2);font-size:15px}
+.foot{max-width:1080px;margin:0 auto;padding:16px 28px 80px;color:var(--text3);font-size:12.5px}
+/* bubble comments */
+#cmt-toolbar{position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;flex-direction:column;gap:7px;align-items:flex-end}
+.cbtn{font-family:var(--font-sans);font-size:12.5px;font-weight:600;border:1px solid var(--line-strong);background:#fff;color:var(--ink);border-radius:100px;padding:8px 13px;cursor:pointer;box-shadow:var(--sh2)}
+.cbtn:hover{border-color:var(--blue)}.cbtn.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+body.cmode{cursor:crosshair}
+.pin{position:absolute;width:24px;height:24px;border-radius:50% 50% 50% 2px;background:var(--gold);color:#3a2c00;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;transform:translate(-4px,-24px);box-shadow:var(--sh2);cursor:pointer;z-index:120;border:2px solid #fff}
+.bubble{position:absolute;z-index:130;width:250px;background:#fff;border:1px solid var(--line-strong);border-radius:12px;box-shadow:0 10px 30px rgba(28,28,46,.18);padding:10px}
+.bubble .bh{font-size:11px;font-weight:700;color:var(--blue-dark);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;display:flex;justify-content:space-between;gap:8px}
+.bubble .bh .x{cursor:pointer;color:var(--text3);font-size:14px}
+.bubble textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px;font-family:var(--font-sans);font-size:13px;resize:vertical;min-height:64px;outline:none}
+.toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:100px;font-size:13px;z-index:10000;box-shadow:var(--sh2);opacity:0;transition:opacity .2s}.toast.show{opacity:1}
+@media print{#cmt-toolbar,.pin,.bubble{display:none!important}}
+</style>
+</head>
+<body>
+
+<details class="devnote" data-sec="Spec pro Martina">
+  <summary>Poznámka pro Martina — partnerský program (rozklikni)</summary>
+  <div class="dn">
+    Veřejná landing partnerského programu + přihláška. Formulář = <code>affiliate-onboarding</code> (HubSpot <code>lead_source: affiliate-onboarding-form</code>, ClickUp tag <code>form:affiliate-onboarding</code>). Sdílené záhlaví/zápatí. <b>Citlivé údaje</b> (bankovní účet, výše provize) se na veřejném formuláři <b>nesbírají</b> — řeší se až po schválení v HubSpotu. Tlačítko je v náhledu neaktivní.
+  </div>
+</details>
+
+<div class="frame">
+  <!-- ZÁHLAVÍ (sdílené – celý web) -->
+  <div class="sh" data-sec="Záhlaví (sdílené – celý web)">
+    <a class="logo" href="#"><img src="https://privatetoursczech.cz/wp-content/themes/main/img/logo-dark.svg" alt="Private Tours Czech"></a>
+    <nav>
+      <a class="hidem" href="#">Výlety</a>
+      <a class="hidem" href="#">Naplánovat výlet</a>
+      <a class="hidem" href="#">Reference</a>
+      <a class="hidem" href="#">Blog</a>
+      <a class="hidem" href="#">Kontakt</a>
+      <span class="hidem langsel" title="Jazyk: CZ · EN · DE · FR · ES …">🌐 CZ ▾</span>
+      <span class="hidem cursel" title="Měna: CZK · EUR · USD …">CZK ▾</span>
+      <a class="plan" href="#prihlaska">Stát se partnerem →</a>
+    </nav>
+  </div>
+
+  <!-- HERO -->
+  <div class="phero" data-sec="Hero">
+    <div class="kick"><span class="dot"></span>Partnerský program</div>
+    <h1>Doporučujte soukromé výlety a <span class="em">vydělávejte</span></h1>
+    <p>Posíláte hosty do Prahy a Česka? Doporučte jim naše soukromé výlety a získejte provizi z každé objednávky. Bez poplatků, bez závazků.</p>
+    <div class="cta">
+      <button class="btn-pri" onclick="document.getElementById('prihlaska').scrollIntoView({behavior:'smooth'})">Přidat se zdarma →</button>
+      <button class="btn-gho" onclick="document.getElementById('jak').scrollIntoView({behavior:'smooth'})">Jak to funguje</button>
+    </div>
+  </div>
+
+  <div class="trust" data-sec="Důvěra">
+    <span><span class="stars">★★★★★</span> <b>5,0</b> na Googlu</span>
+    <span>Soukromé prémiové výlety</span>
+    <span>Odpověď hostům <b>do dalšího pracovního dne</b></span>
+    <span>Platba bez zálohy</span>
+  </div>
+
+  <!-- JAK TO FUNGUJE -->
+  <section id="jak" data-sec="Jak to funguje">
+    <div class="sttl">Jak to funguje</div>
+    <h2 class="shd">Od doporučení k provizi ve <span class="em">čtyřech krocích</span></h2>
+    <div class="steps">
+      <div class="step" data-sec="Krok 1"><div class="n">1</div><h4>Zaregistrujete se</h4><p>Vyplníte krátkou přihlášku níže. Schválení a založení účtu je rychlé.</p></div>
+      <div class="step" data-sec="Krok 2"><div class="n">2</div><h4>Získáte odkaz / kód</h4><p>Dostanete vlastní odkaz nebo slevový kód pro vaše hosty.</p></div>
+      <div class="step" data-sec="Krok 3"><div class="n">3</div><h4>Host si objedná</h4><p>Host přes váš odkaz pošle poptávku a objedná si výlet.</p></div>
+      <div class="step" data-sec="Krok 4"><div class="n">4</div><h4>Vyplatíme provizi</h4><p>Po uskutečnění výletu vám pošleme provizi. Vše vidíte v přehledu.</p></div>
+    </div>
+  </section>
+
+  <!-- PRO KOHO -->
+  <section style="padding-top:8px" data-sec="Pro koho">
+    <div class="sttl">Pro koho</div>
+    <h2 class="shd">Hodí se vám, pokud jste…</h2>
+    <div class="who">
+      <div class="wcard" data-sec="Pro koho: hotely"><div class="ic">🏨</div><h4>Hotely &amp; concierge</h4><p>Nabídněte hostům výlety jako prémiovou službu navíc.</p></div>
+      <div class="wcard" data-sec="Pro koho: blogeři"><div class="ic">✍️</div><h4>Blogeři &amp; influenceři</h4><p>Doporučte ověřené výlety svému publiku a vydělávejte.</p></div>
+      <div class="wcard" data-sec="Pro koho: fotografové"><div class="ic">📷</div><h4>Fotografové</h4><p>Posílejte klienty na výlety — a klidně fotografujte i s námi.</p></div>
+      <div class="wcard" data-sec="Pro koho: agentury"><div class="ic">🌍</div><h4>Agentury &amp; DMC</h4><p>Spolehlivý partner pro soukromou pozemní dopravu v Česku.</p></div>
+    </div>
+  </section>
+
+  <!-- CO ZÍSKÁTE -->
+  <section class="benefits" data-sec="Co získáte">
+    <div class="sttl">Co získáte</div>
+    <h2 class="shd">Férové podmínky bez háčků</h2>
+    <div class="bgrid">
+      <div class="bitem" data-sec="Výhoda: provize"><span class="ck">✓</span><div><b>Atraktivní provize</b><span>Jasně daná provize z každé uskutečněné objednávky.</span></div></div>
+      <div class="bitem" data-sec="Výhoda: bez poplatků"><span class="ck">✓</span><div><b>Žádné poplatky</b><span>Vstup i členství zdarma, žádné měsíční závazky.</span></div></div>
+      <div class="bitem" data-sec="Výhoda: přehled"><span class="ck">✓</span><div><b>Transparentní přehled</b><span>Vidíte poptávky i provize v reálném čase.</span></div></div>
+      <div class="bitem" data-sec="Výhoda: výplata"><span class="ck">✓</span><div><b>Rychlá výplata</b><span>Provize posíláme spolehlivě a včas.</span></div></div>
+      <div class="bitem" data-sec="Výhoda: podklady"><span class="ck">✓</span><div><b>Marketingové podklady</b><span>Fotky, texty a odkazy připravené k použití.</span></div></div>
+      <div class="bitem" data-sec="Výhoda: kontakt"><span class="ck">✓</span><div><b>Osobní kontakt</b><span>Konkrétní člověk, který vám pomůže — ne anonymní podpora.</span></div></div>
+    </div>
+  </section>
+
+  <!-- PŘIHLÁŠKA -->
+  <section id="prihlaska" data-sec="Přihláška">
+    <div class="formwrap">
+      <div class="formintro" data-sec="Přihláška – intro">
+        <div class="sttl">Přihláška</div>
+        <h2>Staňte se <span class="em">partnerem</span></h2>
+        <p>Vyplňte krátkou přihlášku a ozveme se vám do dalšího pracovního dne. Žádné závazky — nejdřív si vše v klidu probereme.</p>
+        <p class="note">Bankovní údaje a konkrétní výši provize tu nevyplňujete — domluvíme je až po schválení, bezpečně mimo veřejný formulář.</p>
+      </div>
+      <div class="card-form" data-sec="Přihláška – formulář">
+        <div class="fld"><label>Jméno a příjmení</label><input type="text" placeholder="Jana Nováková"></div>
+        <div class="fld"><label>E-mail</label><input type="email" placeholder="jana@hotel.cz"></div>
+        <div class="fld"><label>Telefon <span class="opt">(nepovinné)</span></label><input type="tel" placeholder="+420 …"></div>
+        <div class="fld"><label>Typ partnera</label>
+          <select><option value="">Vyberte…</option><option>Hotel / penzion / concierge</option><option>Bloger / influencer</option><option>Fotograf</option><option>Cestovní agentura / DMC</option><option>Jiné</option></select>
+        </div>
+        <div class="fld"><label>Web nebo sociální sítě</label><input type="text" placeholder="www.hotel.cz / @profil"></div>
+        <div class="fld"><label>Krátké představení</label><textarea placeholder="Napište nám pár vět o sobě a jak byste výlety doporučovali…"></textarea></div>
+        <label class="consent"><input type="checkbox"> Souhlasím se zpracováním údajů za účelem vyřízení přihlášky (GDPR).</label>
+        <button class="submit" onclick="alert('Náhled — formulář se zatím neodesílá.')">Odeslat přihlášku</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="padding-top:8px" data-sec="Časté dotazy">
+    <div class="sttl">Časté dotazy</div>
+    <h2 class="shd">Co se nejčastěji ptáte</h2>
+    <div class="faqs">
+      <details class="faq"><summary>Kolik si můžu vydělat?</summary><div class="a">Provizi dostáváte z každé uskutečněné objednávky přes váš odkaz. Konkrétní výši domluvíme podle typu spolupráce po schválení přihlášky.</div></details>
+      <details class="faq"><summary>Stojí členství něco?</summary><div class="a">Ne. Vstup i členství jsou zdarma, bez měsíčních poplatků a bez závazku.</div></details>
+      <details class="faq"><summary>Jak poznám, že host přišel ode mě?</summary><div class="a">Dostanete vlastní odkaz nebo slevový kód. Každou poptávku a provizi uvidíte ve svém přehledu.</div></details>
+      <details class="faq"><summary>Kdy a jak dostanu provizi vyplacenou?</summary><div class="a">Provizi vyplácíme po uskutečnění výletu. Způsob a frekvenci výplaty domluvíme individuálně.</div></details>
+      <details class="faq"><summary>Musím mít web nebo hodně sledujících?</summary><div class="a">Ne nutně. Spolupracujeme s hotely, fotografy i menšími tvůrci — důležité je, že doporučujete kvalitní službu.</div></details>
+    </div>
+  </section>
+
+  <!-- ZÁPATÍ (sdílené – celý web) -->
+  <footer class="tft" data-sec="Zápatí (sdílené – celý web)" style="background:var(--ink);color:#cfd3dc">
+    <div style="max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:26px;padding:34px 28px" class="tftin">
+      <div>
+        <a class="logo" href="#"><img src="https://privatetoursczech.cz/wp-content/themes/main/img/logo.svg" alt="Private Tours Czech" style="height:30px;margin-bottom:10px"></a>
+        <p style="color:#9aa1b0;font-size:13.5px;margin:4px 0 10px;max-width:240px">Soukromé výlety po Česku — váš řidič, vaše tempo.</p>
+        <div style="display:flex;flex-direction:column;gap:3px;font-size:12.5px;color:#8a91a1"><span>Anglicky mluvící řidič</span><span>Zrušení nejpozději 24 h předem</span></div>
+      </div>
+      <div class="ftcol"><h5>Výlety</h5><a href="#">Český Krumlov</a><a href="#">Kutná Hora</a><a href="#">Karlštejn</a><a href="#">Mělník a vinařství</a><a href="#">Vícedenní výlety</a><a href="#">Naplánovat vlastní</a></div>
+      <div class="ftcol"><h5>Společnost</h5><a href="#">O nás</a><a href="#">Náš tým</a><a href="#">Reference</a><a href="#">Blog</a><a href="#">Partnerský program</a></div>
+      <div class="ftcol"><h5>Kontakt &amp; právní</h5><span>booking@privatetoursczech.cz</span><span>Odpověď do dalšího pracovního dne</span><a href="#">GDPR · Cookies · VOP</a><a href="#">Zero Tolerance · Driver Safety</a></div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.1);padding:14px 28px;font-size:12px;color:#7c8494;max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><span>© 2026 Private Tours Czech · IČO 12345678</span><span>🌐 CZ · EN · DE · FR · ES &nbsp;·&nbsp; CZK · EUR · USD</span></div>
+  </footer>
+  <style>.ftcol h5{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#fff;margin:0 0 9px}.ftcol a,.ftcol span{display:block;color:#aab0bd;font-size:13.5px;margin:5px 0}.ftcol a:hover{color:#fff}@media(max-width:760px){.tftin{grid-template-columns:1fr 1fr !important}}</style>
+  <div class="foot">Náhled partnerského programu v1.0 (CZ, k revizi) · 7. 6. 2026. Formulář = affiliate-onboarding; bankovní údaje se sbírají až po schválení (ne tady). Sdílené záhlaví/zápatí.</div>
+</div>
+
+<div id="cmt-toolbar">
+  <button class="cbtn" id="cmt-copy">📋 Zkopírovat komentáře</button>
+  <button class="cbtn" id="cmt-clear">🗑 Vymazat</button>
+  <button class="cbtn" id="cmt-toggle">💬 Režim komentářů</button>
+</div>
+<div class="toast" id="cmt-toast"></div>
+<script>
+(function(){
+  var KEY='ptcz_partner_cz_comments_v1';var data=[];try{data=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){data=[]}
+  var mode=false,seq=data.reduce(function(m,c){return Math.max(m,c.n)},0);
+  var toggle=document.getElementById('cmt-toggle');
+  function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+  function sectionAt(y){var s=document.querySelectorAll('[data-sec]'),b='Dokument',bt=-1e9;s.forEach(function(e){var t=e.getBoundingClientRect().top+window.scrollY;if(t<=y+2&&t>bt){bt=t;b=e.getAttribute('data-sec')}});return b}
+  function closeBubbles(){document.querySelectorAll('.bubble').forEach(function(b){b.remove()})}
+  function openBubble(c){closeBubbles();var left=Math.min(c.x,(window.scrollX+document.documentElement.clientWidth)-262);if(left<6)left=6;
+    var bx=document.createElement('div');bx.className='bubble';bx.style.left=left+'px';bx.style.top=(c.y+6)+'px';
+    var h=document.createElement('div');h.className='bh';var lab=document.createElement('span');lab.textContent='#'+c.n+' · '+c.sec;
+    var x=document.createElement('span');x.className='x';x.textContent='✕';x.addEventListener('click',function(e){e.stopPropagation();closeBubbles()});
+    h.appendChild(lab);h.appendChild(x);var ta=document.createElement('textarea');ta.value=c.text||'';ta.placeholder='Tvoje poznámka…';
+    ta.addEventListener('input',function(){c.text=ta.value;save()});ta.addEventListener('click',function(e){e.stopPropagation()});
+    bx.appendChild(h);bx.appendChild(ta);bx.addEventListener('click',function(e){e.stopPropagation()});document.body.appendChild(bx);ta.focus()}
+  function renderPins(){document.querySelectorAll('.pin').forEach(function(p){p.remove()});data.forEach(function(c){var p=document.createElement('div');p.className='pin';p.textContent=c.n;p.style.left=c.x+'px';p.style.top=c.y+'px';p.title=c.sec;p.addEventListener('click',function(e){e.stopPropagation();openBubble(c)});document.body.appendChild(p)})}
+  function toast(m){var t=document.getElementById('cmt-toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},1900)}
+  toggle.addEventListener('click',function(){mode=!mode;document.body.classList.toggle('cmode',mode);toggle.classList.toggle('on',mode);toggle.textContent=mode?'✓ Komentuju (klikni na stránku)':'💬 Režim komentářů';if(!mode)closeBubbles()});
+  document.addEventListener('click',function(e){if(!mode)return;if(e.target.closest('#cmt-toolbar')||e.target.closest('.bubble')||e.target.closest('.pin'))return;if(e.target.closest('a')||e.target.closest('summary')||e.target.closest('button')||e.target.closest('input')||e.target.closest('select')||e.target.closest('textarea')){e.preventDefault()}seq++;var c={n:seq,x:Math.round(e.pageX),y:Math.round(e.pageY),sec:sectionAt(e.pageY),text:''};data.push(c);save();renderPins();openBubble(c)});
+  document.getElementById('cmt-copy').addEventListener('click',function(){var fl=data.slice().sort(function(a,b){return a.n-b.n}).filter(function(c){return (c.text||'').trim()});if(!fl.length){toast('Žádné vyplněné komentáře');return}var out='Komentáře — Partnerský program (CZ) ('+new Date().toLocaleDateString('cs-CZ')+')\n\n'+fl.map(function(c){return '#'+c.n+' ['+c.sec+']: '+c.text.trim()}).join('\n');(navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(out):Promise.reject()).then(function(){toast('Zkopírováno — vlož mi je do chatu')}).catch(function(){var t2=document.createElement('textarea');t2.value=out;document.body.appendChild(t2);t2.select();try{document.execCommand('copy');toast('Zkopírováno')}catch(e){alert(out)}document.body.removeChild(t2)})});
+  document.getElementById('cmt-clear').addEventListener('click',function(){if(!data.length)return;if(confirm('Smazat všechny komentáře?')){data=[];seq=0;save();renderPins();closeBubbles()}});
+  renderPins();
+})();
+</script>
+</body>
+</html>

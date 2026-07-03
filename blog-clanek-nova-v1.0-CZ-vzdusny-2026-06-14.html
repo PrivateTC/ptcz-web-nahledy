@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog článek — nový vzhled (CZ) k revizi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#1E88B5;--blue-dark:#176f93;--blue-soft:#e8f2f7;--ink:#1C1C2E;--text2:#454552;--muted:#6b7280;--text3:#8a8f99;
+  --line:#e7eaee;--line-strong:#d3d9e0;--soft:#f4f7f9;--bg:#fbfcfd;--surface:#fff;--gold:#f5b400;--success:#1a9e55;--warn:#d97706;--red:#c0392b;
+  --font-sans:"Inter Tight",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --font-serif:"Source Serif 4","EB Garamond",Georgia,serif;
+  --r-card:16px;--r-img:12px;--r-pill:100px;--sh1:0 1px 2px rgba(28,28,46,.05);--sh2:0 8px 24px rgba(28,28,46,.08);--sh-cta:0 4px 16px rgba(30,136,181,.30)
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-sans);font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
+a{color:var(--blue-dark);text-decoration:none}img{display:block;max-width:100%}
+.frame{max-width:1080px;margin:0 auto;background:#fff;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.devnote{max-width:1080px;margin:0 auto}
+.devnote summary{cursor:pointer;list-style:none;background:#1c1c2e;color:#fff;font-size:13px;font-weight:700;padding:10px 18px;display:flex;gap:8px;align-items:center}
+.devnote summary::-webkit-details-marker{display:none}.devnote summary::before{content:"📋"}
+.devnote .dn{padding:16px 18px;background:#fbfcfd;border-bottom:1px solid var(--line);font-size:13px;color:var(--text2)}
+.devnote code{background:#fff;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:12px}
+/* header (sdílené) */
+.sh{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:11px 24px}
+.sh .logo img{height:30px;display:block}
+.sh nav{display:flex;gap:14px;align-items:center;font-size:13.5px;color:var(--text2);font-weight:500}.sh nav a:hover{color:var(--blue-dark)}
+.sh nav .plan{background:var(--blue);color:#fff;border-radius:var(--r-pill);padding:7px 14px;font-weight:700}
+.sh nav .resv{border:1px solid var(--line-strong);color:var(--blue-dark);border-radius:var(--r-pill);padding:6px 13px;font-weight:700}.sh nav .resv:hover{border-color:var(--blue)}
+/* mobilní sticky lišta = zrcadlo primáru (CTA systém 14.6.) */
+.msticky{display:none}
+@media(max-width:760px){.msticky{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:9000;background:rgba(255,255,255,.97);backdrop-filter:blur(6px);border-top:1px solid var(--line);box-shadow:0 -2px 14px rgba(0,0,0,.08);padding:9px 12px;gap:9px;align-items:center}.msticky .ll{font-size:10.5px;font-weight:700;color:var(--ink);flex:0 0 auto;max-width:92px;line-height:1.15}.msticky .bb{flex:1;text-align:center;background:var(--blue);color:#fff;border-radius:var(--r-pill);padding:12px 10px;font-weight:700;font-size:13.5px}}
+.sh nav .langsel,.sh nav .cursel{border:1px solid var(--line);border-radius:var(--r-pill);padding:6px 11px;font-size:12.5px;font-weight:600;color:var(--text2);cursor:pointer}
+.sh nav .langsel:hover,.sh nav .cursel:hover{border-color:var(--blue);color:var(--blue-dark)}
+@media(max-width:760px){.sh nav .hidem{display:none}}
+/* reading progress */
+#progress{position:fixed;top:0;left:0;height:3px;background:var(--blue);width:0;z-index:60}
+/* article */
+.bc{font-size:12.5px;color:var(--text3);padding:18px 28px 0}
+.ahero{padding:14px 28px 6px}
+.ahero .kick{display:inline-flex;gap:8px;align-items:center;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:10px}
+.ahero .kick .dot{width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.ahero h1{font-size:clamp(32px,4.6vw,52px);line-height:1.04;letter-spacing:-.03em;font-weight:800;margin:0 0 14px;max-width:840px}
+.ahero h1 .em{font-family:var(--font-serif);font-style:italic;font-weight:400;color:var(--blue-dark)}
+.meta{display:flex;gap:18px;flex-wrap:wrap;align-items:center;font-size:13.5px;color:var(--text2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:12px 0;margin-top:6px}
+.meta .au{display:flex;gap:9px;align-items:center;font-weight:600;color:var(--ink)}
+.meta .av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#1E88B5,#176f93);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.meta .sp{color:var(--line-strong)}
+.sharebtn{margin-left:auto;font-family:var(--font-sans);font-size:13.5px;font-weight:700;border:1px solid var(--line-strong);background:#fff;color:var(--ink);border-radius:var(--r-pill);padding:8px 15px;cursor:pointer}
+.sharebtn:hover{border-color:var(--blue);color:var(--blue-dark)}
+.ph{background:linear-gradient(135deg,#1E88B5 0%,#1C1C2E 100%);border-radius:var(--r-img);display:flex;align-items:flex-end;justify-content:flex-start;color:rgba(255,255,255,.92);font-size:12.5px;font-weight:600;padding:12px 14px;letter-spacing:.01em}
+.feat{margin:18px 28px 0;height:420px}
+@media(max-width:760px){.feat{height:240px}}
+/* body grid */
+.layout{display:grid;grid-template-columns:1fr 250px;gap:34px;padding:26px 28px 8px;align-items:start}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.toc{display:none}}
+.body{font-size:17px;color:#23232e;max-width:720px}
+.body p{margin:0 0 18px}
+.body h2{font-size:27px;letter-spacing:-.02em;font-weight:800;margin:34px 0 12px;scroll-margin-top:70px}
+.body h3{font-size:20px;font-weight:700;margin:24px 0 8px}
+.body figure{margin:24px 0}.body figure .ph{height:300px}.body figcaption{font-size:12.5px;color:var(--text3);margin-top:7px}
+.body ul{margin:0 0 18px;padding-left:0;list-style:none}
+.body ul.dest li{padding:14px 0;border-bottom:1px solid var(--line);display:flex;gap:14px}
+.body ul.dest li .nn{font-family:var(--font-serif);font-style:italic;color:var(--blue-dark);font-size:20px;flex:0 0 auto;width:30px}
+.body ul.dest li b{display:block;margin-bottom:2px}
+.body ul.dest li .sm{font-size:14.5px;color:var(--text2)}
+.pull{font-family:var(--font-serif);font-style:italic;font-size:24px;line-height:1.4;color:var(--ink);border-left:3px solid var(--gold);padding:6px 0 6px 22px;margin:26px 0}
+.tip{background:var(--blue-soft);border-radius:12px;padding:16px 18px;margin:24px 0;font-size:15px;color:var(--text2)}
+.tip b{color:var(--ink)}
+.qf{border:1px solid var(--line);border-radius:var(--r-card);padding:18px 20px;margin:24px 0;background:var(--soft)}
+.qf h4{margin:0 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--text3)}
+.qf .row{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid var(--line);font-size:14.5px}.qf .row:last-child{border-bottom:none}.qf .row b{color:var(--ink)}
+.midcta{background:var(--ink);color:#fff;border-radius:var(--r-card);padding:22px 24px;margin:28px 0;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+.midcta .t{font-size:18px;font-weight:700}.midcta .s{font-size:14px;color:#aeb4c2;margin-top:3px}
+.midcta a{background:var(--blue);color:#fff;border-radius:var(--r-pill);padding:11px 20px;font-weight:700;white-space:nowrap}
+/* toc */
+.toc{position:sticky;top:74px}
+.toc .tt{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);margin:0 0 10px}
+.toc a{display:block;font-size:13.5px;color:var(--text2);padding:6px 0 6px 12px;border-left:2px solid var(--line)}
+.toc a:hover{color:var(--blue-dark);border-left-color:var(--blue)}
+.toc .share2{margin-top:18px;display:flex;gap:8px}
+.toc .share2 button{flex:1;border:1px solid var(--line-strong);background:#fff;border-radius:10px;padding:8px;cursor:pointer;font-size:15px}
+.toc .share2 button:hover{border-color:var(--blue)}
+/* faq */
+.faqs{padding:6px 28px 0;max-width:720px}
+.faqs h2{font-size:24px;font-weight:800;letter-spacing:-.02em;margin:18px 0 12px}
+details.faq{border:1px solid var(--line);border-radius:12px;margin:8px 0;overflow:hidden}
+details.faq>summary{cursor:pointer;list-style:none;font-weight:600;padding:14px 44px 14px 16px;position:relative}
+details.faq>summary::-webkit-details-marker{display:none}
+details.faq>summary::after{content:"+";position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:20px;color:var(--text3)}
+details.faq[open]>summary::after{content:"×"}
+details.faq .a{padding:0 16px 14px;color:var(--text2);font-size:15px}
+/* author + related */
+.author{display:flex;gap:14px;align-items:center;margin:26px 28px;padding:18px;border:1px solid var(--line);border-radius:var(--r-card);background:#fff;max-width:720px}
+.author .av{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#1E88B5,#176f93);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
+.author .n{font-weight:700}.author .r{font-size:13.5px;color:var(--text3)}
+.related{padding:10px 28px 6px}
+.related h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--text3);margin:0 0 14px}
+.rgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+@media(max-width:760px){.rgrid{grid-template-columns:1fr}}
+.rcard{border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden;box-shadow:var(--sh1)}
+.rcard .ph{height:130px;border-radius:0}
+.rcard .ct{padding:12px 14px}.rcard .ct .k{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--blue-dark);font-weight:700}
+.rcard .ct .tt{font-weight:700;margin:4px 0 0;font-size:15px;letter-spacing:-.01em}
+/* cta band */
+.ctaband{background:linear-gradient(135deg,#176f93,#1E88B5);color:#fff;margin:24px 0 0;padding:40px 28px;text-align:center}
+.ctaband h2{font-size:28px;font-weight:800;letter-spacing:-.02em;margin:0 0 8px}
+.ctaband h2 .em{font-family:var(--font-serif);font-style:italic;font-weight:400}
+.ctaband p{color:rgba(255,255,255,.9);margin:0 0 18px}
+.ctaband a{background:#fff;color:var(--blue-dark);border-radius:var(--r-pill);padding:13px 26px;font-weight:700;display:inline-block}
+.foot{max-width:1080px;margin:0 auto;padding:16px 28px 80px;color:var(--text3);font-size:12.5px}
+/* bubble comments */
+#cmt-toolbar{position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;flex-direction:column;gap:7px;align-items:flex-end}
+.cbtn{font-family:var(--font-sans);font-size:12.5px;font-weight:600;border:1px solid var(--line-strong);background:#fff;color:var(--ink);border-radius:100px;padding:8px 13px;cursor:pointer;box-shadow:var(--sh2)}
+.cbtn:hover{border-color:var(--blue)}.cbtn.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+body.cmode{cursor:crosshair}
+.pin{position:absolute;width:24px;height:24px;border-radius:50% 50% 50% 2px;background:var(--gold);color:#3a2c00;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;transform:translate(-4px,-24px);box-shadow:var(--sh2);cursor:pointer;z-index:120;border:2px solid #fff}
+.bubble{position:absolute;z-index:130;width:250px;background:#fff;border:1px solid var(--line-strong);border-radius:12px;box-shadow:0 10px 30px rgba(28,28,46,.18);padding:10px}
+.bubble .bh{font-size:11px;font-weight:700;color:var(--blue-dark);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;display:flex;justify-content:space-between;gap:8px}
+.bubble .bh .x{cursor:pointer;color:var(--text3);font-size:14px}
+.bubble textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px;font-family:var(--font-sans);font-size:13px;resize:vertical;min-height:64px;outline:none}
+.toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:100px;font-size:13px;z-index:10000;box-shadow:var(--sh2);opacity:0;transition:opacity .2s}.toast.show{opacity:1}
+@media print{#cmt-toolbar,.pin,.bubble{display:none!important}}
+/* ====== VZDUŠNĚJŠÍ VARIANTA 2026 — pouze vizuál (white space, volnější řádkování, lehčí stíny/linky). Obsah, FAQ, ToC i funkce beze změny. ====== */
+:root{--sh1:0 1px 2px rgba(28,28,46,.04);--sh2:0 16px 44px rgba(28,28,46,.07);--line:#eef1f5;--r-card:20px;--r-img:16px}
+body{line-height:1.72}
+.ahero{padding:24px 34px 8px}
+.feat{margin:24px 34px 0}
+.layout{gap:44px;padding:36px 34px 8px}
+.body{font-size:17.5px;line-height:1.78}
+.body p{margin:0 0 22px}
+.body h2{margin:46px 0 14px}
+.body h3{margin:30px 0 10px}
+.body figure{margin:30px 0}
+.midcta{padding:24px 26px;margin:32px 0}
+.faqs{padding:10px 34px 0}
+details.faq{margin:10px 0}details.faq>summary{padding:16px 46px 16px 18px}
+.author{margin:32px 34px;padding:22px}
+.related{padding:16px 34px 8px}.rgrid{gap:20px}
+.ctaband{padding:50px 28px}
+@media(max-width:900px){.layout{gap:24px;padding:24px 22px 8px}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<details class="devnote" data-sec="Spec pro Martina">
+  <summary>Poznámka pro Martina — vzhled blog článku (rozklikni)</summary>
+  <div class="dn">
+    Nová šablona blogového článku v jednotném designu (Inter Tight + Source Serif, stejné záhlaví/zápatí jako celý web). Funkční prvky: lišta čtení nahoře, sticky <code>Obsah</code> (z H2), sdílení (nahoře + v sidebaru), <code>type:"faq"</code> blok → FAQPage JSON-LD (řeší schema.php), blok autora (generický — „Tým Private Tours Czech", žádné jméno), související články, závěrečné CTA na plánovač. Fotky níže jsou placeholdery.
+  </div>
+</details>
+
+<div style="max-width:1080px;margin:0 auto;background:#1c1c2e;color:#fff;font-size:12.5px;padding:7px 24px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">Blog článek · <b style="background:#1E88B5;color:#fff;border-radius:100px;padding:2px 9px">✨ Vzdušnější varianta (2026)</b> <span>stejný obsah i funkce, jen prosvětlená grafika · CTA systém zachován (primár Prohlédnout výlet z článku → detail)</span></div>
+<div class="frame">
+  <!-- ZÁHLAVÍ (sdílené – celý web) -->
+  <div class="sh" data-sec="Záhlaví (sdílené – celý web)">
+    <a class="logo" href="#"><img src="https://privatetoursczech.cz/wp-content/themes/main/img/logo-dark.svg" alt="Private Tours Czech"></a>
+    <nav>
+      <a class="hidem" href="#">Výlety</a>
+      <a class="hidem" href="#">Sestavit vlastní výlet</a>
+      <a class="hidem" href="#">Reference</a>
+      <a class="hidem" href="#">Blog</a>
+      <a class="hidem" href="#">Kontakt</a>
+      <span class="hidem langsel" title="Jazyk: CZ · EN · DE · FR · ES …">🌐 CZ ▾</span>
+      <span class="hidem cursel" title="Měna: CZK · EUR · USD …">CZK ▾</span>
+      <a class="resv" href="#">Rezervovat</a>
+    </nav>
+  </div>
+
+  <div class="bc" data-sec="Drobečky">Blog → Výlety z Prahy → <b>Český Krumlov na den</b></div>
+
+  <div class="ahero" data-sec="Záhlaví článku">
+    <div class="kick"><span class="dot"></span>Průvodce · Výlety z Prahy</div>
+    <h1>Český Krumlov na den z Prahy: <span class="em">kompletní průvodce</span></h1>
+    <div class="meta">
+      <span class="au"><span class="av">PT</span> Tým Private Tours Czech</span>
+      <span class="sp">·</span><span>7. června 2026</span>
+      <span class="sp">·</span><span>⏱ 8 min čtení</span>
+      <button class="sharebtn" onclick="alert('Sdílení: odkaz, WhatsApp, e-mail, Facebook…')">↗ Sdílet</button>
+    </div>
+  </div>
+  <div class="feat ph" data-sec="Hlavní fotka">Foto: Český Krumlov — meandr Vltavy a zámek</div>
+
+  <div class="layout">
+    <div class="body" data-sec="Tělo článku">
+      <p>Český Krumlov patří k nejkrásnějším městům Evropy a z Prahy se dá pohodlně zvládnout za jeden den. V tomhle průvodci vám poradíme, jak se tam dostat, co vidět a jak si výlet užít bez davů — ať jedete sami, nebo se soukromým řidičem.</p>
+
+      <h2 id="s1" data-sec="Sekce: Proč právě Krumlov">Proč jet zrovna do Krumlova</h2>
+      <p>Historické centrum je na seznamu UNESCO, ovládá ho druhý největší hrad a zámek v Česku a uličky pod ním vypadají, jako by se od středověku nezměnily. Na rozdíl od jiných výletů se sem vejdete i s procházkou, obědem a kávou nad řekou.</p>
+      <figure><div class="ph" data-sec="Fotka v textu">Foto: zámecká věž a Latrán</div><figcaption>Zámecká věž patří k nejfotografovanějším místům jižních Čech.</figcaption></figure>
+
+      <h2 id="s2" data-sec="Sekce: Jak se dostat">Jak se dostat z Prahy</h2>
+      <p>Autem to je zhruba 2 hodiny po D3. Nejpohodlnější je soukromý odvoz — vyzvednou vás u hotelu, jedete svým tempem a cestou se dá zastavit třeba na zámku Hluboká.</p>
+      <ul class="dest" data-sec="Možnosti dopravy">
+        <li><span class="nn">1</span><div><b>Soukromý řidič (doporučeno)</b><span class="sm">Od dveří ke dveřím, vlastní tempo, anglicky mluvící řidič. Cena za vůz, ne za osobu.</span></div></li>
+        <li><span class="nn">2</span><div><b>Autobus</b><span class="sm">Levné, ale pevný jízdní řád a přestup — méně času ve městě.</span></div></li>
+        <li><span class="nn">3</span><div><b>Vlak</b><span class="sm">Malebné, ale delší a s přestupem v Českých Budějovicích.</span></div></li>
+      </ul>
+
+      <div class="pull" data-sec="Citace">„Krumlov si zaslouží víc než hodinu na náměstí — s vlastním řidičem stihnete i zámeckou zahradu a oběd nad řekou."</div>
+
+      <h2 id="s3" data-sec="Sekce: Co vidět">Co stihnout za jeden den</h2>
+      <p>Začněte u zámku, projděte zámeckou zahradu, slezte do Latránu a přes Lazebnický most dojdete na náměstí Svornosti. Pokud zbude čas, stojí za to muzeum nebo plavba na voru.</p>
+      <div class="tip" data-sec="Tip"><b>Tip:</b> Vyrazte z Prahy do 8:00 ráno — do Krumlova dorazíte před největšími davy a budete mít uličky skoro pro sebe.</div>
+
+      <div class="qf" data-sec="Rychlá fakta">
+        <h4>Rychlá fakta</h4>
+        <div class="row"><span>Vzdálenost z Prahy</span><b>~170 km / 2 h</b></div>
+        <div class="row"><span>Ideální délka</span><b>celý den (8–10 h)</b></div>
+        <div class="row"><span>Nejlepší období</span><b>květen–září, brzy ráno</b></div>
+        <div class="row"><span>S řidičem od</span><b>cena za vůz (až 4 osoby)</b></div>
+      </div>
+
+      <div class="midcta" data-sec="CTA v textu">
+        <div><div class="t">Nechte se odvézt do Krumlova</div><div class="s">Soukromý výlet na míru — vy si vyberete tempo, my řidiče.</div></div>
+        <a href="#">Prohlédnout výlet Český Krumlov →</a>
+      </div>
+
+      <h2 id="s4" data-sec="Sekce: Praktické info">Praktické informace</h2>
+      <p>Většina pamětihodností je otevřená od 9 do 17 hodin, zámecké prohlídky je dobré rezervovat předem. Centrum je pěší — pohodlné boty se hodí, dlažba je nerovná.</p>
+    </div>
+
+    <aside class="toc" data-sec="Obsah (sticky)">
+      <div class="tt">Obsah</div>
+      <a href="#s1">Proč jet zrovna do Krumlova</a>
+      <a href="#s2">Jak se dostat z Prahy</a>
+      <a href="#s3">Co stihnout za jeden den</a>
+      <a href="#s4">Praktické informace</a>
+      <div class="share2"><button title="Kopírovat odkaz">🔗</button><button title="WhatsApp">💬</button><button title="E-mail">✉️</button></div>
+    </aside>
+  </div>
+
+  <div class="faqs" data-sec="Časté dotazy">
+    <h2>Časté dotazy</h2>
+    <details class="faq"><summary>Dá se Krumlov zvládnout z Prahy za jeden den?</summary><div class="a">Ano. S autem nebo soukromým řidičem to je ideální celodenní výlet — ráno tam, odpoledne prohlídka, večer zpět.</div></details>
+    <details class="faq"><summary>Kolik stojí soukromý výlet do Krumlova?</summary><div class="a">Cena je za vůz (až 4 osoby), ne za osobu. Konkrétní částku uvidíte v plánovači podle trasy a zastávek.</div></details>
+    <details class="faq"><summary>Dá se cestou zastavit i jinde?</summary><div class="a">Ano, oblíbená zastávka je zámek Hluboká nebo České Budějovice. Stačí říct řidiči.</div></details>
+    <details class="faq"><summary>Platí se předem?</summary><div class="a">Ne, záloha se neplatí — platíte až na místě řidiči. Zrušení je možné nejpozději 24 h předem.</div></details>
+  </div>
+
+  <div class="author" data-sec="O autorovi">
+    <div class="av">PT</div>
+    <div><div class="n">Tým Private Tours Czech</div><div class="r">Soukromé výlety po Česku — píšeme o místech, která sami denně ukazujeme hostům.</div></div>
+  </div>
+
+  <div class="related" data-sec="Související články">
+    <h3>Mohlo by vás zajímat</h3>
+    <div class="rgrid">
+      <a class="rcard" href="#"><div class="ph">Foto: Kutná Hora</div><div class="ct"><div class="k">Průvodce</div><div class="tt">Kutná Hora a kostnice na den</div></div></a>
+      <a class="rcard" href="#"><div class="ph" style="background:linear-gradient(135deg,#f5b400,#1C1C2E)">Foto: Karlštejn</div><div class="ct"><div class="k">Průvodce</div><div class="tt">Karlštejn z Prahy: jak na to</div></div></a>
+      <a class="rcard" href="#"><div class="ph" style="background:linear-gradient(135deg,#176f93,#0d3a4d)">Foto: výlety z Prahy</div><div class="ct"><div class="k">Tipy</div><div class="tt">10 nejlepších výletů z Prahy</div></div></a>
+    </div>
+  </div>
+
+  <div class="ctaband" data-sec="Závěrečné CTA → detail výletu">
+    <h2>Chcete to <span class="em">bez starostí?</span></h2>
+    <p>Mrkněte na náš soukromý výlet do Krumlova — řidiče, tempo i zastávky necháte na nás.</p>
+    <a href="#">Prohlédnout výlet Český Krumlov →</a>
+    <div style="margin-top:12px"><a href="#" style="background:none;color:#fff;padding:0;font-weight:600;font-size:14px;text-decoration:underline;text-underline-offset:3px">nebo Všechny výlety z Prahy →</a></div>
+  </div>
+
+  <!-- ZÁPATÍ (sdílené – celý web) -->
+  <footer class="tft" data-sec="Zápatí (sdílené – celý web)" style="background:var(--ink);color:#cfd3dc">
+    <div style="max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:26px;padding:34px 28px" class="tftin">
+      <div>
+        <a class="logo" href="#"><img src="https://privatetoursczech.cz/wp-content/themes/main/img/logo.svg" alt="Private Tours Czech" style="height:30px;margin-bottom:10px"></a>
+        <p style="color:#9aa1b0;font-size:13.5px;margin:4px 0 10px;max-width:240px">Soukromé výlety po Česku — váš řidič, vaše tempo.</p>
+        <div style="display:flex;flex-direction:column;gap:3px;font-size:12.5px;color:#8a91a1"><span>Anglicky mluvící řidič</span><span>Zrušení nejpozději 24 h předem</span></div>
+      </div>
+      <div class="ftcol"><h5>Výlety</h5><a href="#">Český Krumlov</a><a href="#">Kutná Hora</a><a href="#">Karlštejn</a><a href="#">Mělník a vinařství</a><a href="#">Vícedenní výlety</a><a href="#">Sestavit vlastní výlet</a></div>
+      <div class="ftcol"><h5>Společnost</h5><a href="#">O nás</a><a href="#">Náš tým</a><a href="#">Reference</a><a href="#">Blog</a><a href="#">Partnerský program</a></div>
+      <div class="ftcol"><h5>Kontakt &amp; právní</h5><span>booking@privatetoursczech.cz</span><span>Odpověď do dalšího pracovního dne</span><a href="#">GDPR · Cookies · VOP</a><a href="#">Zero Tolerance · Driver Safety</a></div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.1);padding:14px 28px;font-size:12px;color:#7c8494;max-width:1080px;margin:0 auto;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><span>© 2026 Private Tours Czech · IČO 12345678</span><span>🌐 CZ · EN · DE · FR · ES &nbsp;·&nbsp; CZK · EUR · USD</span></div>
+  </footer>
+  <style>.ftcol h5{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#fff;margin:0 0 9px}.ftcol a,.ftcol span{display:block;color:#aab0bd;font-size:13.5px;margin:5px 0}.ftcol a:hover{color:#fff}@media(max-width:760px){.tftin{grid-template-columns:1fr 1fr !important}}</style>
+  <div class="foot">Náhled vzhledu blogového článku v1.0 (CZ, k revizi) · 7. 6. 2026. Sdílené záhlaví/zápatí, fotky jsou placeholdery, autor generický (bez jména).</div>
+</div>
+
+<div class="msticky" data-sec="Sticky lišta (mobil)">
+  <span class="ll">Z článku:<br>Č. Krumlov</span>
+  <a class="bb" href="#">Prohlédnout výlet →</a>
+</div>
+<div id="cmt-toolbar">
+  <button class="cbtn" id="cmt-copy">📋 Zkopírovat komentáře</button>
+  <button class="cbtn" id="cmt-clear">🗑 Vymazat</button>
+  <button class="cbtn" id="cmt-toggle">💬 Režim komentářů</button>
+</div>
+<div class="toast" id="cmt-toast"></div>
+<script>
+/* reading progress */
+window.addEventListener('scroll',function(){var h=document.documentElement;var sc=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;document.getElementById('progress').style.width=sc+'%'});
+(function(){
+  var KEY='ptcz_blog_clanek_cz_airy_comments_v1';var data=[];try{data=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){data=[]}
+  var mode=false,seq=data.reduce(function(m,c){return Math.max(m,c.n)},0);
+  var toggle=document.getElementById('cmt-toggle');
+  function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+  function sectionAt(y){var s=document.querySelectorAll('[data-sec]'),b='Dokument',bt=-1e9;s.forEach(function(e){var t=e.getBoundingClientRect().top+window.scrollY;if(t<=y+2&&t>bt){bt=t;b=e.getAttribute('data-sec')}});return b}
+  function closeBubbles(){document.querySelectorAll('.bubble').forEach(function(b){b.remove()})}
+  function openBubble(c){closeBubbles();var left=Math.min(c.x,(window.scrollX+document.documentElement.clientWidth)-262);if(left<6)left=6;
+    var bx=document.createElement('div');bx.className='bubble';bx.style.left=left+'px';bx.style.top=(c.y+6)+'px';
+    var h=document.createElement('div');h.className='bh';var lab=document.createElement('span');lab.textContent='#'+c.n+' · '+c.sec;
+    var x=document.createElement('span');x.className='x';x.textContent='✕';x.addEventListener('click',function(e){e.stopPropagation();closeBubbles()});
+    h.appendChild(lab);h.appendChild(x);var ta=document.createElement('textarea');ta.value=c.text||'';ta.placeholder='Tvoje poznámka…';
+    ta.addEventListener('input',function(){c.text=ta.value;save()});ta.addEventListener('click',function(e){e.stopPropagation()});
+    bx.appendChild(h);bx.appendChild(ta);bx.addEventListener('click',function(e){e.stopPropagation()});document.body.appendChild(bx);ta.focus()}
+  function renderPins(){document.querySelectorAll('.pin').forEach(function(p){p.remove()});data.forEach(function(c){var p=document.createElement('div');p.className='pin';p.textContent=c.n;p.style.left=c.x+'px';p.style.top=c.y+'px';p.title=c.sec;p.addEventListener('click',function(e){e.stopPropagation();openBubble(c)});document.body.appendChild(p)})}
+  function toast(m){var t=document.getElementById('cmt-toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},1900)}
+  toggle.addEventListener('click',function(){mode=!mode;document.body.classList.toggle('cmode',mode);toggle.classList.toggle('on',mode);toggle.textContent=mode?'✓ Komentuju (klikni na stránku)':'💬 Režim komentářů';if(!mode)closeBubbles()});
+  document.addEventListener('click',function(e){if(!mode)return;if(e.target.closest('#cmt-toolbar')||e.target.closest('.bubble')||e.target.closest('.pin'))return;if(e.target.closest('a')||e.target.closest('summary')||e.target.closest('button')){e.preventDefault()}seq++;var c={n:seq,x:Math.round(e.pageX),y:Math.round(e.pageY),sec:sectionAt(e.pageY),text:''};data.push(c);save();renderPins();openBubble(c)});
+  document.getElementById('cmt-copy').addEventListener('click',function(){var fl=data.slice().sort(function(a,b){return a.n-b.n}).filter(function(c){return (c.text||'').trim()});if(!fl.length){toast('Žádné vyplněné komentáře');return}var out='Komentáře — Blog článek (CZ) ('+new Date().toLocaleDateString('cs-CZ')+')\n\n'+fl.map(function(c){return '#'+c.n+' ['+c.sec+']: '+c.text.trim()}).join('\n');(navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(out):Promise.reject()).then(function(){toast('Zkopírováno — vlož mi je do chatu')}).catch(function(){var t2=document.createElement('textarea');t2.value=out;document.body.appendChild(t2);t2.select();try{document.execCommand('copy');toast('Zkopírováno')}catch(e){alert(out)}document.body.removeChild(t2)})});
+  document.getElementById('cmt-clear').addEventListener('click',function(){if(!data.length)return;if(confirm('Smazat všechny komentáře?')){data=[];seq=0;save();renderPins();closeBubbles()}});
+  renderPins();
+})();
+</script>
+</body>
+</html>

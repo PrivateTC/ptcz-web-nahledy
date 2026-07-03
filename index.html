@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Private Tours Czech — náhledy nové verze webu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#1E88B5;--blue-dark:#176f93;--blue-soft:#e8f2f7;--ink:#1C1C2E;--text2:#454552;--muted:#6b7280;--text3:#8a8f99;--line:#e7eaee;--line-strong:#d3d9e0;--soft:#f4f7f9;--bg:#fbfcfd;--gold:#f5b400;--font-sans:"Inter Tight",-apple-system,BlinkMacSystemFont,sans-serif;--font-serif:"Source Serif 4",Georgia,serif;--r:16px;--sh1:0 1px 2px rgba(28,28,46,.05);--sh2:0 10px 30px rgba(28,28,46,.10)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-sans);font-size:16px;line-height:1.6}
+.wrap{max-width:960px;margin:0 auto;padding:0 22px}
+header.hero{padding:50px 0 24px}
+.kick{display:inline-flex;gap:8px;align-items:center;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:12px}
+.kick .dot{width:7px;height:7px;border-radius:50%;background:var(--gold)}
+h1{font-size:clamp(30px,5vw,44px);line-height:1.05;letter-spacing:-.03em;font-weight:800;margin:0 0 12px}
+h1 .em{font-family:var(--font-serif);font-style:italic;font-weight:400;color:var(--blue-dark)}
+.lead{font-size:18px;color:var(--text2);max-width:700px;margin:0 0 18px}
+.how{display:flex;gap:14px;align-items:flex-start;background:var(--blue-soft);border-left:3px solid var(--blue);border-radius:0 12px 12px 0;padding:14px 18px;margin:0 0 8px;font-size:14.5px;color:var(--text2)}
+.how b{color:var(--ink)}
+.how .em2{font-size:22px;line-height:1}
+.secttl{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin:34px 0 14px;display:flex;align-items:center;gap:10px}
+.secttl::after{content:"";flex:1;height:1px;background:var(--line)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:680px){.grid{grid-template-columns:1fr}}
+.card{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh1);text-decoration:none;color:inherit;overflow:hidden;transition:box-shadow .18s,transform .18s,border-color .18s}
+.card:hover{box-shadow:var(--sh2);transform:translateY(-2px);border-color:var(--blue)}
+.card .top{padding:18px 18px 14px;flex:1}
+.card .num{font-family:var(--font-serif);font-style:italic;font-size:14px;color:var(--blue-dark);margin-bottom:6px}
+.card .t{font-size:18px;font-weight:700;letter-spacing:-.01em;margin:0 0 6px}
+.card .d{font-size:14px;color:var(--text2);margin:0}
+.card .foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 18px;border-top:1px solid var(--line);background:var(--soft)}
+.chip{font-size:11px;font-weight:700;border-radius:100px;padding:3px 10px;background:#e7f7ee;color:#1a7f48;white-space:nowrap}
+.open{font-size:13.5px;font-weight:700;color:var(--blue-dark)}
+.card:hover .open{text-decoration:underline}
+.sub-link{display:inline-block;margin-top:8px;font-size:12.5px;color:var(--blue-dark);text-decoration:none}
+.sub-link:hover{text-decoration:underline}
+.tip{font-size:13px;color:var(--text3);margin:26px 0 0;border-top:1px solid var(--line);padding-top:14px}
+footer{padding:30px 0 80px;color:var(--text3);font-size:12.5px}
+/* ====== vzdušná grafika 2026 — prosvětlený vzhled ====== */
+:root{--line:#eef1f5;--sh1:0 1px 2px rgba(28,28,46,.04);--sh2:0 16px 44px rgba(28,28,46,.07);--r:20px}
+body{line-height:1.7}
+header.hero{padding:64px 0 28px}
+.secttl{margin:46px 0 18px}
+.grid{gap:22px}
+.card .top{padding:22px 20px 16px}
+.card .foot{padding:14px 20px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kick"><span class="dot"></span>Private Tours Czech · nová verze webu · vzdušná grafika 2026</div>
+    <h1>Nový web <span class="em">na jednom místě</span> — k prohlížení a komentování</h1>
+    <p class="lead">Klikací náhledy hotového návrhu nové verze webu: homepage, detail výletu (CZ i EN), plánovač, blog, partnerský program, AI utilita a sticky lišta. Každý náhled se dá komentovat přímo v něm — bublinou na konkrétním místě.</p>
+    <div class="how">
+      <span class="em2">💬</span>
+      <div>Jak komentovat: v náhledu vpravo dole klikni <b>„Režim komentářů"</b> → klikni na <b>místo</b>, kterého se poznámka týká → napiš do bubliny. Až budeš hotový, <b>„Zkopírovat komentáře"</b> a vlož mi je sem do chatu. Komentáře se ti průběžně ukládají v prohlížeči.</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="secttl">Stránky webu — k prohlížení a komentářům</div>
+
+  <div class="grid">
+
+    <a class="card" href="homepage-nova-v1.1-CZ-vzdusny-2026-06-14.html" target="_blank" rel="noopener">
+      <div class="top">
+        <div class="num">01 — Homepage</div>
+        <div class="t">Nová homepage v1.1 (CZ)</div>
+        <p class="d">Magazínová úvodka: ceny od (Superb −25 %), „vyzvednutí kdekoliv", poptávkový formulář, bloky důvěry (Britax, fotograf &amp; průvodce), Tipy &amp; inspirace, FAQ v 6 oblastech, pražské výlety, WhatsApp a kompletní zápatí. CTA systém: primár = Prohlédnout výlety, sticky lišta na mobilu.</p>
+      </div>
+      <div class="foot"><span class="chip">🟢 bublinové komentáře</span><span class="open">Otevřít →</span></div>
+    </a>
+
+    <a class="card" href="detail-vyletu-cesky-krumlov-KOMPLET-CZ-vzdusny-2026-06-14.html" target="_blank" rel="noopener">
+      <div class="top">
+        <div class="num">02 — Detail výletu</div>
+        <div class="t">Detail výletu — KOMPLET (CZ)</div>
+        <p class="d">Kompletní nový vzhled detailu — <b>šablona pro všechny výlety</b> (Č. Krumlov jako vzor). Od €429 (Superb) + Staria od €572, rozklik „cena na osobu podle počtu a vozu", galerie, zastávky, FAQ v 6 kategoriích, modály kredencí, „Z našich výletů". CTA systém: primár = Rezervovat tento výlet, sticky cena+Rezervovat.</p>
+        <a class="sub-link" href="detail-vyletu-cesky-krumlov-KOMPLET-vzdusny-2026-06-14.html" target="_blank" rel="noopener">↳ EN verze stejného designu</a>
+      </div>
+      <div class="foot"><span class="chip">🟢 bublinové komentáře</span><span class="open">Otevřít →</span></div>
+    </a>
+
+    <a class="card" href="planovac-redesign-KOMPLET-vzdusny-2026-06-14.html" target="_blank" rel="noopener">
+      <div class="top">
+        <div class="num">03 — Plánovač</div>
+        <div class="t">Plánovač — KOMPLET</div>
+        <p class="d">Celý plánovač krok za krokem: výběr vozu <b>Škoda Superb (1–3 os., −25 %)</b> / Staria (až 8), Britax sedačky, datum s presety, „Cena je finální" na potvrzení, telefon nepovinný, „Poslat mi plán e-mailem". CTA systém: 1 primár na krok (Pokračovat → Rezervovat výlet), na mobilu sticky cena+Pokračovat.</p>
+      </div>
+      <div class="foot"><span class="chip">🟢 bublinové komentáře</span><span class="open">Otevřít →</span></div>
+    </a>
+
+    <a class="card" href="blog-clanek-nova-v1.0-CZ-vzdusny-2026-06-14.html" target="_blank" rel="noopener">
+      <div class="top">
+        <div class="num">04 — Blog</div>
+        <div class="t">Blog článek — nový vzhled (CZ)</div>
+        <p class="d">Nová šablona blogového článku: lišta čtení, obsah (ToC), sdílení, FAQ, blok autora a související články. Studené publikum → měkká výzva: primár „Prohlédnout výlet z článku", sekundár „Všechny výlety". Šablona pro všechny články.</p>
+      </div>
+      <div class="foot"><span class="chip">🟢 bublinové komentáře</span><span class="open">Otevřít →</span></div>
+    </a>
+
+    <a class="card" href="partnersky-program-nova-v1.0-CZ-2026-06-07.html" target="_blank" rel="noopener">
+      <div class="top">
+        <div class="num">05 — Partnerský program</div>
+        <div class="t">Partnerský program (CZ)</div>
+        <p class="d">Affiliate landing: jak to funguje, pro koho, co získáte, přihláška (affiliate-onboarding) a FAQ. Pro hotely, blogery, fotografy i agentury.</p>
+      </div>
+      <div class="foot"><span class="chip">🟢 bublinové komentáře</span><span class="open">Otevřít →</span></div>
+    </a>
+
+    <a class="card" href="planovac-vloz-plan-z-ai-CZ-v1.0-2026-06-06.html" target="_blank" rel="noopener">
+      <div class="top">
+        <div class="num">06 — AI utilita</div>
+        <div class="t">Vlož plán z AI (CZ)</div>
+        <p class="d">Host vloží plán z ChatGPT/Claude → my ho naceníme a vrátíme konkrétní výlet + rozdíly. Návrh obrazovky + spec endpointu.</p>
+      </div>
+      <div class="foot"><span class="chip">🟢 bublinové komentáře</span><span class="open">Otevřít →</span></div>
+    </a>
+
+    <a class="card" href="sticky-footer-rozsireny-mobil-ipad-pc-2026-06-14.html" target="_blank" rel="noopener">
+      <div class="top">
+        <div class="num">07 — Sticky lišta</div>
+        <div class="t">Rozšířená sticky lišta (mobil · iPad · PC)</div>
+        <p class="d">Návrh spodní sticky lišty pro všechny šířky obrazovky — zrcadlí primární akci stránky (Prohlédnout výlety / Rezervovat / Pokračovat), varianty pro mobil, tablet i desktop.</p>
+      </div>
+      <div class="foot"><span class="chip">🟢 bublinové komentáře</span><span class="open">Otevřít →</span></div>
+    </a>
+
+  </div>
+
+  <p class="tip">💡 Všechny náhledy leží v této složce — odkazy fungují z GitHub Pages i lokálně z disku. Otevírají se v nové záložce; fotky výletů se načítají z internetu.</p>
+
+</div>
+
+<footer><div class="wrap">Rozcestník náhledů nové verze webu · Private Tours Czech · vzdušná grafika 2026. Všechny náhledy jsou komentovatelné (bublinová vrstva); detail výletu je i v EN. Detail Č. Krumlov je šablona pro všechny výlety; obsah se doplní postupně.</div></footer>
+
+</body>
+</html>

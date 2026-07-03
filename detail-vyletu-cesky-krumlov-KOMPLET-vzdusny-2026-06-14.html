@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Český Krumlov Private Tour from Prague — kompletní detail v1.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#1E88B5;--blue-dark:#176f93;--blue-soft:#e8f2f7;--ink:#1C1C2E;--text2:#454552;--muted:#6b7280;--text3:#8a8f99;
+  --line:#e7eaee;--line-strong:#d3d9e0;--soft:#f4f7f9;--bg:#fbfcfd;--surface:#fff;--gold:#f5b400;--success:#1a9e55;--warn:#d97706;--red:#c0392b;
+  --font-sans:"Inter Tight",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --font-serif:"Source Serif 4","EB Garamond",Georgia,serif;
+  --r-card:16px;--r-img:12px;--r-pill:100px;--sh1:0 1px 2px rgba(28,28,46,.05);--sh2:0 8px 24px rgba(28,28,46,.08);--sh-cta:0 4px 16px rgba(30,136,181,.30);
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-sans);font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
+a{color:var(--blue-dark);text-decoration:none}img{display:block;max-width:100%}
+.frame{max-width:1080px;margin:0 auto;background:#fff;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+
+/* dev note */
+.devnote{max-width:1080px;margin:0 auto}
+.devnote summary{cursor:pointer;list-style:none;background:#1c1c2e;color:#fff;font-size:13px;font-weight:700;padding:10px 18px;display:flex;gap:8px;align-items:center}
+.devnote summary::-webkit-details-marker{display:none}
+.devnote summary::before{content:"📋";}
+.devnote .dn{padding:16px 18px;background:#fbfcfd;border-bottom:1px solid var(--line);font-size:13px;color:var(--text2)}
+.devnote code{background:#fff;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:12px}
+.devnote table{width:100%;border-collapse:collapse;margin:8px 0;font-size:12.5px}
+.devnote th,.devnote td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+
+/* header */
+.sh{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:12px 24px}
+.sh .logo{font-weight:800;letter-spacing:-.02em;font-size:18px}.sh .logo span{color:var(--blue)}
+.sh nav{display:flex;gap:16px;align-items:center;font-size:13.5px;color:var(--text2);font-weight:500}
+.sh nav .plan{background:var(--blue);color:#fff;border-radius:var(--r-pill);padding:7px 14px;font-weight:700}
+@media(max-width:760px){.sh nav .hidem{display:none}}
+
+.bc{font-size:12.5px;color:var(--text3);padding:16px 28px 0}
+.hero{padding:12px 28px 6px;display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap}
+.hero .kick{display:inline-flex;gap:8px;align-items:center;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:10px}
+.hero .kick .dot{width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.hero h1{font-size:clamp(34px,5vw,58px);line-height:1.02;letter-spacing:-.035em;font-weight:800;margin:0 0 12px;max-width:720px}
+.hero h1 .em{font-family:var(--font-serif);font-style:italic;font-weight:400;color:var(--blue-dark)}
+.hero .facts{display:flex;gap:20px;flex-wrap:wrap;font-size:14px;color:var(--text2)}
+.hero .facts b{color:var(--ink)} .hero .stars{color:var(--gold)}
+/* share */
+.share-wrap{position:relative;flex:0 0 auto}
+.sharebtn{font-family:var(--font-sans);font-size:14px;font-weight:700;border:1px solid var(--line-strong);background:#fff;color:var(--ink);border-radius:var(--r-pill);padding:9px 16px;cursor:pointer;white-space:nowrap}
+.sharebtn:hover{border-color:var(--blue);color:var(--blue-dark)}
+.sharepop{position:absolute;right:0;top:46px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--sh2);padding:8px;display:none;z-index:50;min-width:180px}
+.sharepop.open{display:block}
+.sharepop a,.sharepop button{display:flex;gap:9px;align-items:center;width:100%;text-align:left;font-family:var(--font-sans);font-size:14px;color:var(--ink);background:none;border:none;border-radius:8px;padding:9px 11px;cursor:pointer}
+.sharepop a:hover,.sharepop button:hover{background:var(--soft)}
+
+.gal{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:190px 190px;gap:8px;padding:14px 28px 8px}
+.gal a{border-radius:var(--r-img);overflow:hidden;position:relative;background:#dfe6ea;display:block}
+.gal img{width:100%;height:100%;object-fit:cover}.gal .big{grid-row:1/span 2}
+.gal .more{position:absolute;right:10px;bottom:10px;background:rgba(28,28,46,.74);color:#fff;font-size:12px;font-weight:600;border-radius:var(--r-pill);padding:6px 12px}
+@media(max-width:760px){.gal{grid-template-columns:1fr 1fr;grid-template-rows:140px 140px}.gal .big{grid-row:1/span 2;grid-column:1/span 2}}
+
+.body{display:grid;grid-template-columns:1fr 320px;gap:38px;padding:26px 28px 12px}
+@media(max-width:880px){.body{grid-template-columns:1fr}}
+.lead{font-size:21px;line-height:1.5;color:var(--ink);font-family:var(--font-serif);margin:0 0 18px}
+.prose p{margin:0 0 15px;color:var(--text2)}
+.prose h2{font-size:25px;letter-spacing:-.02em;font-weight:700;margin:32px 0 8px;scroll-margin-top:70px}
+.prose h2 .n{font-family:var(--font-serif);font-style:italic;color:var(--blue);font-size:17px;margin-right:8px}
+.prose h3{font-size:17px;font-weight:700;margin:16px 0 4px}
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:6px 0}
+@media(max-width:620px){.why{grid-template-columns:1fr}}
+.why .c{border:1px solid var(--line);border-radius:var(--r-card);padding:14px 16px;background:var(--soft)}
+.why .c .h{font-weight:700;font-size:15px;margin-bottom:2px}.why .c .x{font-size:13px;color:var(--text2)}
+
+/* stops */
+.stop{display:grid;grid-template-columns:150px 1fr;gap:16px;border:1px solid var(--line);border-radius:var(--r-card);padding:14px;margin:12px 0;box-shadow:var(--sh1)}
+@media(max-width:620px){.stop{grid-template-columns:1fr}}
+.stop img{width:100%;height:120px;object-fit:cover;border-radius:var(--r-img)}
+.stop .num{font-family:var(--font-serif);font-style:italic;color:var(--blue);font-size:13px}
+.stop h3{margin:2px 0 4px;font-size:18px;display:flex;gap:9px;align-items:baseline;flex-wrap:wrap}
+.stop h3 .t{font-size:11px;font-weight:600;color:var(--blue-dark);background:var(--blue-soft);border-radius:var(--r-pill);padding:2px 9px}
+.stop h3 .opt{font-size:11px;font-weight:700;color:var(--warn);background:#fff7ec;border-radius:var(--r-pill);padding:2px 9px}
+.stop p{margin:0;font-size:13.5px;color:var(--text2)}
+
+/* from our tours (unique) */
+.fromtours{border:1px solid #f3e2c4;background:linear-gradient(180deg,#fffdf7,#fff);border-radius:var(--r-card);padding:18px 18px 14px;margin:18px 0}
+.fromtours .hd{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+.fromtours .hd .t{font-weight:800;font-size:19px;letter-spacing:-.01em}
+.fromtours .hd .live{font-size:11px;font-weight:700;color:var(--success);display:flex;align-items:center;gap:5px}
+.fromtours .hd .live .d{width:7px;height:7px;border-radius:50%;background:var(--success);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.fromtours .sub{font-size:13px;color:var(--text3);margin:0 0 12px}
+.ft-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:680px){.ft-grid{grid-template-columns:1fr}}
+.ft{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+.ft img{width:100%;height:120px;object-fit:cover}
+.ft .b{padding:10px 12px}
+.ft .date{font-size:11px;font-weight:700;color:var(--blue-dark);text-transform:uppercase;letter-spacing:.04em}
+.ft .x{font-size:13px;color:var(--text2);margin-top:3px}
+
+/* accordion (good to know / faq) */
+details.acc{border:1px solid var(--line);border-radius:12px;margin:8px 0;overflow:hidden;background:#fff}
+details.acc[open]{box-shadow:var(--sh1)}
+details.acc>summary{list-style:none;cursor:pointer;font-weight:700;font-size:15.5px;padding:14px 46px 14px 16px;position:relative}
+details.acc>summary::-webkit-details-marker{display:none}
+details.acc>summary::after{content:"+";position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:22px;color:var(--blue);font-weight:400}
+details.acc[open]>summary::after{content:"×"}
+details.acc .ac{padding:0 16px 15px;color:var(--text2);font-size:14px}
+details.acc .ac p{margin:0 0 9px}
+.tl{margin:4px 0 0;padding-left:0;list-style:none}
+.tl li{display:flex;gap:10px;padding:5px 0;border-bottom:1px dashed var(--line);font-size:13.5px}
+.tl li:last-child{border-bottom:none}
+.tl .hr{font-weight:700;color:var(--blue-dark);min-width:64px}
+
+/* guide / reviews */
+.guide{display:flex;gap:14px;align-items:center;border:1px solid var(--line);border-radius:var(--r-card);padding:16px;background:linear-gradient(120deg,#fff,var(--soft));margin:14px 0}
+.guide .av{width:64px;height:64px;border-radius:50%;background:var(--blue-soft);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-style:italic;font-size:20px;color:var(--blue-dark);flex:0 0 auto;font-weight:600}
+.guide .h{font-weight:700;font-size:16px}.guide .x{font-size:13.5px;color:var(--text2)}
+.revhead{display:flex;align-items:baseline;gap:12px;margin:30px 0 4px}
+.revhead .big{font-size:25px;font-weight:800;letter-spacing:-.02em}.revhead .s{color:var(--gold)}
+.rev{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0}
+@media(max-width:620px){.rev{grid-template-columns:1fr}}
+.rev .c{border:1px solid var(--line);border-radius:var(--r-card);padding:14px 16px}
+.rev .s{color:var(--gold);font-size:13px}.rev .q{font-size:14px;color:var(--ink);font-family:var(--font-serif);margin:6px 0}.rev .w{font-size:12px;color:var(--text3)}
+
+/* booking sidebar */
+.book{border:1px solid var(--line-strong);border-radius:var(--r-card);padding:18px;box-shadow:var(--sh2);position:sticky;top:80px}
+.book .price{font-size:30px;font-weight:800;letter-spacing:-.02em}.book .price small{font-size:13px;font-weight:500;color:var(--text3)}
+.book .cap{font-size:13px;color:var(--text2);margin:2px 0 14px}
+.btn{display:block;text-align:center;font-weight:700;font-size:15px;border-radius:var(--r-pill);padding:13px 18px;cursor:pointer}
+.btn-pri{background:var(--blue);color:#fff;box-shadow:var(--sh-cta)}.btn-pri:hover{background:var(--blue-dark)}
+.btn-ghost{background:#fff;color:var(--ink);border:1px solid var(--line-strong);margin-top:9px}.btn-ghost:hover{border-color:var(--blue);color:var(--blue-dark)}
+/* mobile sticky bar = price + primary (CTA system 14 Jun) */
+.msticky{display:none}
+@media(max-width:760px){.msticky{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:9000;background:rgba(255,255,255,.97);backdrop-filter:blur(6px);border-top:1px solid var(--line);box-shadow:0 -2px 14px rgba(0,0,0,.08);padding:9px 12px;gap:10px;align-items:center}.msticky .mp{font-size:14px;font-weight:800;color:var(--ink);line-height:1.12;flex:0 0 auto}.msticky .mp small{display:block;font-weight:400;font-size:9.5px;color:var(--text3)}.msticky .btn{flex:1;padding:12px 10px;font-size:14px;margin-top:0}}
+.incl{font-size:13px;color:var(--text2);margin-top:14px}.incl .i{display:flex;gap:8px;margin:5px 0}.incl .y{color:var(--success);font-weight:800}.incl .x{color:var(--red);font-weight:800}
+.trustline{font-size:12px;color:var(--text3);margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
+
+/* planner handoff */
+.handoff{margin:8px 28px 0;border-radius:var(--r-card);overflow:hidden;border:1px solid var(--line)}
+.handoff .top{background:linear-gradient(120deg,#176f93,#1E88B5);color:#fff;padding:22px 24px}
+.handoff .top .k{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.handoff .top h3{font-size:25px;letter-spacing:-.02em;margin:6px 0 6px;font-weight:800}.handoff .top h3 .em{font-family:var(--font-serif);font-style:italic;font-weight:400}
+.handoff .top p{margin:0;max-width:560px;opacity:.92;font-size:14px}
+.handoff .toggle{display:flex;background:#fff}
+.handoff .toggle .t{flex:1;text-align:center;padding:12px;font-weight:600;font-size:14px;color:var(--text2);border-right:1px solid var(--line);cursor:pointer}
+.handoff .toggle .t.on{color:var(--blue-dark);background:var(--blue-soft);box-shadow:inset 0 -3px 0 var(--blue)}.handoff .toggle .t:last-child{border-right:none}
+.handoff .act{background:#fff;padding:16px 24px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.handoff .pbtn{background:var(--blue);color:#fff;font-weight:700;border-radius:var(--r-pill);padding:11px 20px;font-size:14.5px;box-shadow:var(--sh-cta)}
+.handoff .note{font-size:12.5px;color:var(--text3)}
+
+/* related */
+.related{padding:26px 28px 10px}
+.related h2{font-size:23px;letter-spacing:-.02em;margin:0 0 12px}.related h2 .em{font-family:var(--font-serif);font-style:italic;color:var(--blue-dark);font-weight:400}
+.rcards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:680px){.rcards{grid-template-columns:1fr}}
+.rcard{border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden;box-shadow:var(--sh1);cursor:pointer}
+.rcard .ph{height:120px;background-size:cover;background-position:center}
+.rcard .b{padding:11px 13px}.rcard .t{font-weight:700;font-size:15px}.rcard .m{font-size:12px;color:var(--text3)}.rcard .p{font-size:13px;font-weight:700;margin-top:4px}
+
+.foot{padding:26px 28px 90px;color:var(--text3);font-size:12.5px;border-top:1px solid var(--line);margin-top:18px}
+
+/* shared footer (td-footer) */
+.tft{background:var(--ink);color:#cfd3dc}
+.tft .logo{color:#fff}.tft .logo span{color:var(--blue)}
+.tft-in{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:26px;padding:34px 28px}
+@media(max-width:760px){.tft-in{grid-template-columns:1fr 1fr}}
+.tft-brand p{color:#9aa1b0;font-size:13.5px;margin:8px 0 10px;max-width:240px}
+.tft-trust{display:flex;flex-direction:column;gap:3px;font-size:12.5px;color:#8a91a1}
+.tft-col h5{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:#fff;margin:0 0 9px}
+.tft-col a,.tft-col span{display:block;color:#aab0bd;font-size:13.5px;margin:5px 0}
+.tft-col a:hover{color:#fff}
+.tft-legal{border-top:1px solid rgba(255,255,255,.1);padding:14px 28px;font-size:12px;color:#7c8494;max-width:1080px;margin:0 auto}
+/* comment layer */
+#cmt-toolbar{position:fixed;right:16px;bottom:16px;z-index:9999;display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.cbtn{font-family:var(--font-sans);font-size:13px;font-weight:600;border:1px solid var(--line-strong);background:#fff;color:var(--ink);border-radius:var(--r-pill);padding:10px 15px;cursor:pointer;box-shadow:var(--sh2)}
+.cbtn:hover{border-color:var(--blue)}.cbtn.on{background:var(--blue);color:#fff;border-color:var(--blue)}.cbtn.mini{font-size:12px;padding:8px 12px}
+body.cmode{cursor:crosshair}
+.pin{position:absolute;width:24px;height:24px;border-radius:50% 50% 50% 2px;background:var(--gold);color:#3a2c00;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;transform:translate(-4px,-24px);box-shadow:var(--sh2);cursor:pointer;z-index:120;border:2px solid #fff}
+#cmt-panel{position:fixed;top:0;right:-380px;width:360px;max-width:88vw;height:100vh;background:#fff;border-left:1px solid var(--line);box-shadow:-8px 0 30px rgba(28,28,46,.1);z-index:9998;transition:right .25s;display:flex;flex-direction:column}
+#cmt-panel.open{right:0}
+#cmt-panel .ph{padding:16px;border-bottom:1px solid var(--line)}#cmt-panel .ph .tt{font-weight:700}#cmt-panel .ph .ss{font-size:12.5px;color:var(--text3);margin-top:3px}
+#cmt-list{flex:1;overflow:auto;padding:12px 14px}
+.centry{border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:9px}
+.centry .cm{font-size:11px;font-weight:700;color:var(--blue-dark);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;cursor:pointer}
+.centry textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px;font-family:var(--font-sans);font-size:13px;resize:vertical;min-height:50px}
+.centry .del{float:right;color:var(--text3);cursor:pointer}
+#cmt-empty{color:var(--text3);font-size:13px;text-align:center;padding:18px 4px}
+.toast{position:fixed;bottom:74px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:var(--r-pill);font-size:13px;z-index:10000;box-shadow:var(--sh2);opacity:0;transition:opacity .2s}.toast.show{opacity:1}
+@media print{#cmt-toolbar,#cmt-panel,.pin{display:none!important}}
+/* ====== AIRIER VARIANT 2026 — visual only (white space, lighter shadows/lines, larger radius). Content, structure, schema and functionality unchanged. ====== */
+:root{--sh1:0 1px 2px rgba(28,28,46,.04);--sh2:0 16px 44px rgba(28,28,46,.07);--sh-cta:0 6px 22px rgba(30,136,181,.22);--line:#eef1f5;--r-card:20px;--r-img:16px}
+body{line-height:1.72}
+.hero{padding:18px 34px 10px}
+.body{gap:56px;padding:34px 34px 16px}
+.lead{margin-bottom:24px;line-height:1.56}
+.gal{gap:12px;padding:18px 34px 12px}
+.prose p{margin-bottom:18px}
+.prose h2{margin:42px 0 10px}
+.why{gap:16px}.why .c{padding:18px 20px}
+.stop{padding:18px;gap:20px;margin:16px 0}
+.book{padding:24px}
+.btn{padding:15px 20px}
+.handoff{margin:18px 34px 0}.handoff .top{padding:28px 28px}.handoff .act{padding:18px 28px}
+.related{padding:8px 34px 28px}.rcards{gap:16px}
+@media(max-width:880px){.body{gap:30px;padding:22px 22px 12px}}
+@media(max-width:760px){.hero{padding:14px 22px 8px}.gal{padding:14px 22px 10px}.handoff{margin:14px 22px 0}}
+</style>
+</head>
+<body>
+
+<details class="devnote" data-sec="Implementační spec (Martin)">
+  <summary>Pro Martina — implementační spec v1.0 (klikni; není součástí stránky)</summary>
+  <div class="dn">
+    <table>
+      <tr><th>URL EN</th><td><code>/en/cesky-krumlov-private-tour-from-prague-2026/</code> · 301 z <code>/en/trip/cesky-krumlov-and-hluboka-castle/</code></td></tr>
+      <tr><th>URL CZ</th><td><code>/soukromy-vylet-cesky-krumlov-z-prahy/</code> (návrh) · 301 z <code>/vylet/cesky-krumlov-a-zamek-hluboka/</code></td></tr>
+      <tr><th>hreflang</th><td>cs + en + x-default (symetricky)</td></tr>
+      <tr><th>Schema (4)</th><td>TouristTrip (origin Prague, destination, duration P1D, offers) · Product (offers from €429/EUR — lowest Superb tier, aggregateRating) · FAQPage (z FAQ sekce) · BreadcrumbList</td></tr>
+      <tr><th>Yoast</th><td>title „Český Krumlov Private Tour from Prague (2026) | Private Tours" · metadesc 140–160 zn. s focus kw „cesky krumlov private tour from prague" · OG = featured</td></tr>
+      <tr><th>Fotky</th><td>WebP, featured 1200×800 ≤200 kB, OG 1200×630, inline ≤150 kB</td></tr>
+      <tr><th>Sdílení</th><td>Share button → copy link / WhatsApp (wa.me) / mailto; OG title+image+desc</td></tr>
+      <tr><th>Plánovač</th><td>CTA „Plan this trip" → plánovač s předvyplněným Č. Krumlov (+ Hluboká volitelná); toggle Ready-made / Build your own</td></tr>
+      <tr><th>Unikát</th><td>blok „From our tours" napájený z deníku výletů (datované fotky + tipy); honest sezónní/otevírací stav</td></tr>
+    </table>
+  </div>
+</details>
+
+<div style="max-width:1080px;margin:0 auto;background:#1c1c2e;color:#fff;font-size:12.5px;padding:7px 24px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">Tour detail · <b style="background:#1E88B5;color:#fff;border-radius:100px;padding:2px 9px">✨ Airier variant (2026)</b> <span>same content &amp; functionality, only lighter graphics · CTA system kept (primary Reserve this trip, sticky price+Reserve)</span></div>
+<div class="frame">
+  <div class="sh" data-sec="Header (sdílené – celý web)">
+    <div class="logo">Private Tours <span>Czech</span></div>
+    <nav>
+      <a class="hidem" href="#">Tours</a>
+      <a class="hidem" href="#planner">Build your own trip</a>
+      <a class="hidem" href="#">Reviews</a>
+      <a class="hidem" href="#">Blog</a>
+      <a class="hidem" href="#">Contact</a>
+      <span class="hidem" style="color:var(--text3);font-weight:600">CS / <strong style="color:var(--ink)">EN</strong></span>
+    </nav>
+  </div>
+
+  <div class="bc" data-sec="Breadcrumb"><a href="#">Home</a> › <a href="#">Tours</a> › <a href="#">Day trips from Prague</a> › <strong style="color:var(--text2)">Český Krumlov</strong></div>
+
+  <div class="hero" data-sec="Hero">
+    <div>
+      <div class="kick"><span class="dot"></span>Private day trip · UNESCO</div>
+      <h1>Český Krumlov, <span class="em">privately</span> — from Prague</h1>
+      <div class="facts"><span><b>South Bohemia</b></span><span>⏱ <b>10–11 h</b></span><span>🚗 Private car, door-to-door</span><span class="stars">★★★★★ <span style="color:var(--text3)">· 31 guests</span></span></div>
+    </div>
+    <div class="share-wrap">
+      <button class="sharebtn" id="shareBtn">↗ Share</button>
+      <div class="sharepop" id="sharepop">
+        <button id="copyLink">🔗 Copy link</button>
+        <a href="https://wa.me/?text=Český%20Krumlov%20private%20tour%20from%20Prague%20https://privatetoursczech.cz/en/cesky-krumlov-private-tour-from-prague-2026/" target="_blank" rel="noopener">💬 WhatsApp</a>
+        <a href="mailto:?subject=Český Krumlov private tour from Prague&body=https://privatetoursczech.cz/en/cesky-krumlov-private-tour-from-prague-2026/" target="_blank" rel="noopener">✉️ Email</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="gal" data-sec="Galerie">
+    <a class="big" href="#"><img src="https://privatetoursczech.cz/wp-content/uploads/2025/11/cesky-krumlov-sunset-vltava-view-privatetoursczech-2000x1500.jpg" alt="Český Krumlov old town and castle at sunset over the Vltava"></a>
+    <a href="#"><img src="https://privatetoursczech.cz/wp-content/uploads/2025/11/cesky-krumlov-evening-street-view-privatetoursczech-1000x750.jpg" alt="Evening lane in Český Krumlov"></a>
+    <a href="#"><img src="https://privatetoursczech.cz/wp-content/uploads/2025/11/cesky-krumlov-blue-hour-privatetoursczech-1000x750.jpg" alt="Český Krumlov at blue hour"></a>
+    <a href="#"><img src="https://privatetoursczech.cz/wp-content/uploads/2025/11/Hluboka-Castle-Hluboka-nad-Vltavou-Autumn-Gardens-PrivateToursCzech-1000x750.jpg" alt="Hluboká Castle gardens"></a>
+    <a href="#"><img src="https://privatetoursczech.cz/wp-content/uploads/2025/11/cesky-krumlov-couple-tower-view-privatetoursczech-1000x750.jpg" alt="Couple at a viewpoint over Český Krumlov"><span class="more">+ 62 photos <span style="font-weight:400">— full production gallery (lazy-load)</span></span></a>
+  </div>
+
+  <div class="body">
+    <div class="prose" data-sec="Příběh + obsah">
+      <p class="lead">One of the most theatrically beautiful towns in Central Europe — a Baroque castle coiling around a bend in the Vltava, a maze of cobbled lanes below, and the time to actually wander before the day-trip coaches arrive.</p>
+
+      <div class="why" data-sec="Proč soukromě">
+        <div class="c"><div class="h">No 6am bus</div><div class="x">Door-to-door from your hotel, leave when you like.</div></div>
+        <div class="c"><div class="h">Your pace</div><div class="x">Stay longer where it's worth it, skip what isn't.</div></div>
+        <div class="c"><div class="h">A real local</div><div class="x">A guide who knows which lane and which light.</div></div>
+      </div>
+
+      <p>Český Krumlov sits about two and a half hours south of Prague. Most people come for the castle — the second largest in the country — but the quieter pleasure is the old town itself: an almost completely preserved medieval and Renaissance townscape, wrapped so tightly by the Vltava that it feels like an island. We time the day so you arrive before the coaches and have the morning light to yourself, then loop back through the South Bohemian countryside, with the option of a second castle on the way home.</p>
+
+      <h2 data-sec="Zastávky"><span class="n">Stops</span>What you'll see</h2>
+      <div class="stop">
+        <img src="https://privatetoursczech.cz/wp-content/uploads/2025/11/cesky-krumlov-evening-street-view-privatetoursczech-1000x750.jpg" alt="Český Krumlov old town">
+        <div><div class="num">Stop 1 · about 3 h</div><h3>Český Krumlov old town &amp; castle <span class="t">UNESCO</span></h3><p>The castle complex (40 buildings on a rocky promontory), the painted Renaissance tower, the tiered Baroque gardens, and the lanes of the old town ending at the river on three sides. Time for the castle interior, a riverside lunch, or simply wandering.</p></div>
+      </div>
+      <div class="stop">
+        <img src="https://privatetoursczech.cz/wp-content/uploads/2025/11/Hluboka-Castle-Hluboka-nad-Vltavou-Autumn-Gardens-PrivateToursCzech-1000x750.jpg" alt="Hluboká Castle">
+        <div><div class="num">Optional stop · about 1 h 30</div><h3>Hluboká Castle <span class="opt">Add-on on the way back</span></h3><p>A neo-Gothic castle modelled on Windsor — bright white above the Vltava valley, with a well-preserved interior and an English-style park. Easy to add on the drive home if you'd like a second castle; skip it for a slower day in Krumlov.</p></div>
+      </div>
+
+      <div class="fromtours" data-sec="Z našich výletů (unikát)">
+        <div class="hd"><span class="t">From our tours</span><span class="live"><span class="d"></span>updated from real trips</span></div>
+        <p class="sub">Real photos and notes from our recent days here — not stock, not a catalogue. This is what a marketplace can't show you, because they don't drive the trip.</p>
+        <div class="ft-grid">
+          <div class="ft"><img src="https://privatetoursczech.cz/wp-content/uploads/2025/11/cesky-krumlov-blue-hour-privatetoursczech-1000x750.jpg" alt=""><div class="b"><div class="date">June 2026</div><div class="x">The castle gardens were in full bloom — we time the climb for late afternoon, when the light turns gold and the groups have left.</div></div></div>
+          <div class="ft"><img src="https://privatetoursczech.cz/wp-content/uploads/2025/11/cesky-krumlov-couple-tower-view-privatetoursczech-1000x750.jpg" alt=""><div class="b"><div class="date">Driver's spot</div><div class="x">A 2-minute stop at the bend on the Krumlov–Hluboká road frames the white castle through the trees. Best around 3pm.</div></div></div>
+          <div class="ft"><img src="https://privatetoursczech.cz/wp-content/uploads/2025/11/cesky-krumlov-night-old-town-privatetoursczech-1000x750.jpg" alt=""><div class="b"><div class="date">Local tip</div><div class="x">The Eggenberg brewery courtyard is calm before noon — a quiet coffee before the lanes fill up.</div></div></div>
+        </div>
+      </div>
+
+      <h2 data-sec="Good to know (LLM sekce)"><span class="n">Good to know</span>Everything travelers ask</h2>
+
+      <details class="acc" open><summary>How to visit Český Krumlov from Prague (private vs group vs self-driving)</summary><div class="ac">
+        <p>It's about 170 km (2 h 30) each way. A group coach is cheapest but rigid — fixed departure, ~4 hours on site, no stops. Self-driving works if you're comfortable parking outside the centre and want full freedom. A private car sits in between on price and at the top on comfort: door-to-door from your hotel, an English-speaking driver, your own timing, and the option to add Hluboká or a viewpoint without renegotiating. For a couple or a family who value a relaxed day, private usually wins; for a solo traveller on a tight budget, the bus is fine.</p>
+      </div></details>
+
+      <details class="acc"><summary>Cost &amp; what's included</summary><div class="ac">
+        <p>From <strong>€429 per car</strong> (Škoda Superb, 1–3 guests; Hyundai Staria up to 8 from €572) — one price for the whole car, not per person. It includes the private vehicle, driver, fuel, motorway tolls and parking. It does <strong>not</strong> include castle interior tickets, meals or drinks. No deposit — you pay the driver.</p>
+      </div></details>
+
+      <details class="acc"><summary>Best time to visit</summary><div class="ac">
+        <p>May, June and September are the sweet spot — long days, open interiors, manageable crowds. July–August is busiest; we counter it by starting early. Winter is quiet and atmospheric (snow on the rooftops, Christmas markets) but some interiors close. The early-morning trick matters all year: arriving by 9–9:30 gives you the old town before the coaches.</p>
+      </div></details>
+
+      <details class="acc"><summary>A realistic hour-by-hour itinerary</summary><div class="ac">
+        <ul class="tl">
+          <li><span class="hr">08:00</span> Pickup anywhere in Prague</li>
+          <li><span class="hr">10:30</span> Arrive Český Krumlov — old town &amp; castle while it's quiet</li>
+          <li><span class="hr">12:30</span> Riverside lunch (we'll recommend, not push)</li>
+          <li><span class="hr">14:00</span> Free time — castle tower, gardens, or a slow wander</li>
+          <li><span class="hr">15:30</span> Drive back, optional Hluboká Castle stop</li>
+          <li><span class="hr">18:30</span> Back in Prague (flexible — it's your day)</li>
+        </ul>
+      </div></details>
+
+      <details class="acc"><summary>With kids / as a couple</summary><div class="ac">
+        <p>For couples we lean into the slow version: a long lunch, the gardens, a viewpoint at golden hour. For families, the castle tower, the bear moat and ice-cream by the river keep younger travellers happy; child seats are provided on request. Either way the pace bends to you.</p>
+      </div></details>
+
+      <details class="acc"><summary>Tickets &amp; opening days (we check before you go)</summary><div class="ac">
+        <p>Castle interior tours run roughly April–October and require timed tickets in peak season — we arrange them. Interiors are typically <strong>closed on Mondays</strong> outside summer, and in winter many close entirely; the town and exteriors are lovely year-round. If a closure would spoil your plan, we'll tell you and suggest a better day — we'd rather you have the right trip than just sell one.</p>
+      </div></details>
+
+      <details class="acc"><summary>Frequently asked questions</summary><div class="ac">
+        <p><strong>How long do we need?</strong> A full day does it justice; a half-day feels rushed once you add travel.</p>
+        <p><strong>Is the driver also a guide?</strong> Your driver is a knowledgeable local; a licensed guide for the castle interior can be arranged.</p>
+        <p><strong>Can we change the plan on the day?</strong> Yes — add a stop, linger longer, head back early. No surcharge.</p>
+        <p><strong>What language?</strong> English throughout; some of our drivers also speak German.</p>
+      </div></details>
+<!-- EN: 6 kategorií FAQ přeneseno z produkce (informační parita + FAQPage schema) -->
+<details class="acc"><summary>Trip planning and booking</summary><div class="ac"><p>Planning your trip with Private Tours Czech is simple: Choose your pick-up location. Plan your route and stops. Select the length of each stop or overnight stay. Set your final destination (which can be the same as your starting point). Choose additional services – child seats, a tour guide, a photographer, or a special photography tour with a photography course. Travel in comfortable, spacious vehicles and complete your booking easily online. If you don’t want to plan the entire trip yourself, you can choose from our Popular Tours section with recommended routes and then customise them to suit your needs.</p></div></details>
+<details class="acc"><summary>Payment &amp; price</summary><div class="ac"><p>Payment is made directly to the driver – you can pay in cash or by card in your chosen currency (CZK / EUR / USD upon request). The price includes everything listed in your confirmed booking – for example, transportation in a comfortable vehicle, professional driver services, and selected additional services. The price does not include expenses such as parking fees, entrance tickets, local guides, meals, overnight stays, or other personal expenses.</p></div></details>
+<details class="acc"><summary>Modify or cancel booking</summary><div class="ac"><p>Our team will make the changes for you – contact our customer support via email or chat.</p></div></details>
+<details class="acc"><summary>Our vehicles &amp; drivers</summary><div class="ac"><p>We use fully equipped Hyundai Staria 4×4 vehicles for up to 8 passengers, with a fixed price and large luggage capacity. Perfect for airport transfers, transporting multiple passengers and luggage, weddings, families with children, and trips. All vehicles feature: Leather seats Britax Römer child seats Vittel water Electric doors Tinted windows Modern safety systems USB and air conditioning Drivers are carefully selected, follow strict quality codes, and are regularly checked.</p></div></details>
+<details class="acc"><summary>Special requests &amp; assistance</summary><div class="ac"><p>If you have special requests – such as assistance for passengers with reduced mobility, transport of sports equipment, specific vehicle equipment, or route adjustments – include them in the “Notes” field when booking. You can also contact us via email or chat for personalised advice.</p></div></details>
+<details class="acc"><summary>Popular custom tours</summary><div class="ac"><p>Don’t want to plan from scratch? Choose from our range of Popular Tours with carefully designed routes and itineraries. You can customise each one – change the order of stops, adjust the length of visits, add services, or include your own stops.</p></div></details>
+
+      <div class="guide" data-sec="Průvodce">
+        <div class="av">PT</div>
+        <div><div class="h">Your local guide &amp; team</div><div class="x">Photography add-on led by an award-winning photographer (MQEP, Zeiss ambassador, Sony) or his team; driver-guides include an MA historian and a certified sommelier — <u>full credential modals as in production</u>. Expert local guides — the kind who know which courtyard to duck into and which viewpoint catches the afternoon light, and who switch easily from history to photography tips as the day goes.</div></div>
+      </div>
+
+      <div class="revhead" data-sec="Recenze"><span class="big">★★★★★</span><span class="s">4.9 / 5</span><span style="color:var(--text3);font-size:13px">· 31 guests</span></div>
+      <div class="rev">
+        <div class="c"><div class="s">★★★★★</div><div class="q">"We left at 8, beat every coach, and had the castle gardens almost to ourselves."</div><div class="w">— Sarah &amp; Tom, UK · May 2026</div></div>
+        <div class="c"><div class="s">★★★★★</div><div class="q">"Adding Hluboká on the way back was the right call. Our driver knew exactly where to stop for photos."</div><div class="w">— Familie Berger, DE · April 2026</div></div>
+        <div class="c"><div class="s">★★★★★</div><div class="q">"Door-to-door, relaxed, no rushing. Worth every euro for a family of four."</div><div class="w">— The Nguyens, AU · March 2026</div></div>
+        <div class="c"><div class="s">★★★★★</div><div class="q">"Honest advice on timing meant we saw the town at its best. Highly recommend."</div><div class="w">— Élise &amp; Marc, FR · Feb 2026</div></div>
+      </div>
+    </div>
+
+    <aside>
+      <div class="book" data-sec="Cena / rezervace">
+        <div class="price">from €429 <small>/ car</small></div>
+<details style="margin:10px 0;border:1px solid #e7eaee;border-radius:10px;padding:8px 12px;font-size:13.5px">
+<summary style="cursor:pointer;font-weight:700">Price per person by group size & vehicle ▾</summary>
+<table style="width:100%;border-collapse:collapse;margin-top:8px;font-size:13px">
+<tr style="color:#6b7280;text-align:left"><th style="padding:3px 6px">Guests</th><th style="padding:3px 6px">Škoda Superb (€429)</th><th style="padding:3px 6px">Hyundai Staria (€572)</th></tr>
+<tr><td style="padding:3px 6px">1</td><td style="padding:3px 6px">€429</td><td style="padding:3px 6px">€572</td></tr>
+<tr><td style="padding:3px 6px">2</td><td style="padding:3px 6px"><b>€215/pp</b></td><td style="padding:3px 6px">€286/pp</td></tr>
+<tr><td style="padding:3px 6px">3</td><td style="padding:3px 6px"><b>€143/pp</b></td><td style="padding:3px 6px">€191/pp</td></tr>
+<tr><td style="padding:3px 6px">4</td><td style="padding:3px 6px">—</td><td style="padding:3px 6px">€143/pp</td></tr>
+<tr><td style="padding:3px 6px">6</td><td style="padding:3px 6px">—</td><td style="padding:3px 6px">€95/pp</td></tr>
+<tr><td style="padding:3px 6px">8</td><td style="padding:3px 6px">—</td><td style="padding:3px 6px">€72/pp</td></tr>
+</table>
+<div style="color:#6b7280;margin-top:6px">One price per car — the more of you, the less per person. Choose your vehicle in the planner.</div>
+</details>
+        <div class="cap">Up to 4 guests · one price for the car (larger vans on request)</div>
+        <a class="btn btn-pri" href="#reserve">Reserve this trip →</a>
+        <a class="btn btn-ghost" href="#planner">Build your own trip</a>
+        <a class="btn btn-ghost" href="#">Get a free quote</a>
+        <div class="incl">
+          <div class="i"><span class="y">✓</span> Private vehicle, driver, fuel, tolls, parking</div>
+          <div class="i"><span class="y">✓</span> Door-to-door from your hotel</div>
+          <div class="i"><span class="x">✗</span> Castle interior tickets, meals</div>
+        </div>
+        <div class="trustline">💳 Pay the driver — no prepayment · Transparent prices, no hidden fees</div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="handoff" id="planner" data-sec="Napojení na plánovač">
+    <div class="top"><div class="k">Make it yours</div><h3>Open this trip in the <span class="em">planner</span></h3><p>Add a stop, change the pace, see the price update live — then send it to us. This tour is pre-loaded, so you start from a real day, not a blank page.</p></div>
+    <div class="toggle"><div class="t on">Ready-made tour</div><div class="t">Build your own route →</div></div>
+    <div class="act"><span class="note">↑ Launch the planner with the <b style="color:var(--blue-dark)">“Build your own trip”</b> button by the price — it opens pre-filled with Český Krumlov (and Hluboká as an optional stop). One planner, one name.</span></div>
+  </div>
+
+  <div class="related" data-sec="Související výlety">
+    <h2>You might also <span class="em">like</span></h2>
+    <div class="rcards">
+      <div class="rcard"><div class="ph" style="background:linear-gradient(135deg,#1c1c2e,#2c9cd4)"></div><div class="b"><div class="t">Hluboká &amp; Třeboň</div><div class="m">South Bohemia · full-day</div><div class="p">from €405 / car</div></div></div>
+      <div class="rcard"><div class="ph" style="background:linear-gradient(135deg,#176f93,#58c2f4)"></div><div class="b"><div class="t">Karlštejn Castle</div><div class="m">Central Bohemia · half-day</div><div class="p">from €218 / car</div></div></div>
+      <div class="rcard"><div class="ph" style="background:linear-gradient(135deg,#2c9cd4,#1c1c2e)"></div><div class="b"><div class="t">Kutná Hora &amp; Bone Church</div><div class="m">Central Bohemia · half-day</div><div class="p">from €233 / car</div></div></div>
+    </div>
+  </div>
+
+  <footer class="tft" data-sec="Footer (sdílené – celý web)">
+    <div class="tft-in">
+      <div class="tft-brand">
+        <div class="logo" style="font-size:18px;font-weight:800">Private Tours <span>Czech</span></div>
+        <p>Private day trips across Czechia — your driver, your pace.</p>
+        <div class="tft-trust"><span>English-speaking driver</span></div>
+      </div>
+      <div class="tft-col"><h5>Tours</h5><a href="#">Český Krumlov</a><a href="#">Kutná Hora</a><a href="#">Karlštejn</a><a href="#">Mělník &amp; wine</a><a href="#">Multi-day tours</a><a href="#planner">Build your own trip</a></div>
+      <div class="tft-col"><h5>Company</h5><a href="#">About us</a><a href="#">Our team</a><a href="#">Reviews</a><a href="#">Blog</a><a href="#">For businesses</a></div>
+      <div class="tft-col"><h5>Contact</h5><span>booking@privatetoursczech.cz</span><span>Reply by the next business day</span><span>Prague, Czechia</span></div>
+    </div>
+    <div class="tft-legal">© 2026 Private Tours Czech · Privacy · Terms · Partner Program · GDPR · Manage Cookies</div>
+  </footer>
+  <div class="foot">Kompletní detail výletu v1.0 — Český Krumlov · 6. 6. 2026. Záhlaví + zápatí = <strong>sdílená theme komponenta</strong> (nová soustava, © 2026) — stejná jako nová dev2 homepage. Implementační reference pro Martina.</div>
+</div>
+
+<div class="msticky" data-sec="Sticky bar (mobile)">
+  <div class="mp">from €429 <small>/car</small></div>
+  <a class="btn btn-pri" href="#reserve">Reserve →</a>
+</div>
+<div id="cmt-toolbar">
+  <button class="cbtn mini" id="cmt-copy">📋 Zkopírovat komentáře</button>
+  <button class="cbtn mini" id="cmt-clear">🗑 Vymazat</button>
+  <button class="cbtn" id="cmt-toggle">💬 Režim komentářů</button>
+</div>
+<div id="cmt-panel"><div class="ph"><div class="tt">Tvoje komentáře</div><div class="ss">Zapni režim, klikni na místo na stránce, napiš. Pak „Zkopírovat".</div></div><div id="cmt-list"><div id="cmt-empty">Zatím žádné komentáře.</div></div></div>
+<div class="toast" id="cmt-toast"></div>
+
+<script>
+(function(){
+  // share
+  var sb=document.getElementById('shareBtn'),sp=document.getElementById('sharepop');
+  sb.addEventListener('click',function(e){e.stopPropagation();sp.classList.toggle('open')});
+  document.addEventListener('click',function(e){if(!e.target.closest('.share-wrap'))sp.classList.remove('open')});
+  document.getElementById('copyLink').addEventListener('click',function(){
+    var u="https://privatetoursczech.cz/en/cesky-krumlov-private-tour-from-prague-2026/";
+    (navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(u):Promise.reject()).then(function(){toast('Odkaz zkopírován')}).catch(function(){toast(u)});
+    sp.classList.remove('open');
+  });
+  // comments
+  var KEY='ptcz_ck_komplet_airy_comments_v1';var data=[];try{data=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){data=[]}
+  var mode=false,seq=data.reduce(function(m,c){return Math.max(m,c.n)},0);
+  var toggle=document.getElementById('cmt-toggle'),panel=document.getElementById('cmt-panel'),list=document.getElementById('cmt-list');
+  var emptyEl='<div id="cmt-empty">Zatím žádné komentáře.</div>';
+  function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+  function sectionAt(y){var s=document.querySelectorAll('[data-sec]'),b='Dokument',bt=-1e9;s.forEach(function(e){var t=e.getBoundingClientRect().top+window.scrollY;if(t<=y+2&&t>bt){bt=t;b=e.getAttribute('data-sec')}});return b}
+  function renderPins(){document.querySelectorAll('.pin').forEach(function(p){p.remove()});data.forEach(function(c){var p=document.createElement('div');p.className='pin';p.textContent=c.n;p.style.left=c.x+'px';p.style.top=c.y+'px';p.title=c.sec;p.addEventListener('click',function(e){e.stopPropagation();openPanel();focusEntry(c.n)});document.body.appendChild(p)})}
+  function renderList(){if(!data.length){list.innerHTML=emptyEl;return}list.innerHTML='';data.slice().sort(function(a,b){return a.n-b.n}).forEach(function(c){var row=document.createElement('div');row.className='centry';row.dataset.n=c.n;var h=document.createElement('div');h.className='cm';h.textContent='#'+c.n+' · '+c.sec;var d=document.createElement('span');d.className='del';d.textContent='✕';d.addEventListener('click',function(){data=data.filter(function(x){return x.n!==c.n});save();renderList();renderPins()});h.appendChild(d);var ta=document.createElement('textarea');ta.value=c.text||'';ta.placeholder='Tvoje poznámka…';ta.addEventListener('input',function(){c.text=ta.value;save()});row.appendChild(h);row.appendChild(ta);list.appendChild(row)})}
+  function openPanel(){panel.classList.add('open')}
+  function focusEntry(n){var r=list.querySelector('.centry[data-n="'+n+'"] textarea');if(r){r.focus();r.scrollIntoView({block:'center'})}}
+  function toast(m){var t=document.getElementById('cmt-toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},1900)}
+  toggle.addEventListener('click',function(){mode=!mode;document.body.classList.toggle('cmode',mode);toggle.classList.toggle('on',mode);toggle.textContent=mode?'✓ Komentuju (klikni na stránku)':'💬 Režim komentářů';if(mode)openPanel()});
+  document.addEventListener('click',function(e){if(!mode)return;if(e.target.closest('#cmt-toolbar')||e.target.closest('#cmt-panel')||e.target.closest('.pin'))return;if(e.target.closest('a')||e.target.closest('summary')||e.target.closest('button')){e.preventDefault()}seq++;var c={n:seq,x:Math.round(e.pageX),y:Math.round(e.pageY),sec:sectionAt(e.pageY),text:''};data.push(c);save();renderPins();renderList();openPanel();focusEntry(seq)});
+  document.getElementById('cmt-copy').addEventListener('click',function(){var f=data.slice().sort(function(a,b){return a.n-b.n}).filter(function(c){return (c.text||'').trim()});if(!f.length){toast('Žádné vyplněné komentáře');openPanel();return}var out='Komentáře — Detail Č. Krumlov KOMPLET v1.0 ('+new Date().toLocaleDateString('cs-CZ')+')\n\n'+f.map(function(c){return '#'+c.n+' ['+c.sec+']: '+c.text.trim()}).join('\n');(navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(out):Promise.reject()).then(function(){toast('Zkopírováno — vlož mi je do chatu')}).catch(function(){var ta=document.createElement('textarea');ta.value=out;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('Zkopírováno')}catch(e){alert(out)}document.body.removeChild(ta)})});
+  document.getElementById('cmt-clear').addEventListener('click',function(){if(!data.length)return;if(confirm('Smazat všechny komentáře?')){data=[];seq=0;save();renderPins();renderList()}});
+  renderPins();renderList();
+})();
+</script>
+</body>
+</html>

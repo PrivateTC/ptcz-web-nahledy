@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rozšířená sticky lišta — mobil / iPad / PC · návrh k revizi (Fable, 14. 6. 2026)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#1E88B5;--blue-dark:#176f93;--blue-soft:#e8f2f7;--ink:#1C1C2E;--text2:#454552;--muted:#6b7280;--text3:#8a8f99;
+--line:#e7eaee;--line-strong:#d3d9e0;--soft:#f4f7f9;--bg:#fbfcfd;--gold:#f5b400;--green:#1a9e55;--red:#c0392b;
+--font-sans:"Inter Tight",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;--font-serif:"Source Serif 4",Georgia,serif;
+--r:16px;--sh1:0 1px 2px rgba(28,28,46,.05);--sh2:0 10px 30px rgba(28,28,46,.10)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--blue-dark);text-decoration:none}
+.wrap{max-width:1300px;margin:0 auto;padding:0 22px}
+/* banner */
+.topbar{background:#1c1c2e;color:#fff;font-size:12.5px;padding:8px 22px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.topbar b.badge{background:var(--gold);color:#3a2c00;border-radius:100px;padding:2px 10px;font-size:12px;white-space:nowrap}
+header.hero{padding:38px 0 10px}
+.kick{display:inline-flex;gap:8px;align-items:center;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:12px}
+.kick .dot{width:7px;height:7px;border-radius:50%;background:var(--gold)}
+h1{font-size:clamp(27px,4.2vw,40px);line-height:1.06;letter-spacing:-.03em;font-weight:800;margin:0 0 12px;max-width:900px}
+h1 .em{font-family:var(--font-serif);font-style:italic;font-weight:400;color:var(--blue-dark)}
+.lead{font-size:17.5px;color:var(--text2);max-width:840px;margin:0 0 16px}
+.how{display:flex;gap:14px;align-items:flex-start;background:var(--blue-soft);border-left:3px solid var(--blue);border-radius:0 12px 12px 0;padding:13px 18px;margin:0 0 6px;font-size:14.5px;color:var(--text2);max-width:840px}
+.how b{color:var(--ink)}.how .em2{font-size:22px;line-height:1}
+.secttl{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin:44px 0 16px;display:flex;align-items:center;gap:10px}
+.secttl::after{content:"";flex:1;height:1px;background:var(--line)}
+/* concept cards */
+.prin{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+@media(max-width:900px){.prin{grid-template-columns:1fr}}
+.pcard{border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;background:#fff;box-shadow:var(--sh1)}
+.pcard h3{margin:0 0 6px;font-size:15.5px;display:flex;gap:8px;align-items:center}
+.pcard p{margin:0;font-size:13.5px;color:var(--text2)}
+.pcard .tag{font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;border-radius:100px;padding:3px 9px}
+.tag.a{background:var(--blue-soft);color:var(--blue-dark)}.tag.b{background:#fff7ec;color:#b9770e}.tag.c{background:#fdeeee;color:var(--red)}
+/* layout of device sections */
+.devrow{display:grid;grid-template-columns:300px 1fr;gap:26px;align-items:start}
+@media(max-width:1150px){.devrow{grid-template-columns:1fr}}
+.desc{font-size:14px;color:var(--text2)}
+.desc ul{margin:8px 0 0;padding-left:18px}.desc li{margin:7px 0}
+.desc .dtit{font-weight:800;font-size:16.5px;letter-spacing:-.01em;color:var(--ink);margin-bottom:4px}
+.desc .dnote{background:var(--soft);border-radius:10px;padding:10px 12px;font-size:12.5px;color:var(--text2);margin-top:12px}
+.simbtn{font-family:var(--font-sans);margin-top:12px;font-size:12.5px;font-weight:700;border:1px solid var(--line-strong);background:#fff;border-radius:100px;padding:9px 14px;cursor:pointer;min-height:40px}
+.simbtn:hover{border-color:var(--blue);color:var(--blue-dark)}
+.devwrap{overflow-x:auto;padding-bottom:6px}
+.cap{font-size:12.5px;color:var(--text3);margin-top:10px;max-width:560px}
+/* device chrome */
+.dev{border:10px solid #1c1c2e;border-radius:30px;overflow:hidden;background:#fff;box-shadow:var(--sh2)}
+.scr{position:relative;overflow:hidden;background:#fff}
+.pg{height:100%;overflow-y:auto;position:relative}
+.pg.lock{overflow:hidden}
+/* mini page content shared */
+.mhead{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-bottom:1px solid var(--line);font-size:12px;position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:blur(6px);z-index:5}
+.mlogo{font-weight:800;font-size:13.5px}.mlogo span{color:var(--blue)}
+.mmenu{border:1px solid var(--line-strong);border-radius:100px;padding:5px 11px;font-size:11px;font-weight:700}
+.mnav{display:flex;gap:12px;font-size:12px;color:var(--text2);font-weight:600}
+.mcontent{padding:14px}
+.mkick{font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--blue-dark);margin-bottom:6px}
+.mcontent h4{margin:0 0 6px;font-size:20px;letter-spacing:-.02em;line-height:1.1}
+.mcontent h4 .em{font-family:var(--font-serif);font-style:italic;font-weight:400;color:var(--blue-dark)}
+.mfacts{font-size:11.5px;color:var(--text2);margin-bottom:10px}.mfacts b{color:var(--ink)}
+.mimg{width:100%;height:150px;object-fit:cover;border-radius:12px;margin-bottom:10px;background:#dfe6ea;display:block}
+.mtxt{font-size:12.5px;color:var(--text2);margin:0 0 10px;line-height:1.55}
+.gline{height:9px;border-radius:5px;background:var(--soft);margin:7px 0}.gline.s{width:66%}
+.stub{border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:12px;font-weight:700;margin:8px 0;color:var(--ink);display:flex;justify-content:space-between}.stub span{color:var(--blue);font-weight:400}
+.mfoot{background:var(--ink);color:#aab0bd;font-size:11px;padding:14px;border-radius:12px 12px 0 0;margin:18px -14px 0;line-height:1.7}
+.mfoot b{color:#fff}
+.endmark{margin:12px 0 4px;border:2px dashed var(--green);color:var(--green);border-radius:10px;padding:9px 12px;font-size:11.5px;font-weight:700;text-align:center}
+/* ==== sticky bar (shared) ==== */
+.bar{position:absolute;left:0;right:0;bottom:0;z-index:30;background:rgba(255,255,255,.97);backdrop-filter:blur(6px);border-top:1px solid var(--line);box-shadow:0 -2px 14px rgba(0,0,0,.08);padding:9px 12px;display:flex;align-items:center;gap:10px}
+.handle{font-family:var(--font-sans);flex:1;min-height:46px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:1px;background:none;border:none;cursor:pointer;text-align:left;padding:2px 4px;border-radius:10px}
+.handle:hover{background:var(--soft)}
+.hprice{font-size:14.5px;font-weight:800;color:var(--ink);line-height:1.1;white-space:nowrap}
+.hprice small{font-weight:400;font-size:9.5px;color:var(--text3)}
+.hmore{font-size:10.5px;font-weight:700;color:var(--blue-dark);letter-spacing:.02em}
+.btn{display:inline-flex;align-items:center;justify-content:center;font-weight:700;border-radius:100px;cursor:pointer;text-align:center;font-family:var(--font-sans);border:none}
+.btn.pri{background:var(--blue);color:#fff;box-shadow:0 4px 16px rgba(30,136,181,.30);font-size:14px;padding:12px 18px;min-height:46px}
+.btn.pri:hover{background:var(--blue-dark)}
+.btn.ghostb{background:#fff;color:var(--ink);border:1px solid var(--line-strong);font-size:13.5px;padding:11px 16px;min-height:44px}
+.btn.ghostb:hover{border-color:var(--blue);color:var(--blue-dark)}
+.grab{width:38px;height:4px;border-radius:3px;background:var(--line-strong);margin:8px auto 2px;flex:0 0 auto}
+/* overlay */
+.ovl{position:absolute;inset:0;background:rgba(28,28,46,.45);opacity:0;pointer-events:none;transition:opacity .25s;z-index:34}
+.ovl.on{opacity:1;pointer-events:auto}
+.ovl.light{background:rgba(28,28,46,.28);bottom:70px}
+/* bottom sheet (mobile) */
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:40;background:#fff;border-radius:20px 20px 0 0;box-shadow:0 -12px 40px rgba(28,28,46,.22);transform:translateY(105%);transition:transform .28s cubic-bezier(.3,.8,.3,1);max-height:84%;display:flex;flex-direction:column}
+.sheet.on{transform:translateY(0)}
+.shead{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:6px 16px 8px;border-bottom:1px solid var(--line);flex:0 0 auto}
+.sprice{font-size:22px;font-weight:800;letter-spacing:-.02em}.sprice small{font-size:12px;font-weight:500;color:var(--text3)}
+.ssub{font-size:11.5px;color:var(--text2)}
+.xbtn{width:44px;height:44px;flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:50%;font-size:16px;cursor:pointer;color:var(--text2)}
+.xbtn:hover{border-color:var(--blue);color:var(--blue-dark)}
+.sbody{overflow-y:auto;padding:12px 16px 6px}
+.ptab{width:100%;border-collapse:collapse;font-size:11.5px;margin:2px 0 10px}
+.ptab th,.ptab td{padding:5px 8px;text-align:left;border-bottom:1px solid var(--line)}
+.ptab th{color:var(--text3);font-size:10px;text-transform:uppercase;letter-spacing:.04em}
+.ptab b{color:var(--ink)}
+.sgroup{font-size:12px;color:var(--text2);margin:0 0 10px;line-height:1.65}
+.sgroup .y{color:var(--green);font-weight:800}.sgroup .n{color:var(--red);font-weight:800}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.chips span{font-size:11px;font-weight:600;background:var(--soft);border:1px solid var(--line);border-radius:100px;padding:6px 11px;color:var(--text2)}
+.ter{display:flex;flex-wrap:wrap;gap:2px 14px;margin:10px 0 4px}
+.tlink{font-size:12.5px;font-weight:600;color:var(--blue-dark);text-decoration:underline;text-underline-offset:2px;display:inline-flex;align-items:center;min-height:40px}
+.sfoot{flex:0 0 auto;padding:10px 16px 14px;border-top:1px solid var(--line);background:#fff}
+.sfoot .btn.pri{width:100%;font-size:15px}
+.mirrnote{font-size:10.5px;color:var(--text3);text-align:center;margin-top:6px}
+/* cookie demo */
+.cookiebar{position:absolute;left:0;right:0;bottom:0;z-index:50;background:#14141f;color:#e6e8ef;font-size:11.5px;padding:12px 14px;display:none;flex-wrap:wrap;gap:8px;align-items:center;line-height:1.5}
+.cookiebar .cbx{flex:1;min-width:160px}
+.cookiebar button{font-family:var(--font-sans);font-size:11.5px;font-weight:700;border-radius:100px;padding:9px 14px;border:1px solid #3a3a4d;background:#fff;color:#14141f;cursor:pointer;min-height:38px}
+.cookiebar button.gh{background:transparent;color:#cfd3dc}
+.scr.cookie-on .cookiebar{display:flex}
+.scr.cookie-on .bar{display:none}
+/* iPad panel */
+.panel{position:absolute;right:14px;bottom:78px;z-index:40;width:540px;max-width:92%;background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 18px 50px rgba(28,28,46,.24);transform:translateY(14px);opacity:0;pointer-events:none;transition:transform .24s,opacity .24s}
+.panel.on{transform:translateY(0);opacity:1;pointer-events:auto}
+.panel .pin2{padding:14px 16px 12px}
+.pcols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.pcols{grid-template-columns:1fr}}
+.btrust{font-size:11px;color:var(--text3);white-space:nowrap}
+/* PC */
+.bar.slim{transform:translateY(110%);transition:transform .25s;padding:8px 16px}
+.bar.slim.show{transform:translateY(0)}
+.bar.slim .btitle{font-size:13.5px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar.slim .btitle small{font-weight:500;color:var(--text3)}
+.bar.slim .spacer{flex:1}
+.handle.inline{flex:0 0 auto;flex-direction:row;gap:6px;border:1px solid var(--line-strong);border-radius:100px;padding:10px 16px;min-height:44px}
+.handle.inline .hmore{font-size:12.5px}
+.pop{position:absolute;right:16px;bottom:74px;z-index:40;width:400px;max-width:92%;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 50px rgba(28,28,46,.24);transform:translateY(10px);opacity:0;pointer-events:none;transition:transform .22s,opacity .22s}
+.pop.on{transform:translateY(0);opacity:1;pointer-events:auto}
+.pop .pin2{padding:12px 14px}
+/* PC page layout */
+.pbody{display:grid;grid-template-columns:1fr 300px;gap:26px;padding:16px 20px}
+.book{border:1px solid var(--line-strong);border-radius:var(--r);padding:16px;box-shadow:var(--sh2);background:#fff}
+.book .bprice{font-size:24px;font-weight:800;letter-spacing:-.02em}.book .bprice small{font-size:12px;font-weight:500;color:var(--text3)}
+.book .bcap{font-size:11.5px;color:var(--text2);margin:2px 0 12px}
+.book .btn{width:100%;margin-top:8px}
+.book .incl{font-size:11.5px;color:var(--text2);margin-top:12px;line-height:1.7}
+.book .trust{font-size:10.5px;color:var(--text3);margin-top:10px;border-top:1px solid var(--line);padding-top:8px}
+/* summary table */
+table.cmp{width:100%;border-collapse:collapse;font-size:13.5px;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+table.cmp th,table.cmp td{padding:10px 13px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+table.cmp th{background:var(--soft);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--text3)}
+table.cmp tr:last-child td{border-bottom:none}
+table.cmp td:first-child{font-weight:700;color:var(--ink);white-space:nowrap}
+.rulenote{font-size:13.5px;color:var(--text2);background:var(--soft);border-radius:12px;padding:14px 16px;margin-top:16px}
+footer{padding:28px 0 100px;color:var(--text3);font-size:12.5px}
+/* comment layer */
+#cmt-toolbar{position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;flex-direction:column;gap:7px;align-items:flex-end}
+.cbtn{font-family:var(--font-sans);font-size:12.5px;font-weight:600;border:1px solid var(--line-strong);background:#fff;color:var(--ink);border-radius:100px;padding:8px 13px;cursor:pointer;box-shadow:var(--sh2)}
+.cbtn:hover{border-color:var(--blue)}.cbtn.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+body.cmode{cursor:crosshair}
+.pin{position:absolute;width:24px;height:24px;border-radius:50% 50% 50% 2px;background:var(--gold);color:#3a2c00;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;transform:translate(-4px,-24px);box-shadow:var(--sh2);cursor:pointer;z-index:120;border:2px solid #fff}
+.bubble{position:absolute;z-index:130;width:250px;background:#fff;border:1px solid var(--line-strong);border-radius:12px;box-shadow:0 10px 30px rgba(28,28,46,.18);padding:10px}
+.bubble .bh{font-size:11px;font-weight:700;color:var(--blue-dark);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;display:flex;justify-content:space-between;gap:8px}
+.bubble .bh .x{cursor:pointer;color:var(--text3);font-size:14px}
+.bubble textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px;font-family:var(--font-sans);font-size:13px;resize:vertical;min-height:64px;outline:none}
+.toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:100px;font-size:13px;z-index:10000;box-shadow:var(--sh2);opacity:0;transition:opacity .2s}.toast.show{opacity:1}
+@media print{#cmt-toolbar,.pin,.bubble{display:none!important}}
+@media (prefers-reduced-motion:reduce){.sheet,.panel,.pop,.bar.slim,.ovl{transition:none!important}}
+/* interaktivní počet osob + živá cena 2 vozidel */
+.paxbox{border:1px solid var(--line);border-radius:12px;padding:12px;margin:2px 0 10px;background:var(--soft)}
+.paxrow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.paxlab{font-weight:700;font-size:14px}
+.stepper{display:inline-flex;align-items:center;gap:2px;background:#fff;border:1px solid var(--line-strong);border-radius:100px;padding:3px}
+.stepper button{width:36px;height:36px;min-width:36px;border:none;background:none;font-size:20px;font-weight:700;color:var(--blue-dark);cursor:pointer;border-radius:50%;line-height:1;padding:0}
+.stepper button:hover{background:var(--blue-soft)}
+.stepper b{min-width:28px;text-align:center;font-size:16px}
+.vehrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 2px;border-top:1px dashed var(--line)}
+.vehrow .vname{font-size:13.5px;font-weight:700;line-height:1.2}
+.vehrow .vname small{display:block;font-weight:400;color:var(--text3);font-size:11.5px}
+.vehrow .vprice{font-size:13.5px;text-align:right;white-space:nowrap;color:var(--text2)}
+.vehrow .vprice b{font-size:15px;color:var(--ink)}
+.vehrow.off{opacity:.5}
+.calc{font-size:12px;color:var(--text2);margin-top:8px;line-height:1.45;background:#fff;border-radius:8px;padding:7px 9px}
+/* vysouvací rozpad ceny (jako v rezervaci) */
+.pdtoggle{display:inline-flex;align-items:center;gap:6px;margin-top:10px;background:none;border:none;color:var(--blue-dark);font:inherit;font-weight:700;font-size:13px;cursor:pointer;padding:6px 0}
+.pdtoggle .chev{transition:transform .18s}
+.pdtoggle[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.pd{margin-top:4px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:4px 12px 10px}
+.pd[hidden]{display:none}
+.pdr{display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-size:12.5px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--line)}
+.pdr i{font-style:normal;color:var(--text3);font-size:11.5px;margin-left:6px}
+.pdr b{color:var(--ink);white-space:nowrap}
+.pdr.sum{border-top:2px solid var(--line-strong);border-bottom:none;font-weight:700;padding-top:8px;margin-top:2px}
+.pdr.sum b,.pdr.total b{font-size:14px}
+.pdr.total{border-bottom:none;font-weight:800}
+.pdnote{font-size:11.5px;color:var(--text3);margin-top:8px;line-height:1.45}
+/* NEJDŮLEŽITĚJŠÍ INFO K REZERVACI — rezervuj teď, plať u řidiče */
+.bar{flex-wrap:wrap}
+.payline{flex-basis:100%;order:-1;background:#e7f6ec;color:#12633a;font-size:12px;font-weight:800;text-align:center;padding:6px 10px;border-radius:8px;line-height:1.3}
+.payline b{color:#0b4a29}
+.payassure{display:flex;gap:8px;align-items:flex-start;background:#e7f6ec;border:1px solid #bfe6cd;border-radius:10px;padding:10px 12px;font-size:13px;color:#12633a;line-height:1.4;margin:0 0 10px}
+.payassure b{color:#0b4a29}
+.payassure .ic{font-size:16px;line-height:1.2;flex:0 0 auto}
+/* lišta napříč kroky rezervace (demo) */
+.steprail{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+.steplane{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;box-shadow:var(--sh1)}
+.steplab{background:var(--soft);padding:8px 14px;font-size:12.5px;font-weight:700;color:var(--ink);border-bottom:1px solid var(--line);display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.steplab .stepn{background:var(--blue);color:#fff;border-radius:100px;font-size:11px;font-weight:800;padding:2px 10px}
+.steplab .stepnote{font-weight:400;color:var(--text3);font-size:11.5px}
+.bardemo{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;padding:10px 14px}
+.bardemo .payline{position:static}
+.bardemo .dprice{font-size:14px;font-weight:800;color:var(--ink);white-space:nowrap}
+.bardemo .dprice small{font-weight:500;color:var(--text3);font-size:11.5px}
+.bardemo .dstep{font-size:12px;color:var(--blue-dark);font-weight:600}
+.bardemo .spc{flex:1;min-width:8px}
+.bardemo .btn{width:auto;margin-top:0;flex:0 0 auto}
+.bardemo.done{background:#f2fbf5}
+.bardemo .doneline{display:flex;align-items:center;gap:8px;font-weight:600;color:#12633a;font-size:13px;line-height:1.35}
+.bardemo .doneline b{color:#0b4a29}
+</style>
+</head>
+<body>
+
+<div class="topbar" data-sec="Banner">Návrh — rozšířená sticky lišta <b class="badge">Fable · 14. 6. 2026</b> <span>lišta zůstává zrcadlem primární akce · vysunutý panel = podpůrné info ze zápatí a cenového boxu · žádný druhý primár · SEO/LLM beze změny</span></div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kick"><span class="dot"></span>Private Tours Czech · detail výletu · rozšířená připnutá lišta · k revizi</div>
+    <h1>Připnutá lišta, která umí víc — <span class="em">vysunout podrobnosti k rozhodnutí</span></h1>
+    <p class="lead">Sbalená lišta zůstává minimální (cena + Rezervovat). Nově má úchyt <b>„Podrobnosti ▴"</b>: po klepnutí se vysune panel, kde si <b>nastavíte počet osob</b> a hned vidíte <b>cenu obou vozidel</b> (Škoda Superb 1–3 / Hyundai Staria až 8) i cenu na osobu. Pod „Rozpad ceny" se rozbalí <b>výpočet přesně jako v rezervaci</b> (cena za km × vzdálenost, zastávky, čekání → cena bez příplatků → celkem), plus co je v ceně, důvěra (platba u řidiče) a kontakty — tedy to, co dnes leží až v zápatí. Každý rám níže je <b>klikatelný</b>: vyzkoušej stepper, „Rozpad ceny" i vysunutí/zasunutí.</p>
+    <div class="how" data-sec="Jak komentovat">
+      <span class="em2">💬</span>
+      <div>Jak komentovat: vpravo dole <b>„Režim komentářů"</b> → klikni na <b>místo</b> v návrhu → napiš poznámku → <b>„Zkopírovat komentáře"</b> a vlož mi je do chatu. (V režimu komentářů se panely nevysouvají — klik dělá pin.)</div>
+    </div>
+    <div class="prin" data-sec="Koncept sbaleno/vysunuto">
+      <div class="pcard"><h3><span class="tag a">Sbaleno</span> pořád vidět</h3><p>od €509 /auto · primár <b>Rezervovat</b> · úchyt „Podrobnosti ▴" (min. 44 px). Výška ~64 px, nic víc.</p></div>
+      <div class="pcard"><h3><span class="tag b">Vysunuto</span> panel</h3><p>Rozpad ceny na osobu · co je v ceně · platba u řidiče, anglický řidič, vyzvednutí kdekoliv · sekundár „Sestavit vlastní výlet" · poptávka, WhatsApp, e-mail.</p></div>
+      <div class="pcard"><h3><span class="tag c">Zakázáno</span> v panelu</h3><p>Druhé soupeřící primární tlačítko, právní odkazy, jazyk/měna, odznaky. Panel podporuje rozhodnutí — nepřidává nový cíl ani šum.</p></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ============ MOBIL ============ -->
+  <div class="secttl" data-sec="Mobil — popis">1 · Mobil (~390 px) — bottom-sheet</div>
+  <div class="devrow">
+    <div class="desc">
+      <div class="dtit">Vysunutí = bottom-sheet zdola</div>
+      <ul>
+        <li>Lišta je <b>trvale</b> viditelná (dle CTA standardu). Obsah stránky má kompenzační odsazení — nic nezůstává schované (zelený rámeček na konci obsahu).</li>
+        <li>Klepnutí na „Podrobnosti ▴" vysune sheet do ~80 % výšky, zbytek ztmaví overlay. Delší obsah roluje uvnitř panelu.</li>
+        <li>Sheet <b>překryje lištu</b> → primár „Rezervovat tento výlet" se opakuje dole v panelu plným názvem. Stejná akce, žádný nový cíl.</li>
+        <li>Zavření: ✕, klepnutí mimo, ESC; v implementaci navíc tažení dolů (swipe).</li>
+        <li>Přístupnost: úchyt má aria-expanded, panel role="dialog", fokus jde dovnitř a zpět, vše ≥ 44 px.</li>
+      </ul>
+      <button class="simbtn" id="m-cookie-btn">🍪 Simulovat cookie lištu (Complianz)</button>
+      <div class="dnote">Pravidlo: dokud je cookie lišta otevřená, sticky lišta se <b>nezobrazuje</b> — dvě lišty nad sebou by na mobilu zabraly půl obrazovky.</div>
+    </div>
+    <div class="devwrap" data-sec="Mobil — rám">
+      <div class="dev" style="width:410px">
+        <div class="scr" id="m-scr" style="height:710px">
+          <div class="pg" id="m-pg" style="padding-bottom:0">
+            <div class="mhead"><span class="mlogo">private<span>tours</span></span><span class="mmenu">☰ Menu</span></div>
+            <div class="mcontent" style="padding-bottom:88px">
+              <div class="mkick">● Soukromý jednodenní výlet · UNESCO</div>
+              <h4>Český Krumlov, <span class="em">soukromě</span> — z Prahy</h4>
+              <div class="mfacts">⏱ <b>10–11 h</b> · 🚗 od dveří ke dveřím · <span style="color:var(--gold)">★★★★★</span> Google</div>
+              <img class="mimg" src="https://privatetoursczech.cz/wp-content/uploads/2025/11/cesky-krumlov-sunset-vltava-view-privatetoursczech-2000x1500.jpg" alt="Český Krumlov za soumraku">
+              <p class="mtxt">Barokní zámek obtočený kolem ohbí Vltavy, spleť dlážděných uliček — a čas projít si to dřív, než dorazí autobusy.</p>
+              <div class="gline"></div><div class="gline s"></div><div class="gline"></div>
+              <div class="stub">Zastávky — co uvidíte <span>▾</span></div>
+              <div class="stub">Na co se cestovatelé ptají <span>▾</span></div>
+              <div class="gline"></div><div class="gline s"></div><div class="gline"></div><div class="gline s"></div>
+              <div class="stub">Recenze · ★ 5,0 na Google <span>▾</span></div>
+              <div class="gline"></div><div class="gline s"></div>
+              <div class="mfoot"><b>Zápatí</b> — booking@privatetoursczech.cz · anglicky mluvící řidič · GDPR · Cookies · VOP<br>To podstatné z něj panel povytáhl nahoru „k palci".</div>
+              <div class="endmark">✔ Konec obsahu — kompenzační padding: nic není schované pod lištou</div>
+            </div>
+          </div>
+
+          <div class="ovl" id="m-ovl"></div>
+
+          <div class="sheet" id="m-sheet" role="dialog" aria-modal="true" aria-label="Podrobnosti ceny a rezervace">
+            <div class="grab"></div>
+            <div class="shead">
+              <div><div class="sprice">od €509 <small>/ auto</small></div><div class="ssub">Jedna cena za celé auto — ne na osobu</div></div>
+              <button class="xbtn" id="m-close" aria-label="Zavřít panel">✕</button>
+            </div>
+            <div class="sbody">
+              <div class="paxbox">
+                <div class="paxrow">
+                  <span class="paxlab">Počet osob</span>
+                  <span class="stepper"><button type="button" id="m-minus" aria-label="Ubrat osobu">−</button><b id="m-paxval" aria-live="polite">2</b><button type="button" id="m-plus" aria-label="Přidat osobu">＋</button></span>
+                </div>
+                <div class="vehrow" id="m-superb-row"><span class="vname">Škoda Superb <small>1–3 osoby</small></span><span class="vprice"><b id="m-superb-total">€508,61</b><span id="m-superb-pp"> · €254 /os</span></span></div>
+                <div class="vehrow" id="m-staria-row"><span class="vname">Hyundai Staria <small>až 8 osob</small></span><span class="vprice"><b id="m-staria-total">€678,15</b><span id="m-staria-pp"> · €339 /os</span></span></div>
+                <button type="button" class="pdtoggle" id="m-pdtog" aria-expanded="false" aria-controls="m-pd">Rozpad ceny <span class="chev">▾</span></button>
+                <div class="pd" id="m-pd" hidden>
+                  <div class="pdr"><span>Cena za km <i>1,61 × 359,2 km</i></span><b>€579,05</b></div>
+                  <div class="pdr"><span>Zastávky <i>4,74 × 2</i></span><b>€9,48</b></div>
+                  <div class="pdr"><span>Čekání na zastávkách <i>0,33 × 270 min</i></span><b>€89,61</b></div>
+                  <div class="pdr sum"><span>Cena bez příplatků</span><b>€678,15</b></div>
+                  <div class="pdr total"><span>Celkem — Hyundai Staria, za vůz</span><b>€678,15</b></div>
+                  <div class="pdnote">Škoda Superb = −25 % (€508,61). Orientační rozpad jako v rezervaci — finální cenu spočítá kalkulátor podle přesné trasy.</div>
+                </div>
+              </div>
+              <div class="sgroup"><span class="y">✓</span> Soukromé vozidlo, řidič, palivo, mýtné, parkování &nbsp; <span class="y">✓</span> Vyzvednutí kdekoliv &nbsp; <span class="n">✗</span> Vstupné do interiérů, jídlo</div>
+              <div class="chips"><span>💳 Platba u řidiče — bez zálohy</span><span>🗣 Anglicky mluvící řidič</span><span>📍 Vyzvednutí kdekoliv</span></div>
+              <a class="btn ghostb" style="width:100%" href="#" onclick="return false">Sestavit vlastní výlet</a>
+              <div class="ter"><a class="tlink" href="#" onclick="return false">Nezávazná poptávka</a><a class="tlink" href="#" onclick="return false">💬 Napsat nám (WhatsApp)</a><a class="tlink" href="#" onclick="return false">✉️ booking@privatetoursczech.cz</a></div>
+            </div>
+            <div class="sfoot">
+              <div class="payassure"><span class="ic">💳</span><span><b>Rezervuj teď, zaplatíš až řidiči.</b> Žádná platba předem.</span></div>
+              <a class="btn pri" href="#" onclick="return false">Rezervovat tento výlet →</a>
+              <div class="mirrnote">Stejná akce jako v liště — panel nepřidává nový cíl</div>
+            </div>
+          </div>
+
+          <div class="bar" id="m-bar">
+            <div class="payline">💳 Rezervuj teď — <b>zaplatíš až řidiči</b>, žádná platba předem</div>
+            <button class="handle" id="m-handle" aria-expanded="false" aria-controls="m-sheet">
+              <span class="hprice">od €509 <small>/ auto</small></span>
+              <span class="hmore">Podrobnosti ▴</span>
+            </button>
+            <a class="btn pri" href="#" onclick="return false">Rezervovat →</a>
+          </div>
+
+          <div class="cookiebar" id="m-cookie">
+            <div class="cbx">🍪 Používáme cookies pro měření a zlepšování webu.</div>
+            <button id="m-cookie-accept">Přijmout vše</button><button class="gh">Nastavení</button>
+          </div>
+        </div>
+      </div>
+      <div class="cap">Klikni na <b>„Podrobnosti ▴"</b> vlevo v liště — vysune se bottom-sheet. Zasunutí: ✕, klik do ztmavené plochy nebo ESC. Tlačítko 🍪 vlevo ukáže chování při otevřené cookie liště.</div>
+    </div>
+  </div>
+
+  <!-- ============ IPAD ============ -->
+  <div class="secttl" data-sec="iPad — popis">2 · iPad na výšku (~834 px) — karta nad lištou</div>
+  <div class="devrow">
+    <div class="desc">
+      <div class="dtit">Proč lišta i na iPadu</div>
+      <ul>
+        <li>Layout detailu se láme do <b>jednoho sloupce už na 880 px</b> — na iPadu na výšku tedy cenový box není po ruce o nic víc než na mobilu. Lišta je proto trvalá.</li>
+        <li>Šířka navíc dovolí do sbalené lišty vejít i mikrodůvěru („platba u řidiče — bez zálohy") a <b>plný název</b> tlačítka.</li>
+        <li>Panel se nevysouvá přes celou šířku: je to <b>karta ~540 px vpravo nad lištou</b> — blíž palci, nezakryje celý obsah. Overlay jen lehký a nezasahuje lištu.</li>
+        <li>Lišta zůstává při otevřeném panelu viditelná → primár se v panelu <b>neduplikuje</b>.</li>
+        <li>iPad na šířku (≥ ~1100 px) se chová jako PC.</li>
+      </ul>
+    </div>
+    <div class="devwrap" data-sec="iPad — rám">
+      <div class="dev" style="width:854px;max-width:100%">
+        <div class="scr" id="t-scr" style="height:600px">
+          <div class="pg" id="t-pg">
+            <div class="mhead"><span class="mlogo">private<span>tours</span></span><span class="mnav"><span>Výlety</span><span>Sestavit vlastní výlet</span><span>Blog</span><span>Kontakt</span><span style="border:1px solid var(--line-strong);border-radius:100px;padding:4px 10px">🌐 CZ ▾</span></span></div>
+            <div class="mcontent" style="padding:16px 22px 92px">
+              <div class="mkick">● Soukromý jednodenní výlet · UNESCO</div>
+              <h4 style="font-size:27px;max-width:560px">Český Krumlov, <span class="em">soukromě</span> — z Prahy</h4>
+              <div class="mfacts" style="font-size:13px">⏱ <b>10–11 h</b> · 🚗 Soukromé auto, od dveří ke dveřím · <span style="color:var(--gold)">★★★★★</span> Google · <b>od €509</b> /auto</div>
+              <div style="display:grid;grid-template-columns:2fr 1fr;gap:8px;margin:4px 0 12px">
+                <img class="mimg" style="height:190px;margin:0" src="https://privatetoursczech.cz/wp-content/uploads/2025/11/cesky-krumlov-sunset-vltava-view-privatetoursczech-2000x1500.jpg" alt="Český Krumlov">
+                <img class="mimg" style="height:190px;margin:0" src="https://privatetoursczech.cz/wp-content/uploads/2025/11/cesky-krumlov-evening-street-view-privatetoursczech-1000x750.jpg" alt="Večerní ulička">
+              </div>
+              <p class="mtxt" style="font-size:14px;max-width:640px">Jedno z divácky nejpůsobivějších měst střední Evropy — a den načasovaný tak, abyste dorazili dřív než autobusy. Pod 880 px šířky se cenový box zařadí až pod obsah → tahle lišta drží cenu i akci pořád na očích.</p>
+              <div class="gline"></div><div class="gline s"></div><div class="gline"></div>
+              <div class="stub" style="max-width:640px">Zastávky — co uvidíte <span>▾</span></div>
+              <div class="stub" style="max-width:640px">Na co se cestovatelé ptají <span>▾</span></div>
+              <div class="gline"></div><div class="gline s"></div>
+              <div class="endmark" style="max-width:640px">✔ Konec náhledu — kompenzační padding pod obsahem</div>
+            </div>
+          </div>
+
+          <div class="ovl light" id="t-ovl"></div>
+
+          <div class="panel" id="t-panel" role="dialog" aria-label="Podrobnosti ceny a rezervace">
+            <div class="pin2">
+              <div class="shead" style="padding:0 0 8px">
+                <div><div class="sprice" style="font-size:20px">od €509 <small>/ auto</small></div><div class="ssub">Jedna cena za celé auto — ne na osobu</div></div>
+                <button class="xbtn" id="t-close" aria-label="Zavřít panel">✕</button>
+              </div>
+              <div class="payassure"><span class="ic">💳</span><span><b>Rezervuj teď, zaplatíš až řidiči.</b> Žádná platba předem. Rezervaci potvrdíš tlačítkem dole v liště.</span></div>
+              <div class="pcols" style="padding-top:10px">
+                <div>
+                  <div class="paxbox">
+                    <div class="paxrow">
+                      <span class="paxlab">Počet osob</span>
+                      <span class="stepper"><button type="button" id="t-minus" aria-label="Ubrat osobu">−</button><b id="t-paxval" aria-live="polite">2</b><button type="button" id="t-plus" aria-label="Přidat osobu">＋</button></span>
+                    </div>
+                    <div class="vehrow" id="t-superb-row"><span class="vname">Škoda Superb <small>1–3 osoby</small></span><span class="vprice"><b id="t-superb-total">€508,61</b><span id="t-superb-pp"> · €254 /os</span></span></div>
+                    <div class="vehrow" id="t-staria-row"><span class="vname">Hyundai Staria <small>až 8 osob</small></span><span class="vprice"><b id="t-staria-total">€678,15</b><span id="t-staria-pp"> · €339 /os</span></span></div>
+                    <button type="button" class="pdtoggle" id="t-pdtog" aria-expanded="false" aria-controls="t-pd">Rozpad ceny <span class="chev">▾</span></button>
+                    <div class="pd" id="t-pd" hidden>
+                      <div class="pdr"><span>Cena za km <i>1,61 × 359,2 km</i></span><b>€579,05</b></div>
+                      <div class="pdr"><span>Zastávky <i>4,74 × 2</i></span><b>€9,48</b></div>
+                      <div class="pdr"><span>Čekání na zastávkách <i>0,33 × 270 min</i></span><b>€89,61</b></div>
+                      <div class="pdr sum"><span>Cena bez příplatků</span><b>€678,15</b></div>
+                      <div class="pdr total"><span>Celkem — Hyundai Staria, za vůz</span><b>€678,15</b></div>
+                      <div class="pdnote">Škoda Superb = −25 % (€508,61). Orientační rozpad jako v rezervaci — finální cenu spočítá kalkulátor podle přesné trasy.</div>
+                    </div>
+                  </div>
+                  <div class="sgroup"><span class="y">✓</span> Vozidlo, řidič, palivo, mýtné, parkování<br><span class="y">✓</span> Vyzvednutí kdekoliv &nbsp; <span class="n">✗</span> Vstupné, jídlo</div>
+                </div>
+                <div>
+                  <div class="chips" style="margin-bottom:10px"><span>💳 Platba u řidiče — bez zálohy</span><span>🗣 Anglicky mluvící řidič</span></div>
+                  <a class="btn ghostb" style="width:100%" href="#" onclick="return false">Sestavit vlastní výlet</a>
+                  <div class="ter" style="margin-top:8px"><a class="tlink" href="#" onclick="return false">Nezávazná poptávka</a><a class="tlink" href="#" onclick="return false">💬 Napsat nám (WhatsApp)</a></div>
+                  <div class="mirrnote" style="text-align:left;margin-top:4px">Primár zůstává dole v liště — panel ho nezdvojuje.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bar" id="t-bar">
+            <div class="payline">💳 Rezervuj teď — <b>zaplatíš až řidiči</b>, žádná platba předem</div>
+            <button class="handle" id="t-handle" aria-expanded="false" aria-controls="t-panel" style="flex:0 0 auto;min-width:170px">
+              <span class="hprice">od €509 <small>/ auto</small></span>
+              <span class="hmore">Podrobnosti ▴</span>
+            </button>
+            <span class="btrust">🗣 Anglicky mluvící řidič · 💳 bez platby předem</span>
+            <span style="flex:1"></span>
+            <a class="btn pri" href="#" onclick="return false">Rezervovat tento výlet →</a>
+          </div>
+        </div>
+      </div>
+      <div class="cap">Karta se otevře nad lištou vpravo — lišta (s primárem) zůstává vidět, takže panel tlačítko nezdvojuje. Zavření: ✕, klik mimo, ESC.</div>
+    </div>
+  </div>
+
+  <!-- ============ PC ============ -->
+  <div class="secttl" data-sec="PC — popis">3 · PC (~1280 px) — štíhlá lišta až po odscrollování cenového boxu</div>
+  <div class="desc" style="max-width:860px;margin-bottom:14px">
+    <ul style="margin-top:0">
+      <li>Na desktopu je cenový box <b>trvale přilepený v pravém sloupci</b> → trvalá plná lišta by byla dvojitá informace a druhé viditelné „Rezervovat".</li>
+      <li>Štíhlá lišta (~56 px) se proto objeví <b>až když cenový box odjede z dohledu</b> — u sekce plánovače, souvisejících výletů a zápatí. <b>Vyzkoušej: skroluj v rámu dolů.</b></li>
+      <li>„Podrobnosti ▴" otevírá <b>popover kartu</b> nad pravým koncem lišty — bez overlaye; zavře ESC nebo klik mimo.</li>
+    </ul>
+  </div>
+  <div class="devwrap" data-sec="PC — rám">
+    <div class="dev" style="width:100%;max-width:1240px">
+      <div class="scr" id="p-scr" style="height:640px">
+        <div class="pg" id="p-pg">
+          <div class="mhead"><span class="mlogo">private<span>tours</span></span><span class="mnav"><span>Výlety</span><span>Sestavit vlastní výlet</span><span>Reference</span><span>Blog</span><span>Kontakt</span><span style="border:1px solid var(--line-strong);border-radius:100px;padding:4px 10px">🌐 CZ ▾</span><span style="border:1px solid var(--line-strong);border-radius:100px;padding:4px 10px">CZK ▾</span></span></div>
+          <div class="pbody" style="padding-bottom:70px">
+            <div>
+              <div class="mkick">● Soukromý jednodenní výlet · UNESCO</div>
+              <h4 style="font-size:32px;max-width:620px">Český Krumlov, <span class="em">soukromě</span> — z Prahy</h4>
+              <div class="mfacts" style="font-size:13.5px">⏱ <b>10–11 h</b> · 🚗 Soukromé auto, od dveří ke dveřím · <span style="color:var(--gold)">★★★★★</span> Google</div>
+              <img class="mimg" style="height:230px" src="https://privatetoursczech.cz/wp-content/uploads/2025/11/cesky-krumlov-sunset-vltava-view-privatetoursczech-2000x1500.jpg" alt="Český Krumlov">
+              <p class="mtxt" style="font-size:14px">Barokní zámek obtočený kolem ohbí Vltavy — den načasovaný tak, abyste měli ranní světlo jen pro sebe. (Skroluj dolů: až cenový box vpravo zmizí z dohledu, dole se objeví štíhlá lišta.)</p>
+              <div class="gline"></div><div class="gline s"></div><div class="gline"></div><div class="gline"></div><div class="gline s"></div>
+              <div class="stub">Zastávky — co uvidíte <span>▾</span></div>
+              <div class="gline"></div><div class="gline s"></div><div class="gline"></div>
+              <div class="stub">Z našich výletů — reálné fotky a poznámky <span>▾</span></div>
+              <div class="gline"></div><div class="gline"></div><div class="gline s"></div>
+              <div class="stub">Na co se cestovatelé ptají (FAQ) <span>▾</span></div>
+              <div class="gline"></div><div class="gline s"></div><div class="gline"></div><div class="gline s"></div>
+              <div class="stub">Otevřít výlet v plánovači <span>→</span></div>
+              <div class="gline"></div><div class="gline s"></div>
+              <div class="stub">Mohlo by se vám líbit — související výlety <span>→</span></div>
+              <div class="gline"></div><div class="gline"></div><div class="gline s"></div><div class="gline"></div>
+              <div class="mfoot"><b>Zápatí</b> — booking@privatetoursczech.cz · anglicky mluvící řidič · GDPR · Cookies · VOP · © 2026 Private Tours Czech</div>
+              <div class="endmark">✔ Konec obsahu — i na PC má obsah kompenzační odsazení pod lištou</div>
+            </div>
+            <aside style="align-self:start">
+              <div class="book" id="p-book">
+                <div class="bprice">od €509 <small>/ auto</small></div>
+                <div class="bcap">Škoda Superb (1–3 hosté) · Hyundai Staria až 8 hostů · jedna cena za auto</div>
+                <a class="btn pri" href="#" onclick="return false">Rezervovat tento výlet →</a>
+                <a class="btn ghostb" href="#" onclick="return false">Sestavit vlastní výlet</a>
+                <div class="incl"><span style="color:var(--green);font-weight:800">✓</span> Vozidlo, řidič, palivo, mýtné, parkování<br><span style="color:var(--green);font-weight:800">✓</span> Vyzvednutí kdekoliv<br><span style="color:var(--red);font-weight:800">✗</span> Vstupné do interiérů, jídlo</div>
+                <div class="trust">💳 Platba u řidiče — bez zálohy, platíte až po výletu</div>
+              </div>
+              <div style="font-size:11px;color:var(--text3);margin-top:8px;text-align:center">↑ cenový box (sticky v pravém sloupci)</div>
+            </aside>
+          </div>
+        </div>
+
+        <div class="pop" id="p-pop" role="dialog" aria-label="Podrobnosti ceny a rezervace">
+          <div class="pin2">
+            <div class="shead" style="padding:0 0 8px">
+              <div><div class="sprice" style="font-size:19px">od €509 <small>/ auto</small></div><div class="ssub">Jedna cena za celé auto — ne na osobu</div></div>
+              <button class="xbtn" id="p-close" aria-label="Zavřít panel">✕</button>
+            </div>
+            <div class="payassure"><span class="ic">💳</span><span><b>Rezervuj teď, zaplatíš až řidiči.</b> Žádná platba předem.</span></div>
+            <div class="paxbox" style="margin:10px 0 8px">
+              <div class="paxrow">
+                <span class="paxlab">Počet osob</span>
+                <span class="stepper"><button type="button" id="p-minus" aria-label="Ubrat osobu">−</button><b id="p-paxval" aria-live="polite">2</b><button type="button" id="p-plus" aria-label="Přidat osobu">＋</button></span>
+              </div>
+              <div class="vehrow" id="p-superb-row"><span class="vname">Škoda Superb <small>1–3 osoby</small></span><span class="vprice"><b id="p-superb-total">€508,61</b><span id="p-superb-pp"> · €254 /os</span></span></div>
+              <div class="vehrow" id="p-staria-row"><span class="vname">Hyundai Staria <small>až 8 osob</small></span><span class="vprice"><b id="p-staria-total">€678,15</b><span id="p-staria-pp"> · €339 /os</span></span></div>
+              <button type="button" class="pdtoggle" id="p-pdtog" aria-expanded="false" aria-controls="p-pd">Rozpad ceny <span class="chev">▾</span></button>
+              <div class="pd" id="p-pd" hidden>
+                <div class="pdr"><span>Cena za km <i>1,61 × 359,2 km</i></span><b>€579,05</b></div>
+                <div class="pdr"><span>Zastávky <i>4,74 × 2</i></span><b>€9,48</b></div>
+                <div class="pdr"><span>Čekání na zastávkách <i>0,33 × 270 min</i></span><b>€89,61</b></div>
+                <div class="pdr sum"><span>Cena bez příplatků</span><b>€678,15</b></div>
+                <div class="pdr total"><span>Celkem — Hyundai Staria, za vůz</span><b>€678,15</b></div>
+                <div class="pdnote">Škoda Superb = −25 % (€508,61). Orientační rozpad jako v rezervaci — finální cenu spočítá kalkulátor podle přesné trasy.</div>
+              </div>
+            </div>
+            <div class="sgroup"><span class="y">✓</span> Vozidlo, řidič, palivo, mýtné, parkování · <span class="y">✓</span> vyzvednutí kdekoliv · <span class="n">✗</span> vstupné, jídlo</div>
+            <div class="chips"><span>💳 Platba u řidiče — bez zálohy</span><span>🗣 Anglicky mluvící řidič</span></div>
+            <a class="btn ghostb" style="width:100%" href="#" onclick="return false">Sestavit vlastní výlet</a>
+            <div class="ter" style="margin-top:6px"><a class="tlink" href="#" onclick="return false">Nezávazná poptávka</a><a class="tlink" href="#" onclick="return false">💬 Napsat nám (WhatsApp)</a><a class="tlink" href="#" onclick="return false">✉️ booking@</a></div>
+          </div>
+        </div>
+
+        <div class="bar slim" id="p-bar">
+          <div class="payline">💳 Rezervuj teď — <b>zaplatíš až řidiči</b>, žádná platba předem</div>
+          <span class="btitle">Český Krumlov, soukromě — z Prahy <small>· od €509 /auto</small></span>
+          <span class="spacer"></span>
+          <button class="handle inline" id="p-handle" aria-expanded="false" aria-controls="p-pop"><span class="hmore">Podrobnosti ▴</span></button>
+          <a class="btn pri" href="#" onclick="return false">Rezervovat tento výlet →</a>
+        </div>
+      </div>
+    </div>
+    <div class="cap">Lišta se objeví po odscrollování cenového boxu a zase zmizí, když vyscrolluješ nahoru. „Podrobnosti ▴" otevře popover — bez ztmavení stránky.</div>
+  </div>
+
+  <!-- ============ LIŠTA NAPŘÍČ KROKY ============ -->
+  <div class="secttl" data-sec="Lišta v krocích rezervace">Jak lišta vypadá napříč kroky rezervace — až do odeslání</div>
+  <div class="desc" style="max-width:880px;margin-bottom:12px">
+    <ul style="margin-top:0">
+      <li>Lišta drží <b>cenu + akci na očích celým trychtýřem</b>. Primární tlačítko se mění podle kroku (Rezervovat tento výlet → Pokračovat → Závazně rezervovat), ale <b>„zaplatíš až řidiči" zůstává</b> až do odeslání.</li>
+      <li>Vstup z detailu <b>„Rezervovat tento výlet"</b> otevře rezervaci s předvyplněnou trasou (krok 1 se přeskočí). Po odeslání se lišta změní na potvrzení — a připomene, že platba je až u řidiče.</li>
+    </ul>
+  </div>
+  <div class="steprail" data-sec="Kroky rezervace">
+    <div class="steplane">
+      <div class="steplab"><span class="stepn">Vstup</span> Detail výletu → rezervace <span class="stepnote">klik z detailu, trasa předvyplněná</span></div>
+      <div class="bardemo">
+        <div class="payline">💳 Rezervuj teď — <b>zaplatíš až řidiči</b>, žádná platba předem</div>
+        <span class="dprice">od €509 <small>/auto</small></span><span class="dstep">Podrobnosti ▴</span>
+        <span class="spc"></span>
+        <a class="btn pri" href="#" onclick="return false">Rezervovat tento výlet →</a>
+      </div>
+    </div>
+    <div class="steplane">
+      <div class="steplab"><span class="stepn">Krok 1/3</span> Trasa <span class="stepnote">předvyplněno · Praha → Č. Krumlov → Hluboká → Praha</span></div>
+      <div class="bardemo">
+        <div class="payline">💳 Rezervuj teď — <b>zaplatíš až řidiči</b>, žádná platba předem</div>
+        <span class="dprice">€678,15 <small>/auto · 2 os → €339/os</small></span>
+        <span class="spc"></span>
+        <a class="btn pri" href="#" onclick="return false">Pokračovat →</a>
+      </div>
+    </div>
+    <div class="steplane">
+      <div class="steplab"><span class="stepn">Krok 2/3</span> Údaje <span class="stepnote">jméno, e-mail, telefon (nepovinný)</span></div>
+      <div class="bardemo">
+        <div class="payline">💳 Rezervuj teď — <b>zaplatíš až řidiči</b>, žádná platba předem</div>
+        <span class="dprice">€678,15 <small>/auto</small></span>
+        <span class="spc"></span>
+        <a class="btn pri" href="#" onclick="return false">Pokračovat →</a>
+      </div>
+    </div>
+    <div class="steplane">
+      <div class="steplab"><span class="stepn">Krok 3/3</span> Potvrzení <span class="stepnote">rekapitulace + souhlasy</span></div>
+      <div class="bardemo">
+        <div class="payline">💳 <b>Bez platby teď</b> — zaplatíš až řidiči (hotově/kartou)</div>
+        <span class="dprice">Celkem €678,15 <small>/auto · ≈ €339/os (2)</small></span>
+        <span class="spc"></span>
+        <a class="btn pri" href="#" onclick="return false">Závazně rezervovat →</a>
+      </div>
+    </div>
+    <div class="steplane">
+      <div class="steplab"><span class="stepn" style="background:var(--green)">✓ Odesláno</span> Rezervace odeslána <span class="stepnote">potvrzení e-mailem</span></div>
+      <div class="bardemo done">
+        <span class="doneline">✓ Rezervace odeslána — potvrzení přijde e-mailem. <b>Platíš až u řidiče</b> v den výletu.</span>
+        <span class="spc"></span>
+        <a class="btn ghostb" href="#" onclick="return false" style="width:auto">Zpět na výlety</a>
+      </div>
+    </div>
+  </div>
+  <div class="rulenote" style="margin-top:10px">Labely primáru dle CTA systému: vstup <b>„Rezervovat tento výlet"</b>, uvnitř trychtýře <b>„Pokračovat"</b>, finální krok <b>„Závazně rezervovat"</b>. Lišta = zrcadlo primáru daného kroku; <b>„zaplatíš až řidiči"</b> drží celým trychtýřem až do odeslání.</div>
+
+  <!-- ============ SOUHRN ============ -->
+  <div class="secttl" data-sec="Souhrn rozdílů">Souhrn — čím se řešení liší podle zařízení</div>
+  <table class="cmp">
+    <tr><th></th><th>Mobil (~390 px)</th><th>iPad na výšku (~834 px)</th><th>PC (~1280 px)</th></tr>
+    <tr><td>Lišta vidět</td><td>trvale</td><td>trvale (layout je 1sloupcový už pod 880 px)</td><td>až když cenový box odscrolluje z dohledu</td></tr>
+    <tr><td>Vysunutí</td><td>bottom-sheet přes šířku + overlay</td><td>karta ~540 px vpravo nad lištou, lehký overlay</td><td>popover ~400 px nad lištou, bez overlaye</td></tr>
+    <tr><td>Primár při otevřeném panelu</td><td>dole v panelu (lišta je překrytá)</td><td>zůstává v liště — panel ho nezdvojuje</td><td>zůstává v liště</td></tr>
+    <tr><td>Zavření</td><td>✕ · klik mimo · ESC · (swipe dolů v implementaci)</td><td>✕ · klik mimo · ESC</td><td>✕ · klik mimo · ESC</td></tr>
+    <tr><td>Kompenzace obsahu</td><td>padding-bottom + safe-area</td><td>padding-bottom</td><td>padding-bottom 56 px (trvale, jednodušší)</td></tr>
+    <tr><td>Cookie lišta otevřená</td><td colspan="3">sticky lišta se nezobrazuje (na všech zařízeních) — viz simulace u mobilu</td></tr>
+  </table>
+
+  <div class="rulenote" data-sec="Pravidla implementace">
+    <b>Pravidla, která si z návrhu odnáší implementace (do plánu pro Martina):</b> tap targety v liště min. 44 px · kompenzační padding-bottom kdykoli je lišta zobrazená · lišta skrytá, dokud je otevřená cookie lišta (Complianz) · aria-expanded/aria-controls na úchytu, role="dialog" na panelu, ESC zavírá, fokus dovnitř a zpět · pořadí vrstev: cookie &gt; panel &gt; lišta &gt; obsah · měření: cta_click (placement sticky / sticky_panel) + sticky_panel_open / sticky_panel_close · animace jen transform, obsah panelu v HTML od načtení. Detaily a edit-specy: <b>navrh-sticky-footer-rozsireny-fable-2026-06-14.md</b>.
+  </div>
+
+  <footer data-sec="Zápatí">Rozšířená sticky lišta — návrh k revizi · Fable · 14. 6. 2026 · Komentovatelné (vpravo dole). Žádný produkční náhled nebyl upraven; po schválení promítnu do detail náhledů (CTA i vzdušná verze, CZ + EN) a do plánu pro Martina jako komponentu „sticky-expand v1".</footer>
+
+</div>
+
+<div id="cmt-toolbar">
+  <button class="cbtn" id="cmt-copy">📋 Zkopírovat komentáře</button>
+  <button class="cbtn" id="cmt-clear">🗑 Vymazat</button>
+  <button class="cbtn" id="cmt-toggle">💬 Režim komentářů</button>
+</div>
+<div class="toast" id="cmt-toast"></div>
+
+<script>
+/* interaktivní cena dle počtu osob — Superb (1–3) + Staria (1–8) + vysouvací rozpad výpočtu */
+(function(){
+  var SUP=508.61, STA=678.15, MIN=1, MAX=8;
+  function tot(v){return '€'+v.toFixed(2).replace('.',',');}       /* celková cena za vůz, s haléři */
+  function per(v){return '€'+Math.round(v);}                        /* cena na osobu, zaokrouhlená */
+  function upd(P,n){
+    var el=function(id){return document.getElementById(P+'-'+id);};
+    var pv=el('paxval'); if(pv)pv.textContent=n;
+    var sr=el('superb-row'), stot=el('superb-total'), spp=el('superb-pp');
+    if(n<=3){ if(sr)sr.classList.remove('off'); if(stot)stot.textContent=tot(SUP); if(spp)spp.textContent=' · '+per(SUP/n)+' /os'; }
+    else { if(sr)sr.classList.add('off'); if(stot)stot.textContent='—'; if(spp)spp.textContent=' od 4 osob jen Staria'; }
+    var ttot=el('staria-total'), tpp=el('staria-pp');
+    if(ttot)ttot.textContent=tot(STA); if(tpp)tpp.textContent=' · '+per(STA/n)+' /os';
+  }
+  function wire(P){
+    var n=2;
+    var mi=document.getElementById(P+'-minus'), pl=document.getElementById(P+'-plus');
+    function set(x){n=Math.max(MIN,Math.min(MAX,x));upd(P,n);}
+    if(mi)mi.addEventListener('click',function(){set(n-1);});
+    if(pl)pl.addEventListener('click',function(){set(n+1);});
+    var tg=document.getElementById(P+'-pdtog'), pd=document.getElementById(P+'-pd');
+    if(tg&&pd)tg.addEventListener('click',function(){
+      if(pd.hasAttribute('hidden')){pd.removeAttribute('hidden');tg.setAttribute('aria-expanded','true');}
+      else{pd.setAttribute('hidden','');tg.setAttribute('aria-expanded','false');}
+    });
+    upd(P,n);
+  }
+  ['m','t','p'].forEach(wire);
+})();
+</script>
+
+<script>
+(function(){
+  'use strict';
+  function inCmode(){return document.body.classList.contains('cmode')}
+
+  /* ---------- MOBIL: bottom-sheet ---------- */
+  var mHandle=document.getElementById('m-handle'),mSheet=document.getElementById('m-sheet'),
+      mOvl=document.getElementById('m-ovl'),mClose=document.getElementById('m-close'),
+      mPg=document.getElementById('m-pg'),mScr=document.getElementById('m-scr');
+  function mOpen(){mSheet.classList.add('on');mOvl.classList.add('on');mPg.classList.add('lock');mHandle.setAttribute('aria-expanded','true');mClose.focus()}
+  function mCloseFn(){mSheet.classList.remove('on');mOvl.classList.remove('on');mPg.classList.remove('lock');mHandle.setAttribute('aria-expanded','false');mHandle.focus()}
+  mHandle.addEventListener('click',function(){if(inCmode())return;mSheet.classList.contains('on')?mCloseFn():mOpen()});
+  mClose.addEventListener('click',function(){if(inCmode())return;mCloseFn()});
+  mOvl.addEventListener('click',function(){if(inCmode())return;mCloseFn()});
+
+  /* cookie simulace */
+  var cBtn=document.getElementById('m-cookie-btn'),cAccept=document.getElementById('m-cookie-accept');
+  function setCookie(on){mScr.classList.toggle('cookie-on',on);if(on)mCloseFn();cBtn.textContent=on?'🍪 Skrýt cookie lištu (simulace)':'🍪 Simulovat cookie lištu (Complianz)'}
+  cBtn.addEventListener('click',function(){if(inCmode())return;setCookie(!mScr.classList.contains('cookie-on'))});
+  cAccept.addEventListener('click',function(){if(inCmode())return;setCookie(false)});
+
+  /* ---------- IPAD: karta nad lištou ---------- */
+  var tHandle=document.getElementById('t-handle'),tPanel=document.getElementById('t-panel'),
+      tOvl=document.getElementById('t-ovl'),tClose=document.getElementById('t-close'),tScr=document.getElementById('t-scr');
+  function tOpen(){tPanel.classList.add('on');tOvl.classList.add('on');tHandle.setAttribute('aria-expanded','true');tClose.focus()}
+  function tCloseFn(){tPanel.classList.remove('on');tOvl.classList.remove('on');tHandle.setAttribute('aria-expanded','false');tHandle.focus()}
+  tHandle.addEventListener('click',function(e){if(inCmode())return;e.stopPropagation();tPanel.classList.contains('on')?tCloseFn():tOpen()});
+  tClose.addEventListener('click',function(){if(inCmode())return;tCloseFn()});
+  tOvl.addEventListener('click',function(){if(inCmode())return;tCloseFn()});
+  tScr.addEventListener('click',function(e){if(inCmode())return;if(tPanel.classList.contains('on')&&!e.target.closest('#t-panel')&&!e.target.closest('#t-handle'))tCloseFn()});
+
+  /* ---------- PC: slim lišta po odscrollování + popover ---------- */
+  var pPg=document.getElementById('p-pg'),pBook=document.getElementById('p-book'),pBar=document.getElementById('p-bar'),
+      pHandle=document.getElementById('p-handle'),pPop=document.getElementById('p-pop'),pClose=document.getElementById('p-close'),
+      pScr=document.getElementById('p-scr');
+  function pOpen(){pPop.classList.add('on');pHandle.setAttribute('aria-expanded','true');pClose.focus()}
+  function pCloseFn(){pPop.classList.remove('on');pHandle.setAttribute('aria-expanded','false');pHandle.focus()}
+  function pCheck(){
+    var bookR=pBook.getBoundingClientRect(),scrR=pScr.getBoundingClientRect();
+    var gone=bookR.bottom<=scrR.top+10; /* cenový box mimo dohled */
+    pBar.classList.toggle('show',gone);
+    if(!gone&&pPop.classList.contains('on')){pPop.classList.remove('on');pHandle.setAttribute('aria-expanded','false')}
+  }
+  pPg.addEventListener('scroll',pCheck);pCheck();
+  pHandle.addEventListener('click',function(e){if(inCmode())return;e.stopPropagation();pPop.classList.contains('on')?pCloseFn():pOpen()});
+  pClose.addEventListener('click',function(){if(inCmode())return;pCloseFn()});
+  pScr.addEventListener('click',function(e){if(inCmode())return;if(pPop.classList.contains('on')&&!e.target.closest('#p-pop')&&!e.target.closest('#p-handle'))pCloseFn()});
+
+  /* ESC zavře vše */
+  document.addEventListener('keydown',function(e){
+    if(e.key!=='Escape')return;
+    if(mSheet.classList.contains('on'))mCloseFn();
+    if(tPanel.classList.contains('on'))tCloseFn();
+    if(pPop.classList.contains('on'))pCloseFn();
+  });
+})();
+
+/* ---------- komentovací vrstva (replika z cta-system-navrh-2026-06-13) ---------- */
+(function(){
+  var KEY='ptcz_sticky_footer_comments_v1';var data=[];try{data=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){data=[]}
+  var mode=false,seq=data.reduce(function(m,c){return Math.max(m,c.n)},0);
+  var toggle=document.getElementById('cmt-toggle');
+  function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+  function sectionAt(y){var s=document.querySelectorAll('[data-sec]'),b='Dokument',bt=-1e9;s.forEach(function(e){var t=e.getBoundingClientRect().top+window.scrollY;if(t<=y+2&&t>bt){bt=t;b=e.getAttribute('data-sec')}});return b}
+  function closeBubbles(){document.querySelectorAll('.bubble').forEach(function(b){b.remove()})}
+  function openBubble(c){closeBubbles();var left=Math.min(c.x,(window.scrollX+document.documentElement.clientWidth)-262);if(left<6)left=6;
+    var bx=document.createElement('div');bx.className='bubble';bx.style.left=left+'px';bx.style.top=(c.y+6)+'px';
+    var h=document.createElement('div');h.className='bh';var lab=document.createElement('span');lab.textContent='#'+c.n+' · '+c.sec;
+    var x=document.createElement('span');x.className='x';x.textContent='✕';x.addEventListener('click',function(e){e.stopPropagation();closeBubbles()});
+    h.appendChild(lab);h.appendChild(x);var ta=document.createElement('textarea');ta.value=c.text||'';ta.placeholder='Tvoje poznámka…';
+    ta.addEventListener('input',function(){c.text=ta.value;save()});ta.addEventListener('click',function(e){e.stopPropagation()});
+    bx.appendChild(h);bx.appendChild(ta);bx.addEventListener('click',function(e){e.stopPropagation()});document.body.appendChild(bx);ta.focus()}
+  function renderPins(){document.querySelectorAll('.pin').forEach(function(p){p.remove()});data.forEach(function(c){var p=document.createElement('div');p.className='pin';p.textContent=c.n;p.style.left=c.x+'px';p.style.top=c.y+'px';p.title=c.sec;p.addEventListener('click',function(e){e.stopPropagation();openBubble(c)});document.body.appendChild(p)})}
+  function toast(m){var t=document.getElementById('cmt-toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},1900)}
+  toggle.addEventListener('click',function(){mode=!mode;document.body.classList.toggle('cmode',mode);toggle.classList.toggle('on',mode);toggle.textContent=mode?'✓ Komentuju (klikni na stránku)':'💬 Režim komentářů';if(!mode)closeBubbles()});
+  document.addEventListener('click',function(e){if(!mode)return;if(e.target.closest('#cmt-toolbar')||e.target.closest('.bubble')||e.target.closest('.pin'))return;if(e.target.closest('a')||e.target.closest('summary')||e.target.closest('button')){e.preventDefault()}seq++;var c={n:seq,x:Math.round(e.pageX),y:Math.round(e.pageY),sec:sectionAt(e.pageY),text:''};data.push(c);save();renderPins();openBubble(c)});
+  document.getElementById('cmt-copy').addEventListener('click',function(){var fl=data.slice().sort(function(a,b){return a.n-b.n}).filter(function(c){return (c.text||'').trim()});if(!fl.length){toast('Žádné vyplněné komentáře');return}var out='Komentáře — Rozšířená sticky lišta mobil/iPad/PC ('+new Date().toLocaleDateString('cs-CZ')+')\n\n'+fl.map(function(c){return '#'+c.n+' ['+c.sec+']: '+c.text.trim()}).join('\n');(navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(out):Promise.reject()).then(function(){toast('Zkopírováno — vlož mi je do chatu')}).catch(function(){var t2=document.createElement('textarea');t2.value=out;document.body.appendChild(t2);t2.select();try{document.execCommand('copy');toast('Zkopírováno')}catch(e){alert(out)}document.body.removeChild(t2)})});
+  document.getElementById('cmt-clear').addEventListener('click',function(){if(!data.length)return;if(confirm('Smazat všechny komentáře?')){data=[];seq=0;save();renderPins();closeBubbles()}});
+  renderPins();
+})();
+</script>
+</body>
+</html>

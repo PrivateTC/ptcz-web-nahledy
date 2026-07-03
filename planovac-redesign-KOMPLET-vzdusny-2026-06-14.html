@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plánovač — kompletní návrh (vše + detaily)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--blue:#1E88B5;--blue-dark:#176f93;--ink:#1C1C2E;--muted:#6b7280;--line:#e9ecef;--soft:#f5f7f9;--nfill:#eef1f4;--nline:#d3d9e0;--bg:#eef1f5;--card:#fff;--ok:#1f7a4d}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Inter Tight',system-ui,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55}
+  .wrap{max-width:1120px;margin:0 auto;padding:28px 20px 64px}
+  h1{font-family:'Montserrat',sans-serif;font-size:24px;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 14px}
+  .pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 10px;border-radius:100px;background:#e3eef5;color:var(--blue-dark);margin-right:6px}
+  h2{font-family:'Montserrat',sans-serif;font-size:18px;margin:34px 0 10px;display:flex;align-items:center;gap:10px}
+  h2 .tg{font-size:12px;font-weight:700;color:#fff;background:var(--blue);border-radius:6px;padding:2px 9px}
+  .collapnote{font-size:11.5px;font-weight:600;color:#9a5413;background:#fdf0e6;border-radius:6px;padding:2px 8px;margin-left:6px}
+
+  .screen{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 14px 40px rgb(20 40 60/.08);margin:6px 0 8px}
+  .appbar{display:flex;align-items:center;gap:14px;padding:16px 24px;border-bottom:1px solid var(--line);min-height:64px}
+  .appbar img[alt="privatetours czech"]{height:30px;display:block;align-self:center}
+  .appbar .hflag,.appbar .ctrl{align-self:center}
+  .logo{font-family:'Montserrat',sans-serif;font-weight:700;font-size:17px;color:#0f2233}
+  .logo .mk{display:inline-block;width:23px;height:19px;background:var(--blue);clip-path:polygon(28% 0,100% 0,72% 100%,0 100%);margin-right:8px;vertical-align:-4px}
+  .logo small{color:var(--muted);font-weight:600;font-size:12px}.appbar .sp{flex:1}
+  .ctrl{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;background:#fff;color:var(--ink);border:1px solid var(--nline);border-radius:100px;padding:7px 16px}
+  .ctrl.menu{background:#5a5f66;color:#fff;border-color:#5a5f66;padding:8px 20px}
+  .hflag{font-size:20px;width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center}
+
+  .nav3{display:flex;align-items:center;justify-content:center;padding:20px 22px 4px}
+  .node{display:flex;flex-direction:column;align-items:center;gap:6px;width:120px}
+  .node .c{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;border:2px solid var(--nline);background:#fff;color:var(--muted)}
+  .node .t{font-size:12.5px;font-weight:600;color:var(--muted)}
+  .node.done .c{background:var(--blue);border-color:var(--blue);color:#fff}.node.done .t{color:var(--ink)}
+  .node.cur .c{background:#fff;border-color:var(--blue);color:var(--blue);box-shadow:0 0 0 4px rgb(30 136 181/.15)}.node.cur .t{color:var(--blue)}
+  .sepl{height:2px;width:64px;background:var(--nline);margin:0 -8px 22px}.sepl.fill{background:var(--blue)}
+
+  .ptitle{font-family:'Montserrat',sans-serif;font-size:22px;margin:8px 22px 2px}
+  .pcrumb{font-size:12.5px;color:var(--muted);margin:0 22px 10px}
+  .trust3{display:flex;gap:8px;flex-wrap:wrap;margin:0 22px 16px}
+  .tchip{font-size:12px;font-weight:600;color:#374151;background:var(--soft);border-radius:100px;padding:6px 12px}.tchip b{color:var(--blue-dark)}
+
+  .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;padding:0 22px 24px}
+  @media(max-width:840px){.grid{grid-template-columns:1fr}}
+
+  .seg{display:inline-flex;background:var(--nfill);border-radius:12px;padding:4px;gap:4px;margin-bottom:16px}
+  .seg button{border:none;background:none;font:inherit;font-weight:600;font-size:13.5px;padding:9px 16px;border-radius:9px;cursor:pointer;color:var(--muted)}
+  .seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgb(0 0 0/.1)}
+  .seg small{display:block;font-weight:500;font-size:10px;color:var(--muted)}.seg button.on small{color:var(--blue-dark)}
+
+  .flab{font-size:12px;font-weight:700;color:var(--ink);margin:0 0 8px;display:flex;align-items:center;gap:8px}
+  .flab .n{width:20px;height:20px;border-radius:50%;background:#e3eef5;color:var(--blue-dark);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .flab .open{margin-left:auto;font-size:10px;font-weight:600;color:#9a5413;background:#fdf0e6;border-radius:6px;padding:1px 7px}
+  .sect{margin-bottom:20px}
+  .inp{display:flex;align-items:center;gap:8px;border:1.5px solid var(--nline);border-radius:12px;padding:12px 14px;font-size:15px;background:#fff}
+  .inp.focus{border-color:var(--blue);box-shadow:0 0 0 3px rgb(30 136 181/.12);border-radius:12px 12px 0 0}
+  .inp .pin{color:var(--blue)}.inp .muted{color:var(--muted)}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  textarea.inp{width:100%;min-height:70px;font-family:inherit;border-radius:12px}
+
+  .hero-stops{background:var(--soft);border-radius:16px;padding:16px}
+  .ifilter{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}
+  .ichip{font-size:12px;font-weight:600;padding:5px 11px;border-radius:100px;border:1.5px solid var(--nline);background:#fff;color:#374151}
+  .ichip.on{background:var(--blue);border-color:var(--blue);color:#fff}
+  .drop{border:1.5px solid var(--blue);border-top:none;border-radius:0 0 12px 12px;background:#fff;overflow:hidden;margin-bottom:12px}
+  .dhead{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);padding:9px 13px 5px}
+  .sug{display:flex;align-items:center;gap:11px;padding:8px 12px;border-top:1px solid var(--line);cursor:pointer}
+  .sug img{width:52px;height:39px;border-radius:8px;object-fit:cover;flex-shrink:0}
+  .sug .nm{flex:1}.sug .nm b{font-size:14px}.sug .nm .d{font-size:11.5px;color:var(--muted)}
+  .plus{width:25px;height:25px;border-radius:8px;border:1.5px solid var(--blue);color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+  .orderline{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;color:var(--muted);margin:2px 2px 10px}.orderline b{color:var(--blue-dark)}
+  .stop{display:flex;align-items:center;gap:11px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px;margin-bottom:9px}
+  .grip{color:var(--nline);font-size:16px}.num{width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .stop img{width:54px;height:40px;border-radius:8px;object-fit:cover;flex-shrink:0}
+  .stop .nm{flex:1}.stop .nm b{font-size:14px}.stop .nm .d{font-size:11px;color:var(--muted)}
+  .timechip{font-size:11.5px;font-weight:600;background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:4px 8px;white-space:nowrap}
+  .acts span{display:inline-flex;width:24px;height:24px;border-radius:8px;border:1px solid var(--line);align-items:center;justify-content:center;color:var(--muted);font-size:11px;margin-left:4px}
+  .addstop{display:flex;align-items:center;justify-content:center;gap:8px;border:1.5px dashed var(--nline);border-radius:12px;padding:10px;color:var(--blue-dark);font-weight:600;font-size:13px;background:#fff}
+  .hodise{background:#fff;border:1px dashed #bcdcea;border-radius:12px;padding:10px 12px;margin-top:6px}
+  .hodise .h{font-size:12px;font-weight:700;color:var(--blue-dark);margin-bottom:7px}
+  .nchips{display:flex;flex-wrap:wrap;gap:7px}.nchip{font-size:12.5px;font-weight:600;background:var(--soft);border:1px solid var(--nline);border-radius:100px;padding:5px 11px}.nchip .p{color:var(--blue);font-weight:700}
+
+  .veh{display:flex;align-items:center;gap:14px;border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:#f6f7f9}
+  .veh img{width:150px;height:90px;object-fit:contain;flex-shrink:0}
+  .veh b{font-size:15px}.veh ul{margin:5px 0 0;padding-left:16px;color:var(--muted);font-size:12px;line-height:1.55}
+  .veh .chk{margin-left:auto;color:var(--blue);font-size:18px;align-self:flex-start}
+
+  .dopl{border:1.5px solid var(--nline);border-radius:14px;padding:14px;background:#fff}
+  .fieldrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}.fieldrow .t{font-size:14px;font-weight:600}
+  .stepper{display:inline-flex;align-items:center;border:1.5px solid var(--nline);border-radius:10px;overflow:hidden}
+  .stepper button{border:none;background:#fff;width:36px;height:38px;font-size:16px;color:var(--ink)}.stepper .val{width:42px;text-align:center;font-weight:700}
+  .subh{font-size:13px;color:var(--muted);font-weight:600;margin:12px 0 6px}
+  .opt{display:flex;align-items:center;gap:10px;padding:6px 0}
+  .cbx{width:21px;height:21px;border-radius:7px;border:2px solid var(--blue);background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}.cbx.off{background:#fff;color:transparent;border-color:var(--nline)}
+  .opt .t{font-size:14px;font-weight:600}.opt .i{width:18px;height:18px;border-radius:50%;background:#aeb4bb;color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center}.opt .sp{margin-left:auto}
+  .svcbody{font-size:12.5px;color:#374151;padding:0 0 8px 31px}
+
+  .side{position:sticky;top:14px;align-self:start}
+  .map{height:160px;border-radius:14px;border:1px solid var(--line);position:relative;overflow:hidden;background:linear-gradient(160deg,#dce8ef,#e9eef0)}
+  .map svg{position:absolute;inset:0;width:100%;height:100%}
+  .summary{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-top:14px}
+  .vehmini{display:flex;align-items:center;gap:10px;background:#f6f7f9;border-radius:10px;padding:8px 10px;margin-bottom:12px}
+  .vehmini img{width:64px;height:40px;object-fit:contain}.vehmini b{font-size:13px}.vehmini small{color:var(--muted);font-size:11px}
+  .bigprice{display:flex;justify-content:space-between;align-items:baseline}.bigprice .p{font-family:'Montserrat',sans-serif;font-size:27px}
+  .peros{font-size:13px;color:var(--blue-dark);font-weight:600;margin:2px 0 8px}
+  .srow{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;color:var(--muted)}.srow b{color:var(--ink)}
+  .srow.sub{border-top:1px dashed var(--line);margin-top:3px;padding-top:8px}.srow.auto{color:var(--blue-dark)}.srow.auto b{color:var(--blue-dark)}
+  .incl{background:var(--soft);border-radius:10px;padding:10px 12px;margin-top:10px;font-size:12px;line-height:1.55}.incl .i-yes{color:#1f7a4d}.incl .i-no{color:#9a5413}
+  .reassure{font-size:12.5px;font-weight:600;color:var(--blue-dark);text-align:center;background:#eaf4f9;border-radius:8px;padding:8px;margin:12px 0 0}
+  .cta-row{display:flex;gap:8px;margin-top:10px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:16px;border-radius:100px;padding:14px;border:none;background:var(--blue);color:#fff;box-shadow:0 4px 14px rgb(30 136 181/.35);cursor:pointer;flex:1}
+  .btn .arw{transition:transform .18s}.btn:hover .arw{transform:translateX(4px)}
+  .btn--ghost{background:transparent;color:var(--ink);border:2px solid var(--ink);box-shadow:none}
+  .sharebtn{width:52px;border-radius:100px;border:2px solid var(--ink);background:#fff;color:var(--ink);font-size:18px;cursor:pointer;flex:none}
+  .storno{font-size:11.5px;color:var(--muted);text-align:center;margin-top:9px}
+  .backlink{font-size:14px;color:var(--ink);font-weight:600;text-decoration:underline}
+  .actbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-top:6px}
+
+  /* detail místa */
+  .stage{background:rgba(20,30,45,.30);border-radius:16px;padding:20px;display:flex;justify-content:center;margin:0 22px 22px}
+  .modal{width:520px;max-width:100%;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgb(10 25 40/.3)}
+  .modal .hero{position:relative;height:230px}.modal .hero img{width:100%;height:100%;object-fit:cover;display:block}
+  .modal .x{position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.5);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px}
+  .modal .stb{position:absolute;left:12px;top:12px;font-size:11px;font-weight:700;color:#fff;background:rgba(30,136,181,.92);border-radius:7px;padding:4px 9px}
+  .modal .thumbs{display:flex;gap:6px;padding:9px 14px 2px}.modal .thumbs img{width:62px;height:46px;object-fit:cover;border-radius:7px;cursor:pointer;border:2px solid transparent}.modal .thumbs img.sel{border-color:var(--blue)}
+  .modal .bd{padding:13px 17px 17px}.modal h3{font-family:'Montserrat',sans-serif;margin:0 0 4px;font-size:20px}
+  .modal .meta{display:flex;gap:8px;margin:0 0 10px;flex-wrap:wrap}.tagc{font-size:11.5px;font-weight:600;border-radius:7px;padding:3px 9px;background:#eef4f7;color:var(--blue-dark)}
+  .modal p{font-size:13.5px;color:#374151;margin:0 0 10px}
+
+  /* ready-made */
+  .rm{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:0 22px 22px}
+  @media(max-width:760px){.rm{grid-template-columns:1fr}}
+  .rmc{border:1.5px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}.rmc.sel{border-color:var(--blue);box-shadow:0 0 0 3px rgb(30 136 181/.15)}
+  .rmc img{width:100%;height:96px;object-fit:cover;display:block}.rmc .bd{padding:11px 12px}.rmc b{font-size:14px}.rmc .m{font-size:12px;color:var(--muted);margin:3px 0 9px}
+
+  /* recap / success */
+  .recap .rr{display:flex;gap:18px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}.recap .rr .k{width:160px;color:var(--muted);flex-shrink:0}.recap .rr .v{font-weight:600}
+  .infobar{display:flex;align-items:center;gap:10px;background:var(--ink);color:#fff;border-radius:12px;padding:12px 15px;font-size:14px;margin:14px 0}.infobar .ib{width:24px;height:24px;border-radius:50%;background:rgb(255 255 255/.15);display:flex;align-items:center;justify-content:center}
+  .gdpr{display:flex;align-items:center;gap:10px;font-size:14px;margin:7px 0}.gdpr a{color:var(--blue);text-decoration:none}
+  .succ{text-align:center;padding:46px 22px}.succ .ck{width:70px;height:70px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 14px}.succ h3{font-family:'Montserrat',sans-serif;font-size:24px;margin:0 0 8px}
+  .nextsteps{max-width:440px;margin:6px auto 12px;text-align:left}.ns{display:flex;gap:10px;align-items:flex-start;font-size:14px;margin:9px 0}.nn{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+
+  /* share + group */
+  .sheetwrap{display:flex;gap:16px;flex-wrap:wrap;padding:0 22px 22px}
+  .sheet{flex:1;min-width:300px;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .sheet .sh{padding:13px 16px;border-bottom:1px solid var(--line);font-family:'Montserrat',sans-serif;font-size:15px;display:flex;justify-content:space-between}
+  .sheet .bd{padding:14px 16px}
+  .linkbox{display:flex;gap:8px;border:1.5px solid var(--line);border-radius:10px;padding:9px 11px;font-size:12.5px;color:var(--muted);align-items:center}.linkbox .cp{margin-left:auto;background:var(--blue);color:#fff;border-radius:8px;padding:5px 10px;font-size:12px;font-weight:700}
+  .shrow{display:flex;gap:8px;margin-top:10px}.shbtn{flex:1;border:1px solid var(--line);border-radius:10px;padding:9px;text-align:center;font-size:12.5px;font-weight:600}
+  .gp{background:var(--soft);border:1px dashed #bcdcea;border-radius:12px;padding:11px 12px;margin-top:12px;font-size:13px}.gp b{color:var(--blue-dark)}
+  .pr{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}.pr:last-child{border-bottom:none}.who{font-size:11px;color:var(--muted)}
+  .yes{background:var(--blue);color:#fff;border:none;border-radius:7px;padding:5px 9px;font-size:11px;font-weight:700;margin-left:auto}.no{background:#fff;color:#b42318;border:1px solid #f3c9c2;border-radius:7px;padding:5px 9px;font-size:11px;font-weight:700}
+
+  .note-call{background:#eef6fb;border:1px solid #cfe5f1;border-radius:14px;padding:16px 20px;margin-top:18px;font-size:13.5px}.note-call b{color:var(--ink)}
+  .foot{color:var(--muted);font-size:12.5px;margin-top:22px;text-align:center}
+/* ====== VZDUŠNĚJŠÍ VARIANTA 2026 — pouze vizuál (white space, lehčí stíny/linky, větší radius). Funnel, výpočet i funkce beze změny. ====== */
+:root{--line:#eef1f5;--nline:#e4e9ee}
+body{line-height:1.66}
+.wrap{padding:34px 22px 72px}
+h2{margin:44px 0 12px}
+.screen{border-radius:22px;box-shadow:0 18px 50px rgb(20 40 60/.06);margin:12px 0 16px}
+.appbar{padding:18px 26px}
+.nav3{padding:24px 22px 6px}
+.ptitle{margin:12px 26px 2px}
+.pcrumb{margin:0 26px 14px}
+.grid{gap:26px;padding:4px 26px 30px}
+.sect{margin-bottom:18px}
+.note-call{padding:20px 24px;margin-top:22px}
+@media(max-width:840px){.wrap{padding:24px 16px 56px}.grid{gap:18px;padding:4px 18px 24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Plánovač — kompletní návrh (vše + detaily)</h1>
+  <p class="sub">všechno viditelné včetně rozkliknutých detailů · <span style="color:#9a5413;font-weight:600">oranžově = v reálu sbalitelné</span> · 2026-06-02</p>
+  <p><span class="pill" style="background:#1E88B5;color:#fff">✨ Vzdušnější varianta (2026)</span><span class="pill">Pouze náhled</span><span class="pill">funkce + výpočet beze změny</span><span class="pill">reálné fotky z webu</span></p>
+
+  <div class="note-call" data-sec="CTA systém"><b>✅ CTA systém promítnut (14. 6.):</b> Plánovač je v celém systému nejčistší — <b>jedno primární tlačítko na krok</b> (Pokračovat → Pokračovat → Rezervovat výlet), žádný soupeřící sekundár, soft-lead <b>„Poslat mi tento plán e-mailem"</b> jako terciár (pálí <code>generate_lead</code>, quote-request). <b>Jediná změna systému:</b> na mobilu je <b>cena + Pokračovat</b> trvalá sticky lišta dole (viz souhrn vpravo) — cena nesmí zmizet z očí během vyplňování. Slovník sjednocen: do plánovače se z celého webu vchází vždy tlačítkem <b>„Sestavit vlastní výlet"</b>. <b>SEO i LLM beze změny</b> — týká se jen tlačítek a lišty.</div>
+
+  <!-- KROK 1 -->
+  <h2><span class="tg">1</span> Trasa &amp; vozidlo — kompletní</h2>
+  <div class="screen">
+    <div class="appbar"><img src="https://privatetoursczech.cz/wp-content/themes/main/img/logo-dark.svg" alt="privatetours czech" style="height:30px;display:block"><span class="hflag" style="margin-left:16px">🇺🇸</span><span class="ctrl">EUR</span><span class="sp"></span><span class="ctrl menu">Menu</span></div>
+    <div class="nav3"><div class="node cur"><div class="c">1</div><div class="t">Trasa</div></div><div class="sepl"></div><div class="node"><div class="c">2</div><div class="t">Detaily</div></div><div class="sepl"></div><div class="node"><div class="c">3</div><div class="t">Potvrzení</div></div></div>
+    <div class="ptitle">Naplánujte si vlastní výlet</div><div class="pcrumb">Krok 1 ze 3</div>
+    <div class="grid">
+      <div>
+        <div class="seg"><button class="on">Vlastní trasa</button><button>Hotové výlety</button></div>
+        <div class="sect"><div class="flab"><span class="n">1</span> Odkud &amp; kdy</div><div class="row2"><div class="inp"><span class="pin">📍</span> Praha</div><div class="inp"><span class="pin">📅</span> 25. 6., 9:00</div></div></div>
+
+        <div class="sect"><div class="flab"><span class="n">2</span> Zastávky — kam chcete jet</div>
+          <div class="hero-stops">
+            <div class="ifilter"><span class="ichip on">Vše</span><span class="ichip">🏰 Hrady</span><span class="ichip">🏛️ UNESCO</span><span class="ichip">🏞️ Příroda</span><span class="ichip">♨️ Lázně</span></div>
+            <div class="inp focus"><span class="muted">🔍 Zadej místo… nebo vyber z oblíbených</span></div>
+            <div class="drop">
+              <div class="dhead">★ Oblíbená místa z našich výletů</div>
+              <div class="sug"><img src="https://privatetoursczech.cz/wp-content/uploads/2025/11/cesky-krumlov-blue-hour-privatetoursczech-1000x750.jpg" alt=""><div class="nm"><b>Český Krumlov</b><div class="d">UNESCO město nad Vltavou · ~180 min</div></div><span class="plus">＋</span></div>
+              <div class="sug"><img src="https://privatetoursczech.cz/wp-content/uploads/2025/11/karlstejn-castle-winter-snow-aerial-view-privatetoursczech-1000x750.jpg" alt=""><div class="nm"><b>Karlštejn</b><div class="d">Gotický hrad Karla IV. · ~120 min</div></div><span class="plus">＋</span></div>
+              <div class="sug"><img src="https://privatetoursczech.cz/wp-content/uploads/2026/02/kutna-hora-historic-center-st-james-church-evening-privatetoursczech-1000x750.jpg" alt=""><div class="nm"><b>Kutná Hora</b><div class="d">Stříbrné UNESCO město · ~90 min</div></div><span class="plus">＋</span></div>
+            </div>
+            <div class="orderline"><span>Řazení: <b>Optimální ▾</b> (Vlastní / Optimální / Nejrychlejší)</span></div>
+            <div class="stop"><span class="grip">⠿</span><span class="num">1</span><img src="https://privatetoursczech.cz/wp-content/uploads/2025/11/karlstejn-castle-winter-snow-aerial-view-privatetoursczech-1000x750.jpg" alt=""><div class="nm"><b>Karlštejn</b><div class="d">Gotický hrad</div></div><span class="timechip">120 min ▾</span><span class="acts"><span>✕</span></span></div>
+            <div class="stop"><span class="grip">⠿</span><span class="num">2</span><img src="https://privatetoursczech.cz/wp-content/uploads/2025/11/cesky-krumlov-blue-hour-privatetoursczech-1000x750.jpg" alt=""><div class="nm"><b>Český Krumlov</b><div class="d">UNESCO město</div></div><span class="timechip">180 min ▾</span><span class="acts"><span>✕</span></span></div>
+            <div class="addstop">＋ Přidat zastávku</div>
+            <div class="hodise"><div class="h">💡 Hodí se přidat na trase (jižní Čechy):</div><div class="nchips"><span class="nchip">＋ Holašovice <span class="p">UNESCO</span></span><span class="nchip">＋ Zlatá Koruna <span class="p">klášter</span></span></div></div>
+          </div>
+        </div>
+
+        <div class="sect"><div class="flab"><span class="n">3</span> Kam zpět (cíl)</div><div class="inp"><span class="pin">🏁</span> Praha <span class="muted" style="margin-left:auto;font-size:12px">✓ stejné jako start</span></div></div>
+        <div class="sect"><div class="flab"><span class="n">4</span> Vozidlo</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<div class="veh" style="border:2px solid #1E88B5;border-radius:12px;position:relative"><div><b>Škoda Superb</b><ul><li>1–3 zákazníci · sedan/combi · klima</li><li>Vittel voda zdarma · prostorný kufr</li></ul><div style="font-weight:800;color:#176f93">468 € <small style="font-weight:400">za vůz</small></div></div><span class="chk">✓</span></div>
+<div class="veh" style="border:1px solid #e7eaee;border-radius:12px"><img src="https://privatetoursczech.cz/wp-content/uploads/2025/05/image-9.png" alt="" style="max-width:90px"><div><b>Hyundai Staria 4×4</b><ul><li>max. 8 osob · 4×4 · klima · Wi-Fi</li><li>Vittel voda · sedačky Britax Römer</li></ul><div style="font-weight:800">624 € <small style="font-weight:400">za vůz</small></div></div></div>
+</div>
+<div style="font-size:12.5px;color:#6b7280;margin-top:6px">Vůz vždy prostorný — minimálně třídy Škoda Superb. Cena se přepočítá podle výběru (Superb = −25 %). Při 4+ osobách se Superb skryje.</div></div>
+
+        <div class="sect"><div class="flab"><span class="n">5</span> Doplňky <span class="open">v reálu sbalené ▾</span></div>
+          <div class="dopl">
+            <div class="fieldrow"><span class="t">Počet osob</span><span class="stepper"><button>−</button><span class="val">2</span><button>＋</button></span></div>
+            <div class="fieldrow"><span class="t">Počet zavazadel</span><span class="stepper"><button>−</button><span class="val">2</span><button>＋</button></span></div>
+            <div class="subh">Dětské sedačky</div>
+            <div class="opt"><span class="cbx">✓</span><span class="t">Swivel</span><span class="i">i</span><span class="sp stepper"><button>−</button><span class="val">1</span><button>＋</button></span></div>
+            <div class="opt"><span class="cbx off">✓</span><span class="t">Kidfix M i-Size</span><span class="i">i</span></div>
+            <div class="opt"><span class="cbx off">✓</span><span class="t">iBooster</span><span class="i">i</span></div>
+            <div style="font-size:13px;color:#454552;background:#eef5f9;border-radius:8px;padding:8px 12px;margin:8px 0">🌙 <b>Přespání / vícedenní výlet?</b> Napište do poznámky — naceníme a vrátíme plán (info o přespání jako na produkci).</div><div class="subh">Doplňkové služby <span style="font-weight:400">— cenu spočítá systém</span></div>
+            <div class="opt"><span class="cbx">✓</span><span class="t">Řidič, průvodce &amp; fotograf v jednom</span><span class="i">i</span></div>
+            <div class="svcbody">Jeden člověk řídí, provází i fotí — výklad u zastávek, fotky z výletu, pomoc na místě. Vede oceňovaný fotograf (MQEP, Zeiss ambasador) nebo člen jeho týmu — <u>modál s detaily jako na produkci</u>.</div>
+            <div class="opt"><span class="cbx off">✓</span><span class="t">Řidič &amp; průvodce v jednom</span><span class="i">i</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="side">
+        <div class="map"><svg viewBox="0 0 400 160" preserveAspectRatio="none"><path d="M200,30 C190,70 175,105 160,148" fill="none" stroke="#1E88B5" stroke-width="3" stroke-dasharray="2 6" stroke-linecap="round"/><circle cx="200" cy="30" r="7" fill="#1f9d55"/><circle cx="178" cy="95" r="6" fill="#fff" stroke="#1E88B5" stroke-width="3"/><circle cx="160" cy="148" r="7" fill="#1E88B5"/></svg></div>
+        <div class="summary">
+          <div class="vehmini"><img src="https://privatetoursczech.cz/wp-content/uploads/2025/05/image-9.png" alt=""><div><b>Hyundai Staria 4×4</b><br><small>soukromý vůz s řidičem · max. 8</small></div></div>
+          <div class="bigprice"><span class="p">624 €</span><span style="font-size:12px;color:var(--muted)">za vůz</span></div>
+          <div class="peros">≈ 312 € na osobu (2) · ve 4 jen 156 €/os</div>
+          <div style="font-size:12px;color:var(--blue-dark);font-weight:600;margin:4px 0 2px">💳 Platba až u řidiče — žádná platba předem</div>
+          <div style="font-size:12.5px;color:var(--blue);font-weight:600;margin-bottom:4px">▴ Rozpad ceny <span class="open" style="color:#9a5413;background:#fdf0e6;border-radius:6px;padding:1px 6px;font-size:10px">v reálu sbalené</span></div>
+          <div class="srow">Cena za km · 1,39×357,8 <b>497,66 €</b></div>
+          <div class="srow">Zastávky · 4,09×2 <b>8,18 €</b></div>
+          <div class="srow">Čekání · 0,29×270 min <b>77,32 €</b></div>
+          <div class="srow auto">Cena za služby (AUTO) <b>40,91 €</b></div>
+          <div class="incl"><div class="i-yes"><b>✓ V ceně:</b> doprava komfortním vozem · profesionální řidič · palivo · mýtné · parkovné · vybrané služby</div><div class="i-no"><b>✗ Není v ceně:</b> vstupné · lokální průvodci · jídlo · přespání</div></div>
+          <div class="cta-row" style="margin-top:12px"><button class="sharebtn" title="Sdílet">↗</button><button class="btn">Pokračovat <span class="arw">→</span></button></div>
+          <div class="storno">Hotově/kartou (CZK/EUR/USD) · <u>✉️ poslat si plán e-mailem</u></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PO KLIKNUTÍ (komentáře #6/7/8) -->
+  <h2><span class="tg">↳</span> Po kliknutí — jak se chovají pole</h2>
+  <div class="screen" style="padding:18px 22px">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+      <!-- 8: start -->
+      <div>
+        <div class="flab" style="margin-bottom:8px">Klik na „Odkud" (start)</div>
+        <div class="inp focus"><span class="pin">📍</span> Pra<span style="color:var(--nline)">|</span></div>
+        <div class="drop">
+          <div class="dhead">Adresy a místa</div>
+          <div class="sug" style="gap:9px"><span style="font-size:17px;width:50px;text-align:center">📍</span><div class="nm"><b>Praha</b><div class="d">hlavní město</div></div></div>
+          <div class="sug" style="gap:9px"><span style="font-size:17px;width:50px;text-align:center">🏛️</span><div class="nm"><b>Praha 1 – Staré Město</b><div class="d">centrum</div></div></div>
+          <div class="sug" style="gap:9px"><span style="font-size:17px;width:50px;text-align:center">✈️</span><div class="nm"><b>Letiště Václava Havla</b><div class="d">vyzvednutí na letišti</div></div></div>
+        </div>
+        <p style="font-size:11.5px;color:var(--muted);margin-top:7px">Našeptávač adres (Google Places) — „vyzvednutí kdekoliv".</p>
+      </div>
+      <!-- 7: datum -->
+      <div>
+        <div class="flab" style="margin-bottom:8px">Klik na datum &amp; čas</div>
+        <div style="border:1.5px solid var(--blue);border-radius:12px;padding:13px;box-shadow:0 0 0 3px rgb(30 136 181/.12)">
+          <div style="display:flex;justify-content:space-between;font-weight:700;font-size:13px;margin-bottom:10px">‹ &nbsp;Červen 2026&nbsp; ›</div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:10.5px;text-align:center;color:var(--muted);margin-bottom:5px"><span>Po</span><span>Út</span><span>St</span><span>Čt</span><span>Pá</span><span>So</span><span>Ne</span></div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:12px;text-align:center">
+            <span style="padding:4px 0">22</span><span style="padding:4px 0">23</span><span style="padding:4px 0">24</span><span style="padding:4px 0;background:var(--blue);color:#fff;border-radius:7px;font-weight:700">25</span><span style="padding:4px 0">26</span><span style="padding:4px 0">27</span><span style="padding:4px 0">28</span>
+            <span style="padding:4px 0">29</span><span style="padding:4px 0">30</span><span style="color:var(--nline)">1</span><span style="color:var(--nline)">2</span><span style="color:var(--nline)">3</span><span style="color:var(--nline)">4</span><span style="color:var(--nline)">5</span>
+          </div>
+          <div style="margin-top:11px;display:flex;align-items:center;gap:8px;font-size:13px;border-top:1px solid var(--line);padding-top:10px"><span>⏰ Čas:</span><span style="font-size:11.5px;color:var(--muted);display:block;margin-top:4px">presety 8:00 / 9:00 / 10:00 · <b>default = zítřek</b> · mobil: nativní prvky, velké tap targety</span><span style="border:1.5px solid var(--nline);border-radius:8px;padding:5px 12px;font-weight:600">9:00 ▾</span></div>
+        </div>
+        <p style="font-size:11.5px;color:var(--muted);margin-top:7px">Kalendář (min. dnes) + výběr času.</p>
+      </div>
+      <!-- 6: vyhledávání -->
+      <div>
+        <div class="flab" style="margin-bottom:8px">Psaní do vyhledávání míst</div>
+        <div class="inp focus"><span class="muted">🔍</span> kar<span style="color:var(--nline)">|</span></div>
+        <div class="drop">
+          <div class="dhead">Výsledky pro „kar"</div>
+          <div class="sug"><img src="https://privatetoursczech.cz/wp-content/uploads/2025/11/karlstejn-castle-winter-snow-aerial-view-privatetoursczech-1000x750.jpg" alt=""><div class="nm"><b>Karlštejn</b><div class="d">★ hrad · ~120 min</div></div><span class="plus">＋</span></div>
+          <div class="sug"><img src="https://privatetoursczech.cz/wp-content/uploads/2025/07/ptcz-1776102146-1000x750.jpg" alt=""><div class="nm"><b>Karlovy Vary</b><div class="d">★ lázně · ~150 min</div></div><span class="plus">＋</span></div>
+        </div>
+        <p style="font-size:11.5px;color:var(--muted);margin-top:7px">Při psaní filtruje oblíbená místa + našeptá další (s fotkou). Klik na řádek = detail.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAIL MÍSTA s galerií -->
+  <h2><span class="tg">1·detail</span> Detail oblíbeného místa — všechny fotky + text</h2>
+  <div class="screen"><div class="stage"><div class="modal">
+    <div class="hero"><img id="pdmain" src="https://privatetoursczech.cz/wp-content/uploads/2025/11/cesky-krumlov-blue-hour-privatetoursczech-1000x750.jpg" alt=""><span class="stb">★ ve 4 výletech · 5 fotek</span><span class="x">✕</span></div>
+    <div class="thumbs">
+      <img class="sel" src="https://privatetoursczech.cz/wp-content/uploads/2025/11/cesky-krumlov-blue-hour-privatetoursczech-1000x750.jpg" onclick="document.getElementById('pdmain').src=this.src">
+      <img src="https://privatetoursczech.cz/wp-content/uploads/2025/11/cesky-krumlov-castle-winter-view-privatetoursczech-1000x750.jpg" onclick="document.getElementById('pdmain').src=this.src">
+      <img src="https://privatetoursczech.cz/wp-content/uploads/2025/11/cesky-krumlov-couple-tower-view-privatetoursczech-1000x750.jpg" onclick="document.getElementById('pdmain').src=this.src">
+      <img src="https://privatetoursczech.cz/wp-content/uploads/2025/11/cesky-krumlov-evening-river-view-privatetoursczech-1000x750.jpg" onclick="document.getElementById('pdmain').src=this.src">
+      <img src="https://privatetoursczech.cz/wp-content/uploads/2025/07/cesky-krumlov-hluboka-castle-private-tour-from-prague-privatetoursczech-3-1000x750.jpg" onclick="document.getElementById('pdmain').src=this.src">
+    </div>
+    <div class="bd"><h3>Český Krumlov</h3><div class="meta"><span class="tagc">UNESCO</span><span class="tagc">Jižní Čechy</span><span class="tagc">~180 min</span><span class="tagc">2h 45min z Prahy</span></div>
+      <div style="max-height:150px;overflow:auto;padding-right:6px">
+        <p>Jeden z největších a nejmalebnějších zámeckých komplexů ve střední Evropě — barokní palác obtočený kolem skalního meandru Vltavy. Klikaté uličky, otáčivé hlediště a jedna z nejhezčích historických scenérií v zemi.</p>
+        <div style="font-size:13px;color:#374151;margin:0 0 8px"><b>Co uvidíte:</b> zámek a zahrady · náměstí Svornosti · vyhlídka na meandr Vltavy · otáčivé hlediště</div>
+        <p style="font-size:12px;color:var(--muted)">Tip: v hlavní sezóně (květen–září) zajišťujeme vstupenky do zámku předem.</p>
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin:8px 0 4px">↕ Když je textu víc — textová část se <b>scrolluje</b>, modal drží velikost. Strukturovat na sekce: <b>O místě · Co uvidíte · Praktické info</b> (delší se sbalí pod „číst více").</div>
+      <div class="actbar" style="padding-top:4px"><button class="btn" style="flex:none;padding:11px 20px">Přidat na trasu <span class="arw">→</span></button><a class="backlink">Zavřít</a></div></div>
+  </div></div></div>
+
+  <!-- HOTOVÉ VÝLETY -->
+  <h2><span class="tg">1b</span> Po přepnutí na „Hotové výlety"</h2>
+  <div class="screen">
+    <div class="ptitle" style="margin-top:18px">Vyberte hotový výlet</div><div class="pcrumb">pak doladíte vozidlo a doplňky jako u vlastní trasy</div>
+    <div style="padding:0 22px 6px"><div class="seg"><button>Vlastní trasa</button><button class="on">Hotové výlety</button></div></div>
+    <div class="rm">
+      <div class="rmc sel"><img src="https://privatetoursczech.cz/wp-content/uploads/2025/07/cesky-krumlov-hluboka-castle-private-tour-from-prague-privatetoursczech-3-1000x750.jpg"><div class="bd"><b>Český Krumlov &amp; Hluboká</b><div class="m">9 h · 2 zastávky · od 468 € (Superb) / 624 € (Staria)</div><button class="btn" style="font-size:13px;padding:9px">Vybráno ✓</button></div></div>
+      <div class="rmc"><img src="https://privatetoursczech.cz/wp-content/uploads/2026/02/kutna-hora-historic-center-st-james-church-evening-privatetoursczech-1000x750.jpg"><div class="bd"><b>Kutná Hora &amp; kostnice</b><div class="m">5 h · 2 zastávky · od 308 € (Superb)</div><button class="btn btn--ghost" style="font-size:13px;padding:8px">Vybrat</button></div></div>
+      <div class="rmc"><img src="https://privatetoursczech.cz/wp-content/uploads/2025/11/karlstejn-castle-winter-snow-aerial-view-privatetoursczech-1000x750.jpg"><div class="bd"><b>Karlštejn &amp; Velká Amerika</b><div class="m">5 h · 2 zastávky · od 296 € (Superb)</div><button class="btn btn--ghost" style="font-size:13px;padding:8px">Vybrat</button></div></div>
+    </div>
+  </div>
+
+  <!-- KROK 2 -->
+  <h2><span class="tg">2</span> Detaily — Údaje</h2>
+  <div class="screen">
+    <div class="appbar"><img src="https://privatetoursczech.cz/wp-content/themes/main/img/logo-dark.svg" alt="privatetours czech" style="height:30px;display:block"><span class="hflag" style="margin-left:16px">🇺🇸</span><span class="ctrl">EUR</span><span class="sp"></span><span class="ctrl menu">Menu</span></div>
+    <div class="nav3"><div class="node done"><div class="c">✓</div><div class="t">Trasa</div></div><div class="sepl fill"></div><div class="node cur"><div class="c">2</div><div class="t">Detaily</div></div><div class="sepl"></div><div class="node"><div class="c">3</div><div class="t">Potvrzení</div></div></div>
+    <div class="ptitle">Údaje</div><div class="pcrumb">Krok 2 ze 3</div>
+    <div class="grid"><div>
+      <div class="sect"><div class="flab">Vaše celé jméno</div><div class="inp">Test User</div></div>
+      <div class="sect"><div class="flab">E-mail <span style="font-weight:400;color:var(--muted);margin-left:6px">— sem pošleme potvrzení rezervace</span></div><div class="inp">hello@privatetoursczech.cz</div></div>
+      <div class="sect"><div class="flab">Telefon <span style="font-weight:400;color:var(--muted);margin-left:6px">(nepovinné) — jen pro řidiče v den výletu</span></div><div class="row2" style="grid-template-columns:120px 1fr"><div class="inp">🇨🇿 +420 ▾</div><div class="inp">604 260 841</div></div></div>
+      <div class="sect"><div class="flab">Poznámka (nepovinné)</div><textarea class="inp">test</textarea></div>
+      <div class="actbar"><a class="backlink">Zpět</a><button class="btn" style="flex:none;padding:13px 26px">Pokračovat <span class="arw">→</span></button><div style="font-size:12.5px;color:#6b7280;text-align:center;margin-top:8px">🔒 Žádná platba teď — potvrzení e-mailem, platíte až u řidiče.</div></div>
+    </div><div class="side"><div class="map"><svg viewBox="0 0 400 220" preserveAspectRatio="none"><path d="M205,40 C195,95 175,145 158,195" fill="none" stroke="#1E88B5" stroke-width="3" stroke-linecap="round"/><circle cx="205" cy="40" r="8" fill="#1f9d55"/><circle cx="158" cy="195" r="7" fill="#1E88B5"/></svg></div></div></div>
+  </div>
+
+  <!-- KROK 3 -->
+  <h2><span class="tg">3</span> Potvrzení — Rekapitulace</h2>
+  <div class="screen">
+    <div class="appbar"><img src="https://privatetoursczech.cz/wp-content/themes/main/img/logo-dark.svg" alt="privatetours czech" style="height:30px;display:block"><span class="hflag" style="margin-left:16px">🇺🇸</span><span class="ctrl">EUR</span><span class="sp"></span><span class="ctrl menu">Menu</span></div>
+    <div class="nav3"><div class="node done"><div class="c">✓</div><div class="t">Trasa</div></div><div class="sepl fill"></div><div class="node done"><div class="c">✓</div><div class="t">Detaily</div></div><div class="sepl fill"></div><div class="node cur"><div class="c">3</div><div class="t">Potvrzení</div></div></div>
+    <div class="ptitle">Rekapitulace</div><div class="pcrumb">Krok 3 ze 3</div>
+    <div class="grid"><div class="recap">
+      <div class="vehmini" style="margin-bottom:12px"><img src="https://privatetoursczech.cz/wp-content/uploads/2025/05/image-9.png" alt=""><div><b>Hyundai Staria 4×4</b><br><small>soukromý vůz s řidičem · max. 8</small></div></div>
+      <div class="rr"><span class="k">Trasa</span><span class="v">Praha → Karlštejn (120) → Český Krumlov (180) → Praha</span></div>
+      <div class="rr"><span class="k">Datum a čas</span><span class="v">4. 6. 2026, 9:00</span></div>
+      <div class="rr"><span class="k">Osoby / zavazadla</span><span class="v">2 / 2 · Swivel</span></div>
+      <div class="rr"><span class="k">Služby</span><span class="v">Řidič, průvodce &amp; fotograf v jednom</span></div>
+      <div class="rr"><span class="k">Kontakt</span><span class="v">Test User · hello@privatetoursczech.cz · +420604260841</span></div>
+      <div class="rr"><span class="k">Cena bez doplňků</span><span class="v">583,15 €</span></div>
+      <div class="rr" style="border-bottom:none"><span class="k">Celková cena</span><span class="v" style="font-size:19px">624,06 € <span style="font-weight:400;color:var(--muted);font-size:12px">· ≈ 312 €/os (2)</span></span></div>
+      <div class="infobar"><span class="ib">i</span> Platbu provedete u řidiče/průvodce – kartou nebo v hotovosti.</div>
+      <div class="gdpr"><span class="cbx off">✓</span> Souhlasím se <a>zpracováním osobních údajů</a>.</div>
+      <div class="gdpr"><span class="cbx off">✓</span> Souhlasím s <a>podmínkami služby</a>.</div>
+      <div class="actbar" style="margin-top:12px"><a class="backlink">Zpět</a><button class="btn" style="flex:none;padding:13px 26px">Rezervovat výlet <span class="arw">→</span></button></div>
+    </div><div class="side"><div class="map"><svg viewBox="0 0 400 220" preserveAspectRatio="none"><path d="M205,40 C195,95 175,145 158,195" fill="none" stroke="#1E88B5" stroke-width="3" stroke-linecap="round"/><circle cx="205" cy="40" r="8" fill="#1f9d55"/><circle cx="158" cy="195" r="7" fill="#1E88B5"/></svg></div></div></div>
+  </div>
+
+  <!-- SUCCESS -->
+  <h2><span class="tg">✓</span> Rezervace odeslána — co bude dál</h2>
+  <div class="screen">
+    <div class="appbar"><img src="https://privatetoursczech.cz/wp-content/themes/main/img/logo-dark.svg" alt="privatetours czech" style="height:30px;display:block"><span class="hflag" style="margin-left:16px">🇺🇸</span><span class="ctrl">EUR</span><span class="sp"></span><span class="ctrl menu">Menu</span></div>
+    <div class="succ"><div class="ck">✓</div><h3>Rezervace odeslána</h3>
+      <div class="nextsteps">
+        <div class="ns"><span class="nn">1</span><div><b><b>Cena je finální</b> — potvrzení termínu vám přijde e-mailem</b> —  ceny jsou transparentní, bez skrytých poplatků.</div></div>
+        <div class="ns"><span class="nn">2</span><div>Platíte až na místě <b>u řidiče</b> — hotově nebo kartou (CZK/EUR/USD).</div></div>
+      </div>
+      <button class="btn" style="flex:none;padding:13px 26px">Zpět na hlavní stranu</button></div>
+  </div>
+
+  <!-- SDÍLENÍ + SKUPINA -->
+  <h2><span class="tg">↗</span> Sdílení trasy + návrhy skupiny (z ↗, ne další lišta)</h2>
+  <div class="screen"><div class="sheetwrap">
+    <div class="sheet"><div class="sh"><span>Sdílet trasu</span><span style="color:var(--muted)">✕</span></div><div class="bd">
+      <div class="linkbox">🔗 privatetoursczech.cz/plan/AB12CD <span class="cp">Kopírovat</span></div>
+      <div class="shrow"><span class="shbtn">WhatsApp</span><span class="shbtn">E-mail</span><span class="shbtn">Messenger</span></div><div style="margin-top:10px;padding:10px 12px;background:#eef5f9;border-radius:10px;font-size:13px">✉️ <b>Poslat mi tento plán e-mailem</b> — uložíme vám rozplánovaný výlet a pošleme odkaz. <span style="color:#6b7280">(pálí generate_lead, event_label quote-request — soft lead do HubSpotu)</span></div>
+      <div class="gp"><b>👥 Pozvat ke spolu-úpravám</b><br>Skupina otevře trasu a může přidat/změnit/přeřadit zastávky a dopsat poznámky. Změny chodí jako <b>návrhy</b> — ty je potvrdíš. Bez účtů, přes odkaz.</div>
+    </div></div>
+    <div class="sheet"><div class="sh"><span>Návrhy od skupiny <span style="background:#1E88B5;color:#fff;border-radius:100px;padding:1px 9px;font-size:12px">2</span></span></div><div class="bd">
+      <div class="pr"><span>＋ přidat <b>Hlubokou</b> (90 min)<div class="who">navrhl Tomáš</div></span><button class="yes">Přijmout</button><button class="no">✕</button></div>
+      <div class="pr"><span>přeřadit <b>Krumlov</b> jako první<div class="who">navrhla Eva</div></span><button class="yes">Přijmout</button><button class="no">✕</button></div>
+      <p style="font-size:12px;color:var(--muted);margin:10px 0 0">Organizátor = jediné místo pravdy. Žádný real-time sync, žádné konflikty.</p>
+    </div></div>
+  </div></div>
+
+  <div class="note-call">
+    <b>Co bude v reálu sbalené (označeno oranžově):</b> Doplňky (osoby/zavazadla/sedačky/služby) pod jedním rozklikem · Rozpad ceny defaultně zavřený · „Co je v ceně" jako malý odkaz. Tady je ukazuju rozbalené, ať vidíš detail. <b>Sdílení + skupina</b> jdou z ↗ jako sheet, ne další lišta — na krocích trychtýře zůstává jen 1 spodní lišta. <b>Beze změny:</b> výpočet, vyhledávání, mapa, validace, odeslání.
+  </div>
+
+  <p class="foot">Kompletní návrh 2026-06-02 · statický mockup, reálné fotky z webu · na produkci ani dev2 nic nezměněno.</p>
+</div>
+
+<!-- ===== KOMENTOVACÍ VRSTVA (RF review) ===== -->
+<style>
+  #cmtbar{position:fixed;top:14px;right:14px;z-index:9999;display:flex;gap:8px;font-family:'Inter Tight',system-ui,sans-serif}
+  #cmtbar button{border:none;border-radius:100px;padding:9px 14px;font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 4px 14px rgba(20,40,60,.18)}
+  #cmtToggle{background:#1E88B5;color:#fff}#cmtToggle.on{background:#176f93}
+  #cmtCopy{background:#fff;color:#1C1C2E;border:1px solid #d3d9e0}
+  #cmtClear{background:#fff;color:#b42318;border:1px solid #f3c9c2}
+  body.cmtmode{cursor:crosshair}
+  .cmtpin{position:absolute;z-index:9998;width:26px;height:26px;border-radius:50% 50% 50% 2px;background:#ff7a18;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.3);transform:translate(-4px,-26px)}
+  .cmted{position:absolute;z-index:10000;width:252px;background:#fff;border:1px solid #d3d9e0;border-radius:12px;box-shadow:0 14px 40px rgba(20,40,60,.25);padding:10px;font-family:'Inter Tight',system-ui,sans-serif}
+  .cmted .ctx{font-size:11px;color:#6b7280;margin-bottom:6px}
+  .cmted textarea{width:100%;min-height:64px;border:1px solid #d3d9e0;border-radius:8px;padding:7px;font:inherit;font-size:13px;resize:vertical}
+  .cmted .rowx{display:flex;justify-content:space-between;margin-top:7px}
+  .cmted button{border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer}
+  .cmted .save{background:#1E88B5;color:#fff}.cmted .del{background:#fff;color:#b42318;border:1px solid #f3c9c2}
+  #cmthint{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);z-index:9999;background:#1C1C2E;color:#fff;font-size:12.5px;padding:8px 14px;border-radius:100px;font-family:'Inter Tight',system-ui,sans-serif;display:none}
+  body.cmtmode #cmthint{display:block}
+</style>
+<div id="cmtbar"><button id="cmtToggle">💬 Komentáře</button><button id="cmtCopy">Zkopírovat (0)</button><button id="cmtClear">Smazat</button></div>
+<div id="cmthint">Režim komentářů ZAP — klikni na konkrétní místo a napiš poznámku. Pak „Zkopírovat".</div>
+<script>
+(function(){
+  var KEY='ptcz_cmt_'+(location.pathname.split('/').pop()||'page');
+  var data=[]; try{data=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){}
+  var mode=false, openEd=null;
+  var tgl=document.getElementById('cmtToggle'), cpy=document.getElementById('cmtCopy'), clr=document.getElementById('cmtClear');
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){} cpy.textContent='Zkopírovat ('+data.length+')';}
+  function ctxAt(x,y){
+    var el=document.elementFromPoint(x-window.scrollX,y-window.scrollY), node=el, label='';
+    while(node && node!==document.body){ if(/^H[1-3]$/.test(node.tagName)){label=node.textContent.trim();break;} node=node.parentElement; }
+    if(!label){var h=el;while(h){var p=h.previousElementSibling;while(p){if(/^H[1-3]$/.test(p.tagName)){label=p.textContent.trim();break;}p=p.previousElementSibling;}if(label)break;h=h.parentElement;}}
+    return (label||'(stránka)').replace(/\s+/g,' ').slice(0,46);
+  }
+  function render(){
+    document.querySelectorAll('.cmtpin').forEach(function(p){p.remove();});
+    data.forEach(function(c){ var pin=document.createElement('div'); pin.className='cmtpin'; pin.textContent=c.n; pin.style.left=c.x+'px'; pin.style.top=c.y+'px'; pin.addEventListener('click',function(e){e.stopPropagation(); editor(c,c.x,c.y);}); document.body.appendChild(pin); });
+    cpy.textContent='Zkopírovat ('+data.length+')';
+  }
+  function editor(c,x,y){
+    if(openEd){openEd.remove();openEd=null;}
+    var ed=document.createElement('div'); ed.className='cmted';
+    ed.style.left=Math.min(x+10, window.scrollX+window.innerWidth-262)+'px'; ed.style.top=(y+4)+'px';
+    ed.innerHTML='<div class="ctx">#'+c.n+' · u: '+c.ctx+'</div><textarea placeholder="Tvá poznámka…"></textarea><div class="rowx"><button class="del">Smazat</button><button class="save">Hotovo</button></div>';
+    var ta=ed.querySelector('textarea'); ta.value=c.text||'';
+    ed.querySelector('.save').onclick=function(){c.text=ta.value; save(); ed.remove();openEd=null;};
+    ed.querySelector('.del').onclick=function(){data=data.filter(function(d){return d!==c}); data.forEach(function(d,i){d.n=i+1}); save(); ed.remove();openEd=null; render();};
+    ed.addEventListener('click',function(e){e.stopPropagation();});
+    document.body.appendChild(ed); openEd=ed; ta.focus();
+  }
+  tgl.onclick=function(){mode=!mode; document.body.classList.toggle('cmtmode',mode); tgl.classList.toggle('on',mode); tgl.textContent=mode?'💬 ZAP':'💬 Komentáře';};
+  clr.onclick=function(){if(confirm('Smazat všechny komentáře?')){data=[];save();render();if(openEd){openEd.remove();openEd=null;}}};
+  cpy.onclick=function(){
+    if(!data.length){cpy.textContent='Žádné komentáře'; setTimeout(function(){cpy.textContent='Zkopírovat (0)';},1200); return;}
+    var t='Komentáře k návrhu: '+document.title+'\n\n'+data.map(function(c){return '#'+c.n+' (u: '+c.ctx+'): '+(c.text||'(prázdné)');}).join('\n');
+    navigator.clipboard.writeText(t).then(function(){cpy.textContent='Zkopírováno ✓'; setTimeout(function(){cpy.textContent='Zkopírovat ('+data.length+')';},1500);},function(){alert(t);});
+  };
+  document.addEventListener('click',function(e){
+    if(!mode) return;
+    if(e.target.closest('#cmtbar')||e.target.closest('.cmted')||e.target.closest('.cmtpin')) return;
+    var c={n:data.length+1, x:e.pageX, y:e.pageY, text:'', ctx:ctxAt(e.pageX,e.pageY)};
+    data.push(c); save(); render(); editor(c,c.x,c.y);
+  });
+  render();
+})();
+</script>
+
+<div id="cmt-toolbar">
+  <button class="cbtn" id="cmt-copy">📋 Zkopírovat komentáře</button>
+  <button class="cbtn" id="cmt-clear">🗑 Vymazat</button>
+  <button class="cbtn" id="cmt-toggle">💬 Režim komentářů</button>
+</div>
+<div id="cmt-toast"></div>
+<style>
+#cmt-toolbar{position:fixed;right:14px;bottom:14px;z-index:99999;display:flex;flex-direction:column;gap:7px;align-items:flex-end;font-family:-apple-system,"Inter Tight",Segoe UI,Roboto,sans-serif}
+#cmt-toolbar .cbtn{font-size:12.5px;font-weight:600;border:1px solid #d3d9e0;background:#fff;color:#1C1C2E;border-radius:100px;padding:8px 13px;cursor:pointer;box-shadow:0 8px 24px rgba(28,28,46,.18)}
+#cmt-toolbar .cbtn.on{background:#1E88B5;color:#fff;border-color:#1E88B5}
+body.cmode{cursor:crosshair}
+.cmtpin{position:absolute;width:24px;height:24px;border-radius:50% 50% 50% 2px;background:#f5b400;color:#3a2c00;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;transform:translate(-4px,-24px);box-shadow:0 8px 24px rgba(28,28,46,.18);cursor:pointer;z-index:99990;border:2px solid #fff}
+.cmtbubble{position:absolute;z-index:99991;width:250px;background:#fff;border:1px solid #d3d9e0;border-radius:12px;box-shadow:0 10px 30px rgba(28,28,46,.22);padding:10px;font-family:-apple-system,"Inter Tight",sans-serif}
+.cmtbubble .bh{font-size:11px;font-weight:700;color:#176f93;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px;display:flex;justify-content:space-between;gap:8px}
+.cmtbubble .bh .x{cursor:pointer;color:#8a8f99;font-size:14px}
+.cmtbubble textarea{width:100%;border:1px solid #e7eaee;border-radius:8px;padding:8px;font-family:inherit;font-size:13px;resize:vertical;min-height:64px;outline:none}
+#cmt-toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:#1C1C2E;color:#fff;padding:10px 18px;border-radius:100px;font-size:13px;z-index:100000;box-shadow:0 8px 24px rgba(28,28,46,.18);opacity:0;transition:opacity .2s;font-family:-apple-system,sans-serif}#cmt-toast.show{opacity:1}
+@media print{#cmt-toolbar,.cmtpin,.cmtbubble{display:none!important}}
+</style>
+<script>
+(function(){
+  var KEY='ptcz_planovac_komplet_airy_comments_v1';var data=[];try{data=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){data=[]}
+  var mode=false,seq=data.reduce(function(m,c){return Math.max(m,c.n)},0);
+  var toggle=document.getElementById('cmt-toggle');
+  function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+  function sectionAt(y){var s=document.querySelectorAll('[data-sec],h1,h2,h3,h4'),b='Plánovač',bt=-1e9;s.forEach(function(e){var t=e.getBoundingClientRect().top+window.scrollY;if(t<=y+2&&t>bt){bt=t;b=(e.getAttribute&&e.getAttribute('data-sec'))||((e.textContent||'').trim().slice(0,40))||'Plánovač'}});return b}
+  function closeBubbles(){document.querySelectorAll('.cmtbubble').forEach(function(b){b.remove()})}
+  function openBubble(c){closeBubbles();var left=Math.min(c.x,(window.scrollX+document.documentElement.clientWidth)-262);if(left<6)left=6;
+    var bx=document.createElement('div');bx.className='cmtbubble';bx.style.left=left+'px';bx.style.top=(c.y+6)+'px';
+    var h=document.createElement('div');h.className='bh';var lab=document.createElement('span');lab.textContent='#'+c.n+' · '+c.sec;
+    var x=document.createElement('span');x.className='x';x.textContent='✕';x.addEventListener('click',function(e){e.stopPropagation();closeBubbles()});
+    h.appendChild(lab);h.appendChild(x);
+    var ta=document.createElement('textarea');ta.value=c.text||'';ta.placeholder='Tvoje poznámka…';
+    ta.addEventListener('input',function(){c.text=ta.value;save()});ta.addEventListener('click',function(e){e.stopPropagation()});
+    bx.appendChild(h);bx.appendChild(ta);bx.addEventListener('click',function(e){e.stopPropagation()});document.body.appendChild(bx);ta.focus()}
+  function renderPins(){document.querySelectorAll('.cmtpin').forEach(function(p){p.remove()});data.forEach(function(c){var p=document.createElement('div');p.className='cmtpin';p.textContent=c.n;p.style.left=c.x+'px';p.style.top=c.y+'px';p.title=c.sec;p.addEventListener('click',function(e){e.stopPropagation();openBubble(c)});document.body.appendChild(p)})}
+  function toast(m){var t=document.getElementById('cmt-toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},1900)}
+  toggle.addEventListener('click',function(){mode=!mode;document.body.classList.toggle('cmode',mode);toggle.classList.toggle('on',mode);toggle.textContent=mode?'✓ Komentuju (klikni na stránku)':'💬 Režim komentářů';if(!mode)closeBubbles()});
+  document.addEventListener('click',function(e){if(!mode)return;if(e.target.closest('#cmt-toolbar')||e.target.closest('.cmtbubble')||e.target.closest('.cmtpin'))return;if(e.target.closest('a')||e.target.closest('summary')||e.target.closest('button')){e.preventDefault();e.stopPropagation()}seq++;var c={n:seq,x:Math.round(e.pageX),y:Math.round(e.pageY),sec:sectionAt(e.pageY),text:''};data.push(c);save();renderPins();openBubble(c)},true);
+  document.getElementById('cmt-copy').addEventListener('click',function(){var fl=data.slice().sort(function(a,b){return a.n-b.n}).filter(function(c){return (c.text||'').trim()});if(!fl.length){toast('Žádné vyplněné komentáře');return}var out='Komentáře — Plánovač (KOMPLET) ('+new Date().toLocaleDateString('cs-CZ')+')\n\n'+fl.map(function(c){return '#'+c.n+' ['+c.sec+']: '+c.text.trim()}).join('\n');(navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(out):Promise.reject()).then(function(){toast('Zkopírováno — vlož mi je do chatu')}).catch(function(){var t2=document.createElement('textarea');t2.value=out;document.body.appendChild(t2);t2.select();try{document.execCommand('copy');toast('Zkopírováno')}catch(e){alert(out)}document.body.removeChild(t2)})});
+  document.getElementById('cmt-clear').addEventListener('click',function(){if(!data.length)return;if(confirm('Smazat všechny komentáře?')){data=[];seq=0;save();renderPins();closeBubbles()}});
+  renderPins();
+})();
+</script>
+
+</body>
+</html>
