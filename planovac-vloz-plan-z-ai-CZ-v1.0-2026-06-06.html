@@ -102,6 +102,28 @@ body.cmode{cursor:crosshair}
 .bubble textarea{width:100%;border:1px solid var(--line,#e7eaee);border-radius:8px;padding:8px;font-family:var(--font-sans,'Inter Tight',sans-serif);font-size:13px;resize:vertical;min-height:64px;outline:none}
 .toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:var(--ink,#1C1C2E);color:#fff;padding:10px 18px;border-radius:100px;font-size:13px;z-index:10000;box-shadow:0 8px 24px rgba(28,28,46,.16);opacity:0;transition:opacity .2s}.toast.show{opacity:1}
 @media print{#cmt-toolbar,.pin,.bubble,.pvnav{display:none!important}}
+/* ====== VZDUŠNĚJŠÍ VARIANTA 2026 — pouze vizuál (white space, lehčí stíny/linky, větší radius). Obsah, utilita i funkce beze změny. ====== */
+:root{--sh1:0 1px 2px rgba(28,28,46,.04);--sh2:0 16px 44px rgba(28,28,46,.07);--sh-cta:0 6px 22px rgba(30,136,181,.22);--line:#eef1f5;--r-card:20px;--r-img:16px}
+body{line-height:1.72;font-size:16.5px}
+.hero{padding:52px 0 14px}
+.kick{margin-bottom:14px}
+h1{margin:0 0 16px}
+.lead{margin:0 0 26px;line-height:1.66}
+.pin-box{margin:14px 0 10px}
+.pin-box .lbl{padding:13px 16px}
+.pin-box textarea{padding:18px;line-height:1.6}
+.pin-box .bar{padding:13px 16px}
+.results{padding:26px 0 14px}
+.sumline{padding:15px 18px;margin:10px 0 22px;border-radius:14px}
+.rescard{margin:18px 0}
+.rescard .top{padding:18px;gap:16px}
+.rescard .diff{padding:8px 18px 18px}
+.diff li{padding:8px 0}
+.band{padding:24px 26px;margin:22px 0}
+.cta{margin:26px 0 10px}
+.tft-in{padding:44px 28px}
+.foot{padding:30px 24px 96px}
+@media(max-width:760px){.hero{padding:36px 0 10px}}
 </style>
 </head>
 <body>

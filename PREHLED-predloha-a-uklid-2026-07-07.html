@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nový web — předloha · kontrola dev2 · úklid — 7. 7. 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#1E88B5;
+    --blue-dark:#176f93;
+    --ink:#1C1C2E;
+    --gold:#f5b400;
+    --green:#1e9e6a;
+    --amber:#c77700;
+    --paper:#f7f8fa;
+    --card:#ffffff;
+    --muted:#5b5f6e;
+    --line:#e4e7ec;
+    --radius:18px;
+    --shadow:0 4px 18px rgba(28,28,46,.07);
+    --shadow-soft:0 2px 8px rgba(28,28,46,.06);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Source Serif 4', Georgia, 'Times New Roman', serif, system-ui;
+    font-size:17px;
+    line-height:1.6;
+    position:relative;
+    -webkit-text-size-adjust:100%;
+  }
+  h1,h2,h3,h4{
+    font-family:'Inter Tight', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    line-height:1.2;
+    margin:0 0 .5em;
+    letter-spacing:-.01em;
+  }
+  a{color:var(--blue-dark)}
+  .wrap{max-width:1080px;margin:0 auto;padding:64px 16px 80px}
+  .mono{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:.82em;
+    background:rgba(30,136,181,.08);
+    border-radius:6px;
+    padding:1px 6px;
+    word-break:break-all;
+  }
+
+  /* ===== Header ===== */
+  header.page-head{margin-bottom:34px}
+  .eyebrow{
+    font-family:'Inter Tight',sans-serif;
+    font-weight:700;
+    font-size:.74rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--blue);
+    margin-bottom:10px;
+  }
+  h1.title{font-size:1.65rem;font-weight:800;max-width:760px}
+  .date-chip{
+    display:inline-block;
+    margin-top:10px;
+    background:var(--ink);
+    color:#fff;
+    font-family:'Inter Tight',sans-serif;
+    font-weight:600;
+    font-size:.82rem;
+    padding:5px 14px;
+    border-radius:999px;
+  }
+  nav.quick{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  nav.quick a{
+    font-family:'Inter Tight',sans-serif;
+    font-weight:600;
+    font-size:.85rem;
+    text-decoration:none;
+    color:var(--blue-dark);
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:6px 14px;
+    box-shadow:var(--shadow-soft);
+  }
+  nav.quick a:hover{border-color:var(--blue)}
+
+  /* ===== Sections ===== */
+  section{margin-top:52px}
+  .sec-tag{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'Inter Tight',sans-serif;font-weight:700;font-size:.78rem;
+    letter-spacing:.1em;text-transform:uppercase;color:#fff;
+    background:var(--blue);border-radius:999px;padding:5px 14px;margin-bottom:12px;
+  }
+  section h2{font-size:1.35rem;font-weight:800}
+  .lead{max-width:760px;color:var(--ink);margin:0 0 6px}
+  .note-small{font-size:.85rem;color:var(--muted);margin:4px 0 0}
+
+  /* ===== Cards grid ===== */
+  .grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:16px;
+    margin-top:22px;
+  }
+  @media(min-width:600px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:900px){.grid{grid-template-columns:repeat(3,1fr)}}
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow-soft);
+    padding:20px 20px 18px;
+    display:flex;flex-direction:column;
+    transition:box-shadow .15s ease, transform .15s ease;
+  }
+  .card:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+  .card-star{border:2px solid var(--gold)}
+  .card-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .card-num{
+    flex:none;width:30px;height:30px;border-radius:10px;
+    background:rgba(30,136,181,.12);color:var(--blue-dark);
+    font-family:'Inter Tight',sans-serif;font-weight:800;font-size:.95rem;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .card-star .card-num{background:var(--gold);color:var(--ink)}
+  .card h3{font-size:1.02rem;font-weight:700;margin:0}
+  .badge-vstup{
+    font-family:'Inter Tight',sans-serif;font-weight:700;font-size:.62rem;
+    letter-spacing:.1em;background:var(--gold);color:var(--ink);
+    border-radius:6px;padding:2px 7px;margin-left:auto;flex:none;
+  }
+  .card p{margin:0 0 14px;font-size:.92rem;color:var(--muted);flex:1}
+  .btn{
+    display:block;text-align:center;text-decoration:none;
+    font-family:'Inter Tight',sans-serif;font-weight:700;font-size:.95rem;
+    background:var(--blue);color:#fff !important;
+    border-radius:12px;padding:12px 10px;
+    transition:background .15s ease;
+  }
+  .btn:hover{background:var(--blue-dark)}
+  .under-grid{
+    margin-top:16px;font-size:.88rem;color:var(--muted);
+    background:#fff;border:1px dashed var(--line);border-radius:12px;padding:10px 16px;
+  }
+
+  /* ===== Steps ===== */
+  .steps{display:flex;flex-direction:column;gap:6px;margin-top:24px;align-items:stretch}
+  @media(min-width:820px){.steps{flex-direction:row;align-items:stretch;gap:0}}
+  .step{
+    flex:1;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow-soft);padding:22px 20px;position:relative;
+  }
+  .step-num{
+    width:44px;height:44px;border-radius:14px;background:var(--blue);color:#fff;
+    font-family:'Inter Tight',sans-serif;font-weight:800;font-size:1.3rem;
+    display:flex;align-items:center;justify-content:center;margin-bottom:12px;
+  }
+  .step h3{font-size:1.02rem;font-weight:800;text-transform:uppercase;letter-spacing:.03em}
+  .step p{margin:0;font-size:.92rem;color:var(--muted)}
+  .step-arrow{
+    flex:none;display:flex;align-items:center;justify-content:center;
+    color:var(--blue);font-size:1.7rem;font-weight:800;
+    font-family:'Inter Tight',sans-serif;padding:2px 0;
+  }
+  @media(min-width:820px){.step-arrow{padding:0 12px}}
+  .step-arrow .h{display:none}
+  .step-arrow .v{display:block}
+  @media(min-width:820px){
+    .step-arrow .h{display:block}
+    .step-arrow .v{display:none}
+  }
+  .alert{
+    margin-top:22px;
+    background:#fdf0ea;
+    border:2px solid #e05d2d;
+    border-radius:var(--radius);
+    padding:18px 22px;
+    box-shadow:var(--shadow-soft);
+  }
+  .alert strong{color:#b23a12}
+  .alert .note-small{color:#8a5a3f}
+
+  /* ===== Cleanup columns ===== */
+  .cols{display:grid;grid-template-columns:1fr;gap:16px;margin-top:24px}
+  @media(min-width:820px){.cols{grid-template-columns:1fr 1fr}}
+  .col{
+    border-radius:var(--radius);
+    padding:20px 22px;
+    box-shadow:var(--shadow-soft);
+    background:#fff;
+  }
+  .col-keep{border:2px solid var(--green)}
+  .col-arch{border:2px solid var(--amber)}
+  .col h3{font-size:1.02rem;font-weight:800;display:flex;align-items:center;gap:8px}
+  .col-keep h3{color:var(--green)}
+  .col-arch h3{color:var(--amber)}
+  .col ul{list-style:none;margin:14px 0 0;padding:0}
+  .col li{
+    padding:9px 0 9px 26px;
+    border-top:1px solid var(--line);
+    font-size:.9rem;
+    position:relative;
+  }
+  .col li:first-child{border-top:none}
+  .col li::before{
+    position:absolute;left:0;top:9px;font-size:.85rem;
+  }
+  .col-keep li::before{content:"✓";color:var(--green);font-weight:700}
+  .col-arch li::before{content:"→";color:var(--amber);font-weight:700}
+  .col li .what{color:var(--muted)}
+  .li-warn{
+    display:block;margin-top:4px;font-size:.82rem;color:#b23a12;
+    background:#fdf0ea;border-radius:8px;padding:4px 10px;
+  }
+  .li-info{
+    display:block;margin-top:4px;font-size:.82rem;color:#6b5a1e;
+    background:#fdf6df;border-radius:8px;padding:4px 10px;
+  }
+  .gray-box{
+    margin-top:16px;background:#eef0f3;border-radius:12px;
+    padding:12px 18px;font-size:.85rem;color:var(--muted);
+  }
+
+  footer.page-foot{
+    margin-top:60px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:.82rem;color:var(--muted);
+    font-family:'Inter Tight',sans-serif;
+  }
+
+  /* ===== Komentovací vrstva ===== */
+  #toolbar{
+    position:fixed;top:10px;right:10px;z-index:600;
+    display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;
+  }
+  #toolbar button{
+    font-family:'Inter Tight',sans-serif;font-weight:700;font-size:.82rem;
+    border:1px solid var(--line);border-radius:999px;
+    background:#fff;color:var(--ink);
+    padding:8px 14px;cursor:pointer;box-shadow:var(--shadow-soft);
+  }
+  #toolbar button:hover{border-color:var(--blue)}
+  #btnMode.active{background:var(--blue);border-color:var(--blue);color:#fff}
+  #btnCopy .cnt{
+    display:inline-block;background:var(--gold);color:var(--ink);
+    border-radius:999px;padding:0 7px;margin-left:5px;font-size:.78rem;
+  }
+  #modeHint{
+    display:none;position:fixed;top:52px;right:10px;z-index:600;
+    max-width:260px;background:var(--ink);color:#fff;
+    font-family:'Inter Tight',sans-serif;font-size:.78rem;font-weight:600;
+    border-radius:10px;padding:8px 12px;box-shadow:var(--shadow);
+    line-height:1.45;
+  }
+  #pinLayer{
+    position:absolute;inset:0;z-index:500;
+    pointer-events:none;
+  }
+  body.comment-mode #pinLayer{pointer-events:auto;cursor:crosshair}
+  .pin{
+    position:absolute;width:28px;height:28px;margin:-14px 0 0 -14px;
+    border-radius:50%;border:2px solid #fff;
+    background:var(--gold);color:var(--ink);
+    font-family:'Inter Tight',sans-serif;font-weight:800;font-size:.82rem;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 2px 8px rgba(28,28,46,.35);
+    cursor:pointer;padding:0;
+    pointer-events:none;
+  }
+  body.comment-mode .pin{pointer-events:auto}
+  .pin-pop{
+    position:absolute;width:290px;max-width:86vw;
+    background:#fff;border:1px solid var(--line);border-radius:14px;
+    box-shadow:var(--shadow);padding:12px 14px;z-index:502;
+  }
+  .pin-pop-head{
+    font-family:'Inter Tight',sans-serif;font-weight:800;font-size:.85rem;margin-bottom:8px;
+  }
+  .pin-pop-head span{display:block;font-weight:600;color:var(--muted);font-size:.76rem;margin-top:2px}
+  .pin-pop textarea{
+    width:100%;min-height:70px;resize:vertical;
+    font-family:'Source Serif 4',Georgia,serif;font-size:.9rem;
+    border:1px solid var(--line);border-radius:10px;padding:8px 10px;
+  }
+  .pin-pop textarea:focus{outline:2px solid var(--blue);border-color:var(--blue)}
+  .pin-pop-row{display:flex;justify-content:space-between;gap:8px;margin-top:8px}
+  .pin-pop-row button{
+    font-family:'Inter Tight',sans-serif;font-weight:700;font-size:.78rem;
+    border-radius:8px;border:1px solid var(--line);cursor:pointer;padding:6px 12px;background:#fff;
+  }
+  .pin-del{color:#b23a12}
+  .pin-ok{background:var(--blue) !important;border-color:var(--blue) !important;color:#fff}
+</style>
+</head>
+<body>
+
+<!-- ===== Komentovací toolbar ===== -->
+<div id="toolbar">
+  <button type="button" id="btnMode">✍️ Režim komentářů</button>
+  <button type="button" id="btnCopy">📋 Zkopírovat komentáře</button>
+</div>
+<div id="modeHint">Klikni kamkoli do stránky — vznikne číslovaný pin s poznámkou. Kliknutím na pin poznámku upravíš nebo smažeš.</div>
+
+<div class="wrap">
+
+  <!-- ===== Hlavička ===== -->
+  <header class="page-head">
+    <div class="eyebrow">Private Tours Czech · Nový web</div>
+    <h1 class="title">Nový web — co je předloha · jak se kontroluje dev2 · co uklidit</h1>
+    <span class="date-chip">7. 7. 2026</span>
+    <nav class="quick" aria-label="Rychlá navigace">
+      <a href="#sec-predloha">1 · Předloha</a>
+      <a href="#sec-kontrola">2 · Kontrola dev2</a>
+      <a href="#sec-uklid">3 · Úklid složky</a>
+    </nav>
+  </header>
+
+  <!-- ===== SEKCE 1: PŘEDLOHA ===== -->
+  <section id="sec-predloha">
+    <span class="sec-tag">Sekce 1 · Grafická předloha</span>
+    <h2>Co beru jako předlohu</h2>
+    <p class="lead">Tohle je <strong>jediná grafická předloha nového webu — vzdušná verze</strong>. Martin z ní staví. Klikni na kartu a náhled se otevře.</p>
+    <p class="note-small">Otevírej lokálně (dvojklik z Disku) — z Google Drive náhledu se HTML nevykreslí.</p>
+
+    <div class="grid">
+      <div class="card card-star">
+        <div class="card-top">
+          <span class="card-num">1</span>
+          <h3>Rozcestník</h3>
+          <span class="badge-vstup">VSTUP</span>
+        </div>
+        <p>Úvodní stránka s odkazy na všechny náhledy — začni tady.</p>
+        <a class="btn" href="index.html" target="_blank" rel="noopener">Otevřít náhled</a>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-num">2</span>
+          <h3>Homepage</h3>
+        </div>
+        <p>Hlavní stránka nového webu — hero, výlety, recenze, spodní lišta.</p>
+        <a class="btn" href="homepage-nova-v1.1-CZ-vzdusny-2026-06-14.html" target="_blank" rel="noopener">Otevřít náhled</a>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-num">3</span>
+          <h3>Detail výletu — CZ</h3>
+        </div>
+        <p>Vzorová stránka výletu (Český Krumlov) v české verzi.</p>
+        <a class="btn" href="detail-vyletu-cesky-krumlov-KOMPLET-CZ-vzdusny-2026-06-14.html" target="_blank" rel="noopener">Otevřít náhled</a>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-num">4</span>
+          <h3>Detail výletu — EN</h3>
+        </div>
+        <p>Stejná stránka výletu v anglické verzi pro zahraniční turisty.</p>
+        <a class="btn" href="detail-vyletu-cesky-krumlov-KOMPLET-vzdusny-2026-06-14.html" target="_blank" rel="noopener">Otevřít náhled</a>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-num">5</span>
+          <h3>Plánovač</h3>
+        </div>
+        <p>Sestavení vlastního výletu krok za krokem (Tour Builder).</p>
+        <a class="btn" href="planovac-redesign-KOMPLET-vzdusny-2026-06-14.html" target="_blank" rel="noopener">Otevřít náhled</a>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-num">6</span>
+          <h3>Blog článek</h3>
+        </div>
+        <p>Vzhled článku na blogu — nadpisy, fotky, FAQ a tlačítka.</p>
+        <a class="btn" href="blog-clanek-nova-v1.0-CZ-vzdusny-2026-06-14.html" target="_blank" rel="noopener">Otevřít náhled</a>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-num">7</span>
+          <h3>Partnerský program</h3>
+        </div>
+        <p>Stránka pro hotely a partnery, kteří nám doporučují hosty.</p>
+        <a class="btn" href="partnersky-program-nova-v1.0-CZ-2026-06-07.html" target="_blank" rel="noopener">Otevřít náhled</a>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-num">8</span>
+          <h3>Vlož plán z AI</h3>
+        </div>
+        <p>Vložení hotového plánu cesty (např. z ChatGPT) rovnou do plánovače.</p>
+        <a class="btn" href="planovac-vloz-plan-z-ai-CZ-v1.0-2026-06-06.html" target="_blank" rel="noopener">Otevřít náhled</a>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-num">9</span>
+          <h3>Rozšířená sticky lišta</h3>
+        </div>
+        <p>Spodní rezervační lišta — jak vypadá na mobilu, iPadu i počítači.</p>
+        <a class="btn" href="sticky-footer-rozsireny-mobil-ipad-pc-2026-06-14.html" target="_blank" rel="noopener">Otevřít náhled</a>
+      </div>
+    </div>
+
+    <div class="under-grid">📄 Master plán (text pro Martina): <span class="mono">plan-nasazeni-martin-web-v1.0-2026-06-06.html</span></div>
+  </section>
+
+  <!-- ===== SEKCE 2: KONTROLA DEV2 ===== -->
+  <section id="sec-kontrola">
+    <span class="sec-tag">Sekce 2 · Kontrola</span>
+    <h2>Jak se kontroluje dev2 proti předloze</h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Předloha</h3>
+        <p>Tyto náhledy = jak má nový web vypadat. Jediný platný zdroj vzhledu.</p>
+      </div>
+      <div class="step-arrow" aria-hidden="true"><span class="h">→</span><span class="v">↓</span></div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Martin staví na dev2</h3>
+        <p>Martin podle předlohy staví nový web na zkušební adrese dev2 — mimo ostrý web.</p>
+      </div>
+      <div class="step-arrow" aria-hidden="true"><span class="h">→</span><span class="v">↓</span></div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Porovnání 1:1</h3>
+        <p>Hotové stránky na dev2 se porovnají s náhledem: rozvržení, barvy, mezery, texty, CTA tlačítka, mobil.</p>
+      </div>
+    </div>
+
+    <div class="alert">
+      <strong>⚠️ Teď dev2 vizuálně zkontrolovat NEJDE</strong> — dev2 je za přihlášením (chodí chyba 401) a nemám přístupové údaje. Jakmile přístup bude, projedu hotové stránky proti těmto náhledům a dám seznam rozdílů.
+      <p class="note-small">Obsahové kontroly přes API (texty, schema) jdou i teď; vizuál potřebuje přihlášení.</p>
+    </div>
+  </section>
+
+  <!-- ===== SEKCE 3: ÚKLID ===== -->
+  <section id="sec-uklid">
+    <span class="sec-tag">Sekce 3 · Úklid</span>
+    <h2>Úklid sdílené složky — co nechat / co uklidit</h2>
+    <p class="lead">V PTC-Dev-Shared leží vedle platné předlohy i <strong>starší verze týchž stránek</strong> — to je riziko, že Martin postaví ze špatné. Návrh: staré přesunout do podsložky <span class="mono">_ARCHIV</span>, ať je vidět jeden čistý zdroj.</p>
+
+    <div class="cols">
+      <!-- NECHAT -->
+      <div class="col col-keep">
+        <h3>✅ NECHAT — platná předloha</h3>
+        <ul>
+          <li><span class="mono">index.html</span> <span class="what">— rozcestník</span></li>
+          <li><span class="mono">homepage-nova-v1.1-CZ-vzdusny-2026-06-14.html</span> <span class="what">— homepage</span></li>
+          <li><span class="mono">detail-vyletu-cesky-krumlov-KOMPLET-CZ-vzdusny-2026-06-14.html</span> <span class="what">— detail CZ</span></li>
+          <li><span class="mono">detail-vyletu-cesky-krumlov-KOMPLET-vzdusny-2026-06-14.html</span> <span class="what">— detail EN</span></li>
+          <li><span class="mono">planovac-redesign-KOMPLET-vzdusny-2026-06-14.html</span> <span class="what">— plánovač</span></li>
+          <li><span class="mono">blog-clanek-nova-v1.0-CZ-vzdusny-2026-06-14.html</span> <span class="what">— blog</span></li>
+          <li><span class="mono">partnersky-program-nova-v1.0-CZ-2026-06-07.html</span> <span class="what">— partnerský program</span></li>
+          <li><span class="mono">planovac-vloz-plan-z-ai-CZ-v1.0-2026-06-06.html</span> <span class="what">— vlož plán z AI</span></li>
+          <li><span class="mono">sticky-footer-rozsireny-mobil-ipad-pc-2026-06-14.html</span> <span class="what">— sticky lišta</span></li>
+          <li><span class="mono">plan-nasazeni-martin-web-v1.0-2026-06-06.html</span> <span class="what">— master plán (aktuální, 39 kB)</span></li>
+        </ul>
+      </div>
+
+      <!-- DO ARCHIVU -->
+      <div class="col col-arch">
+        <h3>🗂️ UKLIDIT — starší verze, matou</h3>
+        <ul>
+          <li><span class="mono">homepage-nova-v1.1-CZ-k-revizi-2026-06-07.html</span> <span class="what">— starší homepage</span></li>
+          <li><span class="mono">detail-vyletu-cesky-krumlov-KOMPLET-CZ-v1.0-2026-06-06.html</span> <span class="what">— starší detail CZ</span></li>
+          <li><span class="mono">detail-vyletu-cesky-krumlov-KOMPLET-v1.0-2026-06-06.html</span> <span class="what">— starší detail EN</span></li>
+          <li><span class="mono">blog-clanek-nova-v1.0-CZ-2026-06-07.html</span> <span class="what">— starší blog (ne-vzdušný)</span></li>
+          <li><span class="mono">planovac-redesign-KOMPLET-komentovatelny.html</span> <span class="what">— starší plánovač</span></li>
+          <li><span class="mono">NAHLEDY-nova-verze-HUB-2026-06-07.html</span> <span class="what">— starý rozcestník s přepínačem (nahrazen <span class="mono">index.html</span>)</span></li>
+          <li><span class="mono">hero-tlacitka-CZ-EN-pro-martina.html</span>, <span class="mono">hero-buttons-beforeafter-CZ-EN.html</span>, <span class="mono">hero-layout-navrh.html</span> <span class="what">— staré hero návrhy</span></li>
+          <li><span class="mono">kategorie-ikony-tour-karta.html</span>, <span class="mono">kategorie-tour-karta-before-after.html</span> <span class="what">— staré návrhy tour karty</span></li>
+          <li><span class="mono">plan-nasazeni-martin-web-v1.0-2026-06-06-ARCHIV.html</span> <span class="what">— starý plán</span>
+            <span class="li-warn">⚠️ Úkol na něj omylem odkazuje — opravit odkaz na aktuální plán.</span>
+          </li>
+          <li><span class="mono">cta-system-navrh-2026-06-13.html</span> <span class="what">— zdroj CTA systému, už zapracován</span>
+            <span class="li-info">ℹ️ Nechat jako referenci, jinak archiv.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="gray-box">Ostatní soubory ve složce (Popojedu, PHP, JSON zálohy, specy, Martinovy pracovní složky) NEŘEŠÍME — patří k jiným úkolům, zůstávají.</div>
+  </section>
+
+  <footer class="page-foot">PrivateToursCzech · přehled předlohy nového webu, kontroly dev2 a úklidu sdílené složky · sestaveno 7. 7. 2026</footer>
+</div>
+
+<!-- ===== Vrstva pro piny komentářů ===== -->
+<div id="pinLayer" aria-hidden="true"></div>
+
+<script>
+(function(){
+  var KEY = 'ptcz-prehled-uklid-2026-07-07-comments';
+  var mode = false;
+  var comments = load();
+  var layer = document.getElementById('pinLayer');
+  var btnMode = document.getElementById('btnMode');
+  var btnCopy = document.getElementById('btnCopy');
+  var hint = document.getElementById('modeHint');
+  var openPop = null, openFor = null;
+
+  function load(){
+    try { return JSON.parse(localStorage.getItem(KEY)) || []; }
+    catch(e){ return []; }
+  }
+  function save(){
+    try { localStorage.setItem(KEY, JSON.stringify(comments)); } catch(e){}
+  }
+  function nextId(){
+    var m = 0;
+    for (var i = 0; i < comments.length; i++) if (comments[i].n > m) m = comments[i].n;
+    return m + 1;
+  }
+  function esc(s){
+    return String(s).replace(/[&<>"']/g, function(m){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];
+    });
+  }
+
+  // Najdi nejbližší nadpis NAD místem kliknutí (při shodné výšce ten vodorovně nejbližší)
+  function nearestHeading(x, y){
+    var cand = null, candTop = -1, candDx = Infinity;
+    var hs = document.querySelectorAll('h1, h2, h3');
+    for (var i = 0; i < hs.length; i++){
+      var r = hs[i].getBoundingClientRect();
+      var top = r.top + window.scrollY;
+      if (top > y + 8) continue;
+      var cx = r.left + window.scrollX + r.width / 2;
+      var dx = Math.abs(cx - x);
+      if (top > candTop + 4){ cand = hs[i]; candTop = top; candDx = dx; }
+      else if (Math.abs(top - candTop) <= 4 && dx < candDx){ cand = hs[i]; candDx = dx; }
+    }
+    return cand ? cand.textContent.replace(/\s+/g, ' ').trim() : '(začátek stránky)';
+  }
+
+  function updateCount(){
+    var n = comments.length;
+    btnCopy.innerHTML = '📋 Zkopírovat komentáře' + (n ? ' <span class="cnt">' + n + '</span>' : '');
+  }
+
+  function render(){
+    var old = layer.querySelectorAll('.pin, .pin-pop');
+    for (var i = 0; i < old.length; i++) old[i].parentNode.removeChild(old[i]);
+    openPop = null; openFor = null;
+    comments.forEach(function(c){
+      var pin = document.createElement('button');
+      pin.className = 'pin';
+      pin.type = 'button';
+      pin.textContent = c.n;
+      pin.style.left = c.x + 'px';
+      pin.style.top = c.y + 'px';
+      pin.title = 'Poznámka #' + c.n + ' · ' + c.sec;
+      pin.addEventListener('click', function(ev){
+        ev.stopPropagation();
+        togglePop(c);
+      });
+      layer.appendChild(pin);
+    });
+    updateCount();
+  }
+
+  function closePop(){
+    if (openPop){ openPop.parentNode.removeChild(openPop); openPop = null; openFor = null; }
+  }
+
+  function togglePop(c){
+    if (openFor === c.n){ closePop(); return; }
+    closePop();
+    var pop = document.createElement('div');
+    pop.className = 'pin-pop';
+    var docW = document.documentElement.clientWidth;
+    var left = c.x + 18;
+    if (left + 300 > docW) left = Math.max(8, c.x - 305);
+    pop.style.left = left + 'px';
+    pop.style.top = (c.y + 14) + 'px';
+
+    var head = document.createElement('div');
+    head.className = 'pin-pop-head';
+    head.innerHTML = 'Poznámka #' + c.n + ' <span>' + esc(c.sec) + '</span>';
+
+    var ta = document.createElement('textarea');
+    ta.placeholder = 'Napiš poznámku…';
+    ta.value = c.text || '';
+    ta.addEventListener('input', function(){ c.text = ta.value; save(); });
+    ta.addEventListener('click', function(ev){ ev.stopPropagation(); });
+
+    var del = document.createElement('button');
+    del.type = 'button'; del.className = 'pin-del'; del.textContent = '🗑 Smazat';
+    del.addEventListener('click', function(ev){
+      ev.stopPropagation();
+      comments = comments.filter(function(k){ return k.n !== c.n; });
+      save(); render();
+    });
+
+    var ok = document.createElement('button');
+    ok.type = 'button'; ok.className = 'pin-ok'; ok.textContent = 'Hotovo';
+    ok.addEventListener('click', function(ev){ ev.stopPropagation(); closePop(); });
+
+    var row = document.createElement('div');
+    row.className = 'pin-pop-row';
+    row.appendChild(del); row.appendChild(ok);
+
+    pop.appendChild(head); pop.appendChild(ta); pop.appendChild(row);
+    pop.addEventListener('click', function(ev){ ev.stopPropagation(); });
+    layer.appendChild(pop);
+    openPop = pop; openFor = c.n;
+    ta.focus();
+  }
+
+  // Klik do vrstvy = nový pin (jen v režimu komentářů)
+  layer.addEventListener('click', function(e){
+    if (!mode) return;
+    if (openPop){ closePop(); return; }
+    var x = e.pageX, y = e.pageY;
+    var c = { n: nextId(), x: x, y: y, sec: nearestHeading(x, y), text: '' };
+    comments.push(c);
+    save(); render(); togglePop(c);
+  });
+
+  btnMode.addEventListener('click', function(){
+    mode = !mode;
+    document.body.classList.toggle('comment-mode', mode);
+    btnMode.classList.toggle('active', mode);
+    btnMode.textContent = mode ? '✍️ Komentáře: ZAPNUTO' : '✍️ Režim komentářů';
+    hint.style.display = mode ? 'block' : 'none';
+    if (!mode) closePop();
+  });
+
+  btnCopy.addEventListener('click', function(){
+    var list = comments.slice().sort(function(a, b){ return a.n - b.n; });
+    if (!list.length){ flash('Žádné komentáře'); return; }
+    var out = 'KOMENTÁŘE — Přehled předlohy a úklidu (7. 7. 2026)\n';
+    out += 'Celkem: ' + list.length + '\n\n';
+    list.forEach(function(c){
+      out += '#' + c.n + ' · sekce: ' + c.sec + '\n' + ((c.text || '').trim() || '(bez textu)') + '\n\n';
+    });
+    copyText(out.trim()).then(function(ok){
+      flash(ok ? '✅ Zkopírováno (' + list.length + ')' : '❌ Nešlo zkopírovat');
+    });
+  });
+
+  function flash(msg){
+    btnCopy.textContent = msg;
+    setTimeout(updateCount, 1700);
+  }
+
+  function copyText(t){
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      return navigator.clipboard.writeText(t).then(function(){ return true; }, function(){ return fallbackCopy(t); });
+    }
+    return Promise.resolve(fallbackCopy(t));
+  }
+  function fallbackCopy(t){
+    var ta = document.createElement('textarea');
+    ta.value = t;
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch(e){}
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
