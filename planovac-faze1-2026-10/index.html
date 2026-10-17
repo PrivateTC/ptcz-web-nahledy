@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plánovač – předloha Fáze 1 (dnes / předloha)</title>
+<meta name="robots" content="noindex">
+<style>
+:root{--p:#1E88B5;--t:#1c1c2e;--m:#6B6B6B;--b:#e5e7eb;--e:#d92d20;--ok:#12b76a;--bg:#f6f7f9}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Inter Tight",Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--t);background:#fff;line-height:1.45}
+header.top{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--b);padding:10px 20px;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+header.top h1{font-size:17px;margin:0 auto 0 0}
+.seg{display:inline-flex;border:1.5px solid var(--b);border-radius:999px;overflow:hidden}
+.seg button{border:0;background:#fff;padding:8px 14px;font:inherit;font-size:13px;cursor:pointer;color:var(--t)}
+.seg button[aria-pressed="true"]{background:var(--p);color:#fff}
+.btn{border:1.5px solid var(--b);background:#fff;border-radius:999px;padding:8px 14px;font:inherit;font-size:13px;cursor:pointer}
+.btn.on{background:var(--e);color:#fff;border-color:var(--e)}
+main{max-width:1500px;margin:0 auto;padding:20px}
+h2{font-size:20px;margin:36px 0 6px}
+h3{font-size:15px;margin:18px 0 6px}
+.popis{color:var(--m);margin:0 0 8px;max-width:980px}
+.lead{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin:16px 0 8px}
+.box{border:1.5px solid var(--b);border-radius:16px;padding:14px 16px;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.box h3{margin-top:0}
+.box.warn{border-color:#f4c7c3;background:#fff8f7}
+.box ul{margin:0;padding-left:18px}
+.box li{margin:4px 0}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{border-bottom:1px solid var(--b);padding:7px 8px;text-align:left;vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--m)}
+details.kroky{margin:4px 0 10px}
+details.kroky summary{cursor:pointer;color:var(--p);font-size:13.5px}
+details.kroky ol,details.kroky ul{font-size:13.5px;color:var(--m)}
+ul.hotovo li{color:var(--t)}
+.mrizka{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.kart{border:1.5px solid var(--b);border-radius:14px;padding:8px;background:var(--bg)}
+.kart .lbl{display:flex;justify-content:space-between;font-size:12px;color:var(--m);margin:0 2px 6px}
+.kart .lbl b{color:var(--t)}
+.kart.predloha .lbl b{color:var(--p)}
+.kart img{width:100%;height:auto;display:block;border-radius:8px;border:1px solid var(--b);background:#fff}
+.kart.desktop{grid-column:span 2}
+.chybi{font-size:12px;color:var(--m);padding:20px;text-align:center}
+.pozn{font-size:13px;color:var(--m)}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;background:rgba(30,136,181,.1);color:var(--p);margin-left:6px;vertical-align:middle}
+details.report summary{cursor:pointer;padding:8px 0}
+.det{font-size:12px;color:var(--m)}
+tr.st-sedí td:first-child{color:var(--ok);font-weight:700}
+tr.st-nesedí td:first-child{color:var(--e);font-weight:700}
+tr.st-neověřeno td:first-child{color:var(--m)}
+pre.md{white-space:pre-wrap;font:13px/1.5 ui-monospace,Menlo,monospace;background:var(--bg);padding:14px;border-radius:12px;border:1px solid var(--b)}
+/* komentáře */
+body.kom{cursor:crosshair}
+.pin{position:absolute;z-index:40;width:26px;height:26px;border-radius:50%;background:var(--e);color:#fff;font:700 12px/26px system-ui;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.25);transform:translate(-50%,-50%);cursor:pointer}
+.pin-box{position:absolute;z-index:41;width:280px;background:#fff;border:1.5px solid var(--b);border-radius:12px;box-shadow:0 12px 32px rgba(28,28,46,.14);padding:10px;transform:translate(16px,-50%)}
+.pin-box textarea{width:100%;min-height:70px;font:13px/1.4 inherit;border:1px solid var(--b);border-radius:8px;padding:6px;resize:vertical}
+.pin-box .row{display:flex;justify-content:space-between;margin-top:6px;gap:6px}
+.pin-box small{color:var(--m)}
+.pin-box button{font:12px inherit;border:1px solid var(--b);background:#fff;border-radius:999px;padding:4px 10px;cursor:pointer}
+#toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--t);color:#fff;padding:10px 16px;border-radius:999px;font-size:13px;display:none;z-index:60}
+@media (max-width:700px){.kart.desktop{grid-column:span 1}header.top h1{font-size:15px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <h1>Plánovač výletů – předloha Fáze 1 <span class="tag">v1.0 · 2026-10-17</span></h1>
+  <div class="seg" role="group" aria-label="Jazyk"><button data-lang="en" aria-pressed="true">EN</button><button data-lang="cs" aria-pressed="false">CZ</button></div>
+  <div class="seg" role="group" aria-label="Doplňky"><button data-var="predloha" aria-pressed="true">bez doplňků</button><button data-var="doplnky" aria-pressed="false">s doplňky z nového webu</button></div>
+  <div class="seg" role="group" aria-label="Zařízení"><button data-dev="both" aria-pressed="true">iPhone + počítač</button><button data-dev="iphone" aria-pressed="false">jen iPhone</button><button data-dev="desktop" aria-pressed="false">jen počítač</button></div>
+  <button class="btn" id="kom-toggle" aria-pressed="false">Komentáře: vypnuto</button>
+  <button class="btn" id="kom-copy">Zkopírovat komentáře</button>
+  <button class="btn" id="kom-clear">Smazat komentáře</button>
+</header>
+<main>
+  <div class="lead">
+    <div class="box">
+      <h3>Co je Fáze 1</h3>
+      <ul>
+        <li><b>Sekce 0</b> – tokeny: Inter Tight, pole 16 px bez „cvakání“ rohů při fokusu, jednotný prstenec, dotykové cíle ≥ 44 px, EN bez českých title.</li>
+        <li><b>Sekce 1</b> – našeptávač: jen Česko + sousední země (cz/at/de/pl/sk, bias na ČR), položky 48 px s ikonou a podřádkem, stav pole + ×, chyba při volném textu, na mobilu vidět ≥ 3 položky i s klávesnicí.</li>
+        <li><b>Sekce 7</b> – pevná lišta 72 px (cena + podřádek + Continue), detail ceny ve spodním listu, skrytí při klávesnici.</li>
+        <li><b>Sekce 8</b> – inline validace místo modálu „Error“ (krok 1 i 2), všechny chyby najednou, aria-invalid/aria-describedby, návrh opravy e-mailu.</li>
+        <li><b>Sekce 11</b> – šipka nahoru pryč, WhatsApp 44 px nad lištou, při psaní skrytý (ROZHODNUTO RF 16. 10.).</li>
+        <li><b>T1</b> – měření: dataLayer události kroků a chyb (tabulka ve <code>faze1-html.md</code> §6).</li>
+      </ul>
+      <p class="pozn">Metoda: produkce + vložené <code>faze1.css</code>/<code>faze1.js</code> přes Playwright (jen čtení, tracking blokován, UA „PTCZ-predloha“). Vlevo vždy <b>dnes</b>, vpravo <b>předloha</b>. Přepínač nahoře mění jazyk, variantu a zařízení. Brána: <code>node brana-faze1.mjs --url …</code> (README).</p>
+    </div>
+    <div class="box">
+      <h3>Mimo 1:1 – kreslí Google nebo není ve Fázi 1</h3>
+      <ul>
+        <li>Pořadí, názvy a obce v nabídce (Google); logo „powered by Google“ v patičce (licence, musí zůstat).</li>
+        <li><b>Bez doplňků</b> (legacy <code>places.Autocomplete</code> přestylovaný CSS): řádek bez typu místa, jedna ikona pro vše, varování v konzoli zůstává.</li>
+        <li><b>S doplňky</b>: typ místa jen podle toho, co Google vrátí v <code>types</code> (v předloze odvozen z textu – demo); tipy při fokusu mají doplnit <code>placeId</code>.</li>
+        <li>Ovládání Google mapy (< 44 px), cookie lišta Complianz, kalendář a čas (sekce 2), stepper (3), karty zastávek (4), cenový box a rozpis na konci stránky (6), atributy kroku 2 a telefon (12), souhrn (13) – jiné fáze.</li>
+        <li>Reálná iOS klávesnice (simulace zmenšením viewportu na 520 px) a VoiceOver – ověřit ručně na telefonu.</li>
+        <li><b>Otázka pro majitele:</b> WhatsApp jako plovoucí ikona nad formulářem plné šířky se při některém scrollu vždy ocitne nad okrajem nějakého pole (předloha: pravý dolní roh, překryv ~15–25 px). Nulový překryv jde zaručit jen umístěním do lišty nebo do listu s cenou (řádek „Questions? WhatsApp us“ už tam je). Předloha drží rozhodnutí z 16. 10. (ikona nad lištou), brána překryv měří a hlásí.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="lead">
+    <div class="box warn">
+      <h3>Varianta „s doplňky z nového webu“ = jen ukázka vzhledu</h3>
+      <ul>
+        <li><b>Fáze 1 se schvaluje BEZ doplňků.</b> Přepínač „s doplňky“ ukazuje, jak by nabídka vypadala s typem místa, ikonou podle typu, hlavičkou skupiny a tipy při fokusu.</li>
+        <li>Vyžaduje <b>placené Places API (New)</b> zapnuté na klíči Google Maps – dnes je na klíči zablokované (ověřeno 17. 10. 2026); <b>ceník neověřen</b>.</li>
+        <li>Typy míst (airport / castle / town…) jsou v demu <b>odvozené z textu</b> položky – v realitě z dat Google (<code>placePrediction.types</code>); tipy při fokusu čekají na doplnění <code>placeId</code>.</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>Rozhodnutí pro majitele: barva tlačítka Continue v liště</h3>
+      <ul>
+        <li>Zadání (sekce 7) žádá kontrast textů v liště ≥ 4,5:1. Bílý text na značkové <b>#1E88B5</b> má <b>4,0:1</b>; na hover #176F93 5,3:1.</li>
+        <li>Předloha nechává značkovou #1E88B5 (hover #176F93) a text tlačítka dává na <b>19 px / tučně</b> – podle WCAG 1.4.3 je to „velký text“ (≥ 18,66 px tučně), kde stačí 3:1 → 4,0:1 vyhovuje. Brána bod S7-5 hodnotí podle tohoto pravidla (běžný text ≥ 4,5:1, velký ≥ 3:1).</li>
+        <li>Alternativy: (a) výjimka jen pro tlačítko v liště (zvoleno v předloze), (b) změna primární barvy celého webu později (mimo Fázi 1), (c) tmavší klidová barva tlačítka jen v liště (#176F93) – zamítnuto, ať lišta nemá jinou modrou než zbytek webu.</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>Co ze snímků posoudit nejde (ověřit po nasazení ručně / bránou)</h3>
+      <ul>
+        <li>„Same as pickup“ u Cíle – nápověda se ukáže až po výběru Startu; na snímcích je mimo viewport (chování je v kódu, bod bez snímku).</li>
+        <li>Lišta na krocích 2–3 (Back jako odkaz 44 px, „Book your trip“ / „Book now“ [M] na jednom řádku při 393 px) – krok 3 se v předloze neotvírá (vede k odeslání), ověří brána po nasazení.</li>
+        <li>VoiceOver / čtečky (aria-describedby, role combobox, aria-live) – ověřit na iPhonu ručně.</li>
+        <li>Reálná iOS klávesnice (v předloze simulace zmenšením viewportu na 393×520) a chování <code>visualViewport</code> v Safari.</li>
+        <li>Dotykové tažení zastávek, hover stavy na dotyku, výkon na starších telefonech.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Texty ke schválení majitelem [M]</h2>
+  <p class="popis">Návrhy podle zadání (sekce 1, 7, 8) a pravdy o nabídce (§1: řidič není průvodce, cena za celý vůz, bez zálohy, storno 24 h). Stručně, bez květnatých frází. V kódu: <code>PTCZ_F1.texts</code>.</p>
+  <table><thead><tr><th>Kde</th><th>EN</th><th>CZ</th></tr></thead><tbody>
+  <tr><td>Nadpis pole Start</td><td>Where do we pick you up?</td><td>Kde vás vyzvedneme?</td></tr><tr><td>Placeholder Start</td><td>Hotel, address or place in Prague</td><td>Hotel, adresa nebo místo v Praze</td></tr><tr><td>Nápověda u Zastávek (nahrazuje „Unesco, castle or water…“)</td><td>Type a place – e.g. Kutná Hora, Karlštejn Castle, Český Krumlov – and pick it from the list.</td><td>Napište místo – např. Kutná Hora, hrad Karlštejn, Český Krumlov – a vyberte ho z nabídky.</td></tr><tr><td>Placeholder Zastávky (beze změny)</td><td>Search for places</td><td>Vyhledávej místa</td></tr><tr><td>Nápověda u Cíle, když je stejný jako Start</td><td>Same as pickup – change it if you want to end somewhere else.</td><td>Stejné jako vyzvednutí – změňte, pokud chcete skončit jinde.</td></tr><tr><td>Tlačítko × (aria-label)</td><td>Clear</td><td>Vymazat</td></tr><tr><td>Nabídka bez výsledků</td><td>No match in Czechia or nearby – try the town name (e.g. Kutná Hora).</td><td>Nic v Česku ani v okolí – zkuste název města (např. Kutná Hora).</td></tr><tr><td>Patička nabídky vlevo</td><td>Czechia and neighbouring countries</td><td>Česko a sousední země</td></tr><tr><td>Hlavička skupiny (s doplňky)</td><td>Places</td><td>Místa</td></tr><tr><td>Hlavička tipů (s doplňky)</td><td>From our tours</td><td>Z našich výletů</td></tr><tr><td>Chyba Start</td><td>Please choose your pickup place from the list.</td><td>Vyberte prosím místo vyzvednutí z nabídky.</td></tr><tr><td>Chyba Cíl</td><td>Please choose your destination from the list.</td><td>Vyberte prosím cíl z nabídky.</td></tr><tr><td>Chyba Datum</td><td>Please choose the day and time of pickup.</td><td>Vyberte prosím den a čas vyzvednutí.</td></tr><tr><td>Chyba Jméno (krok 2)</td><td>Please enter your full name.</td><td>Zadejte prosím jméno a příjmení.</td></tr><tr><td>Chyba E-mail (krok 2)</td><td>Please enter a valid e-mail address.</td><td>Zadejte prosím platný e-mail.</td></tr><tr><td>Chyba E-mail – překlep ({s} = návrh)</td><td>This e-mail looks incomplete – did you mean {s}?</td><td>E-mail vypadá neúplně – mysleli jste {s}?</td></tr><tr><td>Chyba Telefon (krok 2)</td><td>Please enter a phone number we can reach you on.</td><td>Zadejte prosím telefon, na kterém vás zastihneme.</td></tr><tr><td>Lišta – prázdný stav</td><td>Add a stop to see the price</td><td>Přidejte zastávku a uvidíte cenu</td></tr><tr><td>Lišta – podřádek pod cenou</td><td>whole car, up to 8 · tap for details</td><td>celý vůz, až 8 osob · klepněte pro detail</td></tr><tr><td>List s cenou – nadpis</td><td>Price details</td><td>Rozpis ceny</td></tr><tr><td>List s cenou – pod částkou</td><td>for the whole car, up to 8 people</td><td>za celý vůz, až 8 osob</td></tr><tr><td>List s cenou – „v ceně“</td><td>English-speaking driver<br>Fuel, tolls and parking<br>No deposit – pay on the day<br>Free cancellation up to 24 h before pickup</td><td>Anglicky mluvící řidič<br>Palivo, mýtné a parkovné<br>Bez zálohy – platí se v den výletu<br>Storno zdarma do 24 h před vyzvednutím</td></tr><tr><td>List s cenou – rozbalovací řádek</td><td>How is the price calculated?</td><td>Jak se cena počítá?</td></tr><tr><td>List s cenou – platba</td><td>You pay the driver on the day – card or cash. Entrance fees and meals are not included.</td><td>Platíte řidiči v den výletu – kartou nebo hotově. Vstupné a jídlo nejsou v ceně.</td></tr><tr><td>List s cenou – WhatsApp řádek</td><td>Questions? WhatsApp us</td><td>Máte dotaz? Napište nám na WhatsApp</td></tr>
+  <tr><td>Typ místa „airport“ (s doplňky)</td><td>airport</td><td>letiště</td></tr><tr><td>Typ místa „hotel“ (s doplňky)</td><td>hotel</td><td>hotel</td></tr><tr><td>Typ místa „castle“ (s doplňky)</td><td>castle</td><td>hrad / zámek</td></tr><tr><td>Typ místa „town“ (s doplňky)</td><td>town</td><td>město</td></tr><tr><td>Typ místa „address“ (s doplňky)</td><td>address</td><td>adresa</td></tr><tr><td>Typ místa „place“ (s doplňky)</td><td>place</td><td>místo</td></tr><tr><td>Typ místa „station“ (s doplňky)</td><td>station</td><td>nádraží</td></tr><tr><td>Typ místa „nature“ (s doplňky)</td><td>nature</td><td>příroda</td></tr>
+  <tr><td>Tip (s doplňky)</td><td>Kutná Hora – Central Bohemia · UNESCO</td><td>Kutná Hora – Střední Čechy · UNESCO</td></tr><tr><td>Tip (s doplňky)</td><td>Karlštejn Castle – 30 km from Prague</td><td>Hrad Karlštejn – 30 km od Prahy</td></tr><tr><td>Tip (s doplňky)</td><td>Český Krumlov – South Bohemia · UNESCO</td><td>Český Krumlov – Jižní Čechy · UNESCO</td></tr><tr><td>Tip (s doplňky)</td><td>Bohemian Switzerland – national park, 120 km from Prague</td><td>České Švýcarsko – národní park, 120 km od Prahy</td></tr><tr><td>Tip (s doplňky)</td><td>Karlovy Vary – spa town, 130 km from Prague</td><td>Karlovy Vary – lázně, 130 km od Prahy</td></tr>
+  </tbody></table>
+
+  <h2>Stavy – dnes vs. předloha</h2>
+  <p class="popis">Každý stav: popis, jak ho vyvolat, body „Hotovo, když“, snímky iPhone 393×852 (3×) a počítač 1440×900 (2×). Stavy 03–06 mají i variantu „s doplňky“ (přepínač nahoře); stav 04a existuje jen s doplňky; 06 jen na iPhonu.</p>
+  <section class="stav" id="01-prazdny" data-id="01-prazdny" data-doplnky="0" data-jen-doplnky="0" data-jen-iphone="0">
+  <h2>01 · Prázdný formulář</h2>
+  <p class="popis">Čerstvá stránka (localStorage prázdný), odscrolováno na pole Start. Předloha: nový nadpis Startu a placeholder, nápověda u Zastávek, prázdná lišta bez čísla.</p>
+  <details class="kroky"><summary>Jak stav vyvolat (Playwright) a co se kontroluje</summary>
+    <ol><li>goto plánovač</li><li>localStorage.clear()</li><li>odmítnout cookies (.cmplz-deny)</li><li>scroll na #autoComplete1</li></ol>
+    <ul class="hotovo"><li>sekce 0: pole 16 px, rámeček 1,5 px #e5e7eb, zaoblení 16 px, Inter Tight</li><li>sekce 1 [M]: nadpis „Where do we pick you up?“, placeholder „Hotel, address or place in Prague“, nápověda u Zastávek</li><li>sekce 7: lišta ≤ 76 px, prázdný stav „Add a stop to see the price“</li><li>sekce 11: šipka nahoru nevykreslena</li></ul>
+  </details>
+  <div class="mrizka" data-files="01-prazdny-desktop-cs-dnes.webp,01-prazdny-desktop-cs-predloha.webp,01-prazdny-desktop-en-dnes.webp,01-prazdny-desktop-en-predloha.webp,01-prazdny-iphone-cs-dnes.webp,01-prazdny-iphone-cs-predloha.webp,01-prazdny-iphone-en-dnes.webp,01-prazdny-iphone-en-predloha.webp"></div>
+</section>
+<section class="stav" id="02-fokus-start" data-id="02-fokus-start" data-doplnky="0" data-jen-doplnky="0" data-jen-iphone="0">
+  <h2>02 · Fokus v poli Start</h2>
+  <p class="popis">Klik do prázdného Startu. Předloha: zaoblení se nemění (16 px), prstenec 3 px rgba(30,136,181,.28), bez outline; na mobilu lišta a WhatsApp skryté.</p>
+  <details class="kroky"><summary>Jak stav vyvolat (Playwright) a co se kontroluje</summary>
+    <ol><li>klik #autoComplete1</li></ol>
+    <ul class="hotovo"><li>sekce 0: computed border-radius ve fokusu = 16 px, outline-style none, box-shadow prstenec</li><li>sekce 7: .tlacitko.sticky-fixed.is-hidden při fokusu</li><li>sekce 11: WhatsApp .is-hidden při fokusu</li></ul>
+  </details>
+  <div class="mrizka" data-files="02-fokus-start-desktop-cs-dnes.webp,02-fokus-start-desktop-cs-predloha.webp,02-fokus-start-desktop-en-dnes.webp,02-fokus-start-desktop-en-predloha.webp,02-fokus-start-iphone-cs-dnes.webp,02-fokus-start-iphone-cs-predloha.webp,02-fokus-start-iphone-en-dnes.webp,02-fokus-start-iphone-en-predloha.webp"></div>
+</section>
+<section class="stav" id="03-naseptavac-prague" data-id="03-naseptavac-prague" data-doplnky="1" data-jen-doplnky="0" data-jen-iphone="0">
+  <h2>03 · Našeptávač – „Prague“ ve Startu</h2>
+  <p class="popis">Napsáno „Prague“. Dnes: Arial 11 px, 31 px položky, roh 2 px, i „Prague, OK, USA“. Předloha: Inter Tight, položka ≥ 48 px, ikona v kruhu 32 px, název 15/600 se shodou modře, podřádek 13 px, zaoblení 14 px, jen cz/at/de/pl/sk. S doplňky: podřádek s typem místa (airport / castle / town…), ikona podle typu, hlavička skupiny „Places“, patička „Czechia and neighbouring countries · Google“.</p>
+  <details class="kroky"><summary>Jak stav vyvolat (Playwright) a co se kontroluje</summary>
+    <ol><li>type „Prague“ do #autoComplete1</li><li>čekat 1,8 s na nabídku</li></ol>
+    <ul class="hotovo"><li>sekce 1: font-family položky Inter Tight, výška ≥ 48 px, kontejner border-radius 14 px</li><li>sekce 1: žádná položka mimo cz/at/de/pl/sk (USA pryč)</li><li>doplňky: podřádek každé položky obsahuje typ místa; ikona odpovídá typu (data-type)</li></ul>
+  </details>
+  <div class="mrizka" data-files="03-naseptavac-prague-desktop-cs-dnes.webp,03-naseptavac-prague-desktop-cs-doplnky.webp,03-naseptavac-prague-desktop-cs-predloha.webp,03-naseptavac-prague-desktop-en-dnes.webp,03-naseptavac-prague-desktop-en-doplnky.webp,03-naseptavac-prague-desktop-en-predloha.webp,03-naseptavac-prague-iphone-cs-dnes.webp,03-naseptavac-prague-iphone-cs-doplnky.webp,03-naseptavac-prague-iphone-cs-predloha.webp,03-naseptavac-prague-iphone-en-dnes.webp,03-naseptavac-prague-iphone-en-doplnky.webp,03-naseptavac-prague-iphone-en-predloha.webp"></div>
+</section>
+<section class="stav" id="04a-tipy-zastavky-fokus" data-id="04a-tipy-zastavky-fokus" data-doplnky="1" data-jen-doplnky="1" data-jen-iphone="0">
+  <h2>04a · Zastávky – tipy při fokusu prázdného pole (jen s doplňky)</h2>
+  <p class="popis">Fokus do prázdného pole Zastávky ukáže 5 statických tipů z našich výletů (Kutná Hora, Karlštejn, Český Krumlov, Bohemian Switzerland, Karlovy Vary) pod hlavičkou „From our tours“. Volitelné; klik vyplní text a nechá vyhledat.</p>
+  <details class="kroky"><summary>Jak stav vyvolat (Playwright) a co se kontroluje</summary>
+    <ol><li>Start vybrán (Prague)</li><li>klik #search-poi (prázdné)</li></ol>
+    <ul class="hotovo"><li>doplňky: .ptcz-ac otevřená s 5 položkami a hlavičkou „From our tours“</li><li>položky mají ikonu podle typu a podřádek</li></ul>
+  </details>
+  <div class="mrizka" data-files="04a-tipy-zastavky-fokus-desktop-cs-doplnky.webp,04a-tipy-zastavky-fokus-desktop-en-doplnky.webp,04a-tipy-zastavky-fokus-iphone-cs-doplnky.webp,04a-tipy-zastavky-fokus-iphone-en-doplnky.webp"></div>
+</section>
+<section class="stav" id="04-naseptavac-castle-zastavky" data-id="04-naseptavac-castle-zastavky" data-doplnky="1" data-jen-doplnky="0" data-jen-iphone="0">
+  <h2>04 · Našeptávač – „castle“ v Zastávkách</h2>
+  <p class="popis">Dnes vrací Castle Combe (UK), Castle Rock (USA), Castle Hill (AU)… Předloha: jen hrady a místa v ČR a sousedních zemích (componentRestrictions + bias na ČR).</p>
+  <details class="kroky"><summary>Jak stav vyvolat (Playwright) a co se kontroluje</summary>
+    <ol><li>Start vybrán (Prague)</li><li>type „castle“ do #search-poi</li></ol>
+    <ul class="hotovo"><li>sekce 1: 0 položek mimo cz/at/de/pl/sk</li><li>sekce 1: vzhled položek jako ve stavu 03</li><li>doplňky: typ „castle“ s ikonou hradu</li></ul>
+  </details>
+  <div class="mrizka" data-files="04-naseptavac-castle-zastavky-desktop-cs-dnes.webp,04-naseptavac-castle-zastavky-desktop-cs-doplnky.webp,04-naseptavac-castle-zastavky-desktop-cs-predloha.webp,04-naseptavac-castle-zastavky-desktop-en-dnes.webp,04-naseptavac-castle-zastavky-desktop-en-doplnky.webp,04-naseptavac-castle-zastavky-desktop-en-predloha.webp,04-naseptavac-castle-zastavky-iphone-cs-dnes.webp,04-naseptavac-castle-zastavky-iphone-cs-doplnky.webp,04-naseptavac-castle-zastavky-iphone-cs-predloha.webp,04-naseptavac-castle-zastavky-iphone-en-dnes.webp,04-naseptavac-castle-zastavky-iphone-en-doplnky.webp,04-naseptavac-castle-zastavky-iphone-en-predloha.webp"></div>
+</section>
+<section class="stav" id="05-naseptavac-karl" data-id="05-naseptavac-karl" data-doplnky="1" data-jen-doplnky="0" data-jen-iphone="0">
+  <h2>05 · Našeptávač – „Karl“ v Zastávkách</h2>
+  <p class="popis">Napsáno „Karl“: Karlštejn, Karlovy Vary, Karlův most… Předloha ukazuje shodu modře a podřádek s obcí; s doplňky typ místa.</p>
+  <details class="kroky"><summary>Jak stav vyvolat (Playwright) a co se kontroluje</summary>
+    <ol><li>type „Karl“ do #search-poi</li></ol>
+    <ul class="hotovo"><li>sekce 1: max 5 položek, shoda zvýrazněná #1E88B5</li><li>sekce 1: po výběru se pole Zastávky vyprázdní a vrátí fokus</li></ul>
+  </details>
+  <div class="mrizka" data-files="05-naseptavac-karl-desktop-cs-dnes.webp,05-naseptavac-karl-desktop-cs-doplnky.webp,05-naseptavac-karl-desktop-cs-predloha.webp,05-naseptavac-karl-desktop-en-dnes.webp,05-naseptavac-karl-desktop-en-doplnky.webp,05-naseptavac-karl-desktop-en-predloha.webp,05-naseptavac-karl-iphone-cs-dnes.webp,05-naseptavac-karl-iphone-cs-doplnky.webp,05-naseptavac-karl-iphone-cs-predloha.webp,05-naseptavac-karl-iphone-en-dnes.webp,05-naseptavac-karl-iphone-en-doplnky.webp,05-naseptavac-karl-iphone-en-predloha.webp"></div>
+</section>
+<section class="stav" id="06-klavesnice-otevrena" data-id="06-klavesnice-otevrena" data-doplnky="1" data-jen-doplnky="0" data-jen-iphone="1">
+  <h2>06 · iPhone s otevřenou klávesnicí (visual viewport ≈ 520 px)</h2>
+  <p class="popis">Simulace klávesnice zmenšením viewportu na 393×520 při psaní v Zastávkách. Dnes: lišta 154 px zakryje pole a nabídku. Předloha: lišta i WhatsApp skryté (třída is-hidden), vidět pole + ≥ 3 položky nabídky.</p>
+  <details class="kroky"><summary>Jak stav vyvolat (Playwright) a co se kontroluje</summary>
+    <ol><li>setViewportSize 393×520</li><li>fokus #search-poi s textem „Karl“</li><li>scroll tak, aby pole bylo nahoře</li></ol>
+    <ul class="hotovo"><li>sekce 1: pole i ≥ 3 položky nabídky ve viewportu</li><li>sekce 7: lišta má třídu skrytí; elementFromPoint nad polem nevrací lištu</li><li>sekce 11: WhatsApp skrytý</li></ul>
+  </details>
+  <div class="mrizka" data-files="06-klavesnice-otevrena-iphone-cs-dnes.webp,06-klavesnice-otevrena-iphone-cs-doplnky.webp,06-klavesnice-otevrena-iphone-cs-predloha.webp,06-klavesnice-otevrena-iphone-en-dnes.webp,06-klavesnice-otevrena-iphone-en-doplnky.webp,06-klavesnice-otevrena-iphone-en-predloha.webp"></div>
+</section>
+<section class="stav" id="07-chyba-prazdne-continue" data-id="07-chyba-prazdne-continue" data-doplnky="0" data-jen-doplnky="0" data-jen-iphone="0">
+  <h2>07 · Continue s prázdným formulářem</h2>
+  <p class="popis">Dnes: modál „Error – You must select a valid Start.“ (jen první chyba, pole bez označení). Předloha: všechny chyby najednou inline (Start, Datum, Cíl), pole aria-invalid + červený rámeček a pozadí, souhrn „3 things to fix“ nad tlačítkem, fokus v prvním chybném poli, #notice se neotevře.</p>
+  <details class="kroky"><summary>Jak stav vyvolat (Playwright) a co se kontroluje</summary>
+    <ol><li>čerstvá stránka</li><li>klik #continue-btn</li></ol>
+    <ul class="hotovo"><li>sekce 8: do 100 ms aria-invalid=&quot;true&quot; na Startu i Datu a viditelná zpráva</li><li>sekce 8: #notice není otevřený</li><li>sekce 8: fokus v prvním chybném poli, pole ve viewportu</li><li>sekce 8: souhrn role=status</li><li>T1: dataLayer planner_validation_error + planner_field_error</li></ul>
+  </details>
+  <div class="mrizka" data-files="07-chyba-prazdne-continue-desktop-cs-dnes.webp,07-chyba-prazdne-continue-desktop-cs-predloha.webp,07-chyba-prazdne-continue-desktop-en-dnes.webp,07-chyba-prazdne-continue-desktop-en-predloha.webp,07-chyba-prazdne-continue-iphone-cs-dnes.webp,07-chyba-prazdne-continue-iphone-cs-predloha.webp,07-chyba-prazdne-continue-iphone-en-dnes.webp,07-chyba-prazdne-continue-iphone-en-predloha.webp"></div>
+</section>
+<section class="stav" id="08-chyba-volny-text" data-id="08-chyba-volny-text" data-doplnky="0" data-jen-doplnky="0" data-jen-iphone="0">
+  <h2>08 · Volný text ve Startu bez výběru z nabídky</h2>
+  <p class="popis">Napsáno „xqzv1234 nowhere“ a pole opuštěno. Dnes: nic. Předloha: do 100 ms po opuštění zpráva „Please choose your pickup place from the list.“, stav pole invalid, tlačítko ×.</p>
+  <details class="kroky"><summary>Jak stav vyvolat (Playwright) a co se kontroluje</summary>
+    <ol><li>type „xqzv1234 nowhere“ do #autoComplete1</li><li>Escape, Tab (blur)</li></ol>
+    <ul class="hotovo"><li>sekce 1/8: zpráva u pole do 100 ms po blur, aria-invalid</li><li>sekce 1: data-state=&quot;invalid&quot;, × viditelné (44 px)</li><li>po výběru z nabídky zpráva zmizí bez Continue</li></ul>
+  </details>
+  <div class="mrizka" data-files="08-chyba-volny-text-desktop-cs-dnes.webp,08-chyba-volny-text-desktop-cs-predloha.webp,08-chyba-volny-text-desktop-en-dnes.webp,08-chyba-volny-text-desktop-en-predloha.webp,08-chyba-volny-text-iphone-cs-dnes.webp,08-chyba-volny-text-iphone-cs-predloha.webp,08-chyba-volny-text-iphone-en-dnes.webp,08-chyba-volny-text-iphone-en-predloha.webp"></div>
+</section>
+<section class="stav" id="09-lista-cena" data-id="09-lista-cena" data-doplnky="0" data-jen-doplnky="0" data-jen-iphone="0">
+  <h2>09 · Pevná lišta s cenou (Prague → Karlštejn)</h2>
+  <p class="popis">Po přidání zastávky. Dnes: 154 px, 4 řádky, platební věta 12 px #9b9b9b (kontrast 2,7:1). Předloha: 72 px + safe-area, vlevo cena 20/700 + „i“ + podřádek 12 px „whole car, up to 8 · tap for details“, vpravo Continue 150×44. Snímek 09b: detail ceny (dnes rozbalení v liště, předloha spodní list s rozpisem, „v ceně“, platební větou a WhatsApp řádkem). Pozn.: dnešní nabídka na „Karl“ Karlštejn vůbec nenabídne (Karlsruhe, Karlovac, Karlstad…), proto má snímek „dnes“ zastávku Karlsruhe a jinou cenu – to je přesně chyba, kterou sekce 1 řeší.</p>
+  <details class="kroky"><summary>Jak stav vyvolat (Playwright) a co se kontroluje</summary>
+    <ol><li>Start Prague</li><li>Zastávka Karlštejn</li><li>scroll na začátek formuláře</li><li>09b: klepnutí na cenu / ikonu i</li></ol>
+    <ul class="hotovo"><li>sekce 7: computed výška lišty ≤ 76 px + safe-area</li><li>sekce 7: lišta obsahuje jen cenu, podřádek a Continue (viditelné potomky)</li><li>sekce 7: kontrast textů v liště ≥ 4,5:1</li><li>sekce 7: při otevřeném listu je lišta pod ztmavením (elementFromPoint ≠ lišta)</li><li>T1: planner_price_details_open</li></ul>
+  </details>
+  <div class="mrizka" data-files="09-lista-cena-desktop-cs-dnes.webp,09-lista-cena-desktop-cs-predloha.webp,09-lista-cena-desktop-en-dnes.webp,09-lista-cena-desktop-en-predloha.webp,09-lista-cena-iphone-cs-dnes.webp,09-lista-cena-iphone-cs-predloha.webp,09-lista-cena-iphone-en-dnes.webp,09-lista-cena-iphone-en-predloha.webp"></div>
+</section>
+<section class="stav" id="10-whatsapp-umisteni" data-id="10-whatsapp-umisteni" data-doplnky="0" data-jen-doplnky="0" data-jen-iphone="0">
+  <h2>10 · WhatsApp nad lištou, mimo ovládání zastávek</h2>
+  <p class="popis">Scroll na kartu zastávky. Dnes: WhatsApp 56 px + šipka nahoru leží přesně nad sloupcem × a ≡ karty. Předloha: šipka pryč, WhatsApp 44 px vpravo 12 px nad lištou, při psaní skrytý. Pozn.: nad plnou šířkou formuláře se nelze vyhnout každému překryvu při každém scrollu – brána měří překryv v klidovém stavu každého stavu (viz README, otázka pro majitele). Snímek „dnes“ má zastávku Karlsruhe (viz 09).</p>
+  <details class="kroky"><summary>Jak stav vyvolat (Playwright) a co se kontroluje</summary>
+    <ol><li>scroll na #stops-list</li></ol>
+    <ul class="hotovo"><li>sekce 11: .ptcz-btt počet = 0</li><li>sekce 11: WhatsApp 44×44, nad lištou, nepřekrývá pole ani ovládací prvek ve viditelném stavu (průnik 0 px²)</li><li>sekce 11: position:fixed prvky s výškou &gt; 20 px = hlavička + lišta + WhatsApp (šipka pryč)</li></ul>
+  </details>
+  <div class="mrizka" data-files="10-whatsapp-umisteni-desktop-cs-dnes.webp,10-whatsapp-umisteni-desktop-cs-predloha.webp,10-whatsapp-umisteni-desktop-en-dnes.webp,10-whatsapp-umisteni-desktop-en-predloha.webp,10-whatsapp-umisteni-iphone-cs-dnes.webp,10-whatsapp-umisteni-iphone-cs-predloha.webp,10-whatsapp-umisteni-iphone-en-dnes.webp,10-whatsapp-umisteni-iphone-en-predloha.webp"></div>
+</section>
+<section class="stav" id="11-krok2-chyby" data-id="11-krok2-chyby" data-doplnky="0" data-jen-doplnky="0" data-jen-iphone="0">
+  <h2>11 · Krok 2 – Continue s prázdnými údaji</h2>
+  <p class="popis">Stránka údajů (bez odeslání – validace běží před jakýmkoli požadavkem). Dnes: modál „Please enter your full name (at least 5 characters)“. Předloha: tři zprávy najednou (jméno, e-mail, telefon), aria-invalid, souhrn „3 things to fix“.</p>
+  <details class="kroky"><summary>Jak stav vyvolat (Playwright) a co se kontroluje</summary>
+    <ol><li>goto krok 2 (data z kroku 1 v localStorage)</li><li>klik #continue-btn s prázdnými poli</li></ol>
+    <ul class="hotovo"><li>sekce 8: tři zprávy najednou</li><li>sekce 8: „john@gmail“ + blur = návrh „john@gmail.com“; „john@gmail.com“ zprávu odstraní (brána)</li><li>sekce 12 (atributy): autocomplete/inputmode doplněné – jen informativně, sekce 12 je Fáze 3</li></ul>
+  </details>
+  <div class="mrizka" data-files="11-krok2-chyby-desktop-cs-dnes.webp,11-krok2-chyby-desktop-cs-predloha.webp,11-krok2-chyby-desktop-en-dnes.webp,11-krok2-chyby-desktop-en-predloha.webp,11-krok2-chyby-iphone-cs-dnes.webp,11-krok2-chyby-iphone-cs-predloha.webp,11-krok2-chyby-iphone-en-dnes.webp,11-krok2-chyby-iphone-en-predloha.webp"></div>
+</section>
+
+  <h2>Výsledky brány (poslední běhy)</h2>
+  <p class="popis">Brána měří oběma směry: proti dnešní produkci musí hlásit „nesedí“ u bodů, které dnes neplatí; proti produkci s vloženou předlohou „sedí“ u všeho, co předloha řeší.</p>
+  <ul><li>produkce + předloha: sedí 56 · nesedí 0 · neověřeno 4</li><li>dnešní produkce: sedí 2 · nesedí 50 · neověřeno 8</li></ul>
+  <p class="pozn">Zbývající „nesedí“/„neověřeno“ u předlohy: podmíněný bod o varování v konzoli (platí až při přechodu na nové Places API) a body, které vyžadují data z realizace (vystavené instance našeptávače, kód země po výběru).</p>
+
+  <h2>SEO a jazykové modely – zjištění a návrhy</h2>
+  <pre class="md"># SEO a jazykové modely – plánovač výletů, Fáze 1
+
+Datum: 17. 10. 2026 · Metoda: `curl` serverového HTML bez JS (UA „PTCZ-predloha“) pro `/en/trip-planner/`, `/planovac-vyletu/`, variantu `?from=…`, `?utm_source=…`, krok 2 `/en/prague-private-tours/details/`, krok 3 `/en/prague-private-tours/summary/`, `robots.txt`, `page-sitemap.xml`, `/llms.txt`; předloha ověřena jako vložený CSS/JS (nic na serveru se neměnilo).
+
+## Co je v pořádku (nasazeno 16. 10., neměnit)
+- Title „Trip Planner – Private Day Trip from Prague | PrivateToursCzech“ (52 zn.) / „Plánovač výletů – soukromý výlet z Prahy | PrivateToursCzech“; meta description 140–160 zn. v obou jazycích; jeden H1; úvodní odstavec `.ptcz-planovac-uvod` je v serverovém HTML (celý vůz, řidič, bez zálohy).
+- Canonical na čistou URL, hreflang cs + en + x-default, obě URL v `page-sitemap.xml`; `robots.txt` výslovně pouští GPTBot, ClaudeBot, OAI-SearchBot, Claude-Web.
+- Popisky polí jsou skutečné `&lt;label for&gt;` u Startu (`autoComplete1`), Data (`departure`), Cíle (`autoComplete2`), Jména a E-mailu na kroku 2; text je v serverovém HTML, ne jen placeholder.
+- JSON-LD (Yoast): WebPage, WebSite + SearchAction, Organization, BreadcrumbList. Service/FAQ schema na plánovači není – pro formulářovou stránku to není chyba.
+- `/llms.txt` plánovač popisuje správně: „build a route and see the price per car“, „Route: fully customisable in the trip planner“, „Exact prices are shown in the trip planner“, odkazy EN i CZ.
+
+## Co úprava Fáze 1 mění z pohledu SEO/LLM
+- Předloha **nepřidává žádný obsah, který by měl být vidět jen přes JS**: nápovědy (`.ptcz-hint`), zprávy (`.ptcz-msg`, `aria-live`), nový popisek Startu a placeholder jsou v `faze1-html.md` předepsány **do šablony (PHP)** – v demu je dotváří JS jen proto, že na produkci nic neměníme. Po nasazení ověřit `curl` (bez JS), že nový text labelu a nápověda u Zastávek jsou v HTML.
+- Nevznikají duplicitní H1/H2: lišta, list s cenou a nabídka používají `&lt;h2 class=&quot;ptcz-sheet__title&quot;&gt;` jen uvnitř `role=&quot;dialog&quot;` (skrytý, dokud se neotevře). Pokud by vývojář list renderoval v PHP, použít `&lt;p&gt;`/`&lt;div&gt;` místo `&lt;h2&gt;`, ať se nadpis nepočítá do osnovy.
+- Velikost: `faze1.css` 21,8 KB (5,5 KB gzip), `faze1.js` 46,2 KB (14,3 KB gzip) – bez knihoven, bez obrázků (ikony inline SVG), bez dalších požadavků kromě loga „powered by Google“ (gstatic, cache). Lazy načítání Maps se v této fázi nemění (sekce 5 = Fáze 3); první psaní tedy není zpomaleno.
+- Přístupnost: pole `role=&quot;combobox&quot;` + `aria-expanded/controls/activedescendant`, položky `role=&quot;option&quot;`, chyby `role=&quot;status&quot; aria-live=&quot;polite&quot;` napojené přes `aria-describedby`, list `role=&quot;dialog&quot; aria-modal`, kontrast chybové #d92d20 na #fef3f2 = 5,9:1, sekundární #6B6B6B na bílé = 5,3:1, prstenec fokusu 3 px.
+
+## Nálezy (mimo předlohu, k rozhodnutí)
+1. **`/en/trip-planner/?from=…` nemá canonical ani robots** (ověřeno 17. 10.: `?utm_source=x` canonical má, `?from=test` i `?from=tour` ne; stejná stránka s `x-ptcz-nocache: flow`). Varianta tak může být indexována jako duplikát. → vývojář: pro parametr `from` (a `k`, `load_reservation`, `edit_reservation_id`, `adminmode`) vracet `&lt;link rel=&quot;canonical&quot;&gt;` na čistou URL + `&lt;meta name=&quot;robots&quot; content=&quot;noindex,follow&quot;&gt;`. **[T]**
+2. **Kroky 2 a 3 (`/en/prague-private-tours/details/`, `/summary/`, CZ `/planovac-vyletu-na-miru/udaje/`, `/rekapitulace/`) nemají canonical ani noindex** a v `robots.txt` nejsou zakázané (zakázáno je jen `/thank-you/`). Jsou to procesní stránky bez obsahu – `noindex,follow`. V sitemapě nejsou (správně). **[T]**
+3. Stránka nemá žádné `&lt;h2&gt;` (jen H1 a sedm `&lt;h3&gt;` v modálech sedaček/průvodce). Pro osnovu a AI čtení stačí **popisky sekcí formuláře** (Start, Stops, Destination, Car…) ponechat jako `&lt;label&gt;`/`&lt;legend&gt;`, ne měnit na nadpisy – nic nedoporučuji měnit, jen při Fázi 2 (sekce 9) nepřidávat H2 do karet.
+4. Popisek Zastávek `&lt;label class=&quot;labelz&quot;&gt;Stops&lt;/label&gt;` nemá `for=&quot;search-poi&quot;` → není to skutečný popisek pole (AI/čtečka vidí jen placeholder „Search for places“). Předloha doplňuje `for` v JS; v šabloně to je jednořádková změna (viz `faze1-html.md` §1). **[T]**
+5. Popisky „Number of persons“ / „Number of luggage“ míří `for=&quot;person&quot;` na `&lt;span&gt;`, ne na ovládací prvek; stepper je sekce 3 (Fáze 2) – tam převést hodnotu na `&lt;output&gt;` a popisek na `aria-labelledby`.
+
+## Návrhy (max 5) v rozsahu Fáze 1
+| # | Návrh | Co mění pro zákazníka | Kdo |
+|---|---|---|---|
+| 1 | Nápovědu u Zastávek a nový popisek Startu dát do PHP šablony (serverový text), ne přes JS – AI asistenti a Google tak vidí, co pole očekává („Hotel, address or place in Prague“, „Type a place… and pick it from the list“). | ano – texty [M] v tabulce galerie | M schvaluje, T provede |
+| 2 | Canonical + `noindex,follow` pro `?from=` varianty plánovače a pro kroky 2–3 (nálezy 1–2). | ne | T |
+| 3 | `for=&quot;search-poi&quot;` u popisku Zastávek; u Cíle ponechat dva popisky (`Destination` + `Reach your destination`) jen jako jeden `&lt;label for&gt;` a druhý jako `&lt;span&gt;` – dnes jsou oba `&lt;label for=&quot;autoComplete2&quot;&gt;`, čtečka přečte „Destination Reach your destination“. | ne (vizuálně beze změny) | T |
+| 4 | Do `/llms.txt` doplnit k řádku „Trip planner“ jednu větu: „Places: Czechia and neighbouring countries (Austria, Germany, Poland, Slovakia); pickup anywhere in Prague; you pay the driver on the day, no deposit; free cancellation up to 24 h.“ – odpovídá zadání sekce 1 a §1 pravdy; dnes tam o omezení zemí nic není. | ne (soubor pro AI) | M schvaluje znění, Claude zapíše |
+| 5 | Chybové texty (sekce 8) a nápovědy nechat v překladovém zdroji pluginu (`ptczTranslations`), ne natvrdo v JS – kvůli hreflang konzistenci (CZ stránka nesmí dostat EN chybu). Předloha má obě sady v `PTCZ_F1.texts`. | ne | T |
+
+Co se **nenavrhuje**: měnit title/H1/úvod (nasazeno 16. 10.), přidávat FAQ/Service schema na formulář (bez obsahu by to byl prázdný markup), lazy Maps (Fáze 3).
+</pre>
+</main>
+<div id="toast"></div>
+<script>
+(function(){
+  var S = { lang:'en', var:'predloha', dev:'both' };
+  try { Object.assign(S, JSON.parse(localStorage.getItem('ptcz-predloha-f1-view')||'{}')); } catch(e){}
+  function save(){ try{ localStorage.setItem('ptcz-predloha-f1-view', JSON.stringify(S)); }catch(e){} }
+  function render(){
+    document.querySelectorAll('[data-lang]').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.lang===S.lang); });
+    document.querySelectorAll('[data-var]').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.var===S.var); });
+    document.querySelectorAll('[data-dev]').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.dev===S.dev); });
+    document.querySelectorAll('.stav').forEach(function(sec){
+      var files = (sec.querySelector('.mrizka').dataset.files||'').split(',').filter(Boolean);
+      var jenD = sec.dataset.jenDoplnky==='1', jenI = sec.dataset.jenIphone==='1';
+      if (jenD && S.var!=='doplnky') { sec.style.display='none'; return; } else sec.style.display='';
+      var devs = S.dev==='both' ? ['iphone','desktop'] : [S.dev];
+      if (jenI) devs = devs.filter(function(d){return d==='iphone';});
+      var html='';
+      devs.forEach(function(dev){
+        var EXT='.webp';
+        var dnes = sec.dataset.id+'-'+dev+'-'+S.lang+'-dnes'+EXT;
+        var pre = sec.dataset.id+'-'+dev+'-'+S.lang+'-'+S.var+EXT;
+        if (S.var==='doplnky' && files.indexOf(pre)<0) pre = sec.dataset.id+'-'+dev+'-'+S.lang+'-predloha'+EXT;
+        var preLbl = /doplnky\.(png|webp)$/.test(pre) ? 'předloha · s doplňky (jen ukázka vzhledu)' : 'předloha';
+        [[dnes,'dnes','dnes'],[pre,preLbl,'predloha']].forEach(function(p){
+          var body = files.indexOf(p[0])>=0 ? '<a href="snimky/'+p[0]+'" target="_blank"><img loading="lazy" src="snimky/'+p[0]+'" alt="'+p[0]+'"></a>' : (p[2]==='dnes' && jenD ? '<div class="chybi">dnes tento stav neexistuje – nabídka se při fokusu prázdného pole neotevře</div>' : '<div class="chybi">snímek '+p[0]+' zatím není</div>');
+          html += '<div class="kart '+dev+' '+p[2]+'"><div class="lbl"><b>'+p[1]+'</b><span>'+(dev==='iphone'?'iPhone 393×852':'počítač 1440×900')+' · '+S.lang.toUpperCase()+'</span></div>'+body+'</div>';
+        });
+      });
+      sec.querySelector('.mrizka').innerHTML = html;
+    });
+    save();
+  }
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-lang],[data-var],[data-dev]'); if(!b) return;
+    if (b.dataset.lang) S.lang=b.dataset.lang; if (b.dataset.var) S.var=b.dataset.var; if (b.dataset.dev) S.dev=b.dataset.dev; render();
+  });
+  render();
+
+  /* ---- komentovací vrstva (vanilla JS + localStorage) ---- */
+  var LS_KOM='ptcz-predloha-f1-komentare', pins=[]; try{ pins=JSON.parse(localStorage.getItem(LS_KOM)||'[]'); }catch(e){}
+  var on=false, tg=document.getElementById('kom-toggle'), toast=document.getElementById('toast');
+  function say(t){ toast.textContent=t; toast.style.display='block'; setTimeout(function(){toast.style.display='none';},1800); }
+  function savePins(){ try{ localStorage.setItem(LS_KOM, JSON.stringify(pins)); }catch(e){} }
+  function ctxOf(x,y){ var el=document.elementFromPoint(x-window.scrollX, y-window.scrollY); var sec=el&&el.closest?el.closest('.stav, section, .box, table'):null; var h=sec?sec.querySelector('h2,h3'):null; var img=el&&el.closest?el.closest('.kart'):null; return (h?h.textContent.trim():'(bez nadpisu)')+(img?' › '+Array.from(img.querySelectorAll('.lbl b, .lbl span')).map(function(n){return n.textContent.trim();}).join(' · '):''); }
+  function draw(){
+    document.querySelectorAll('.pin,.pin-box').forEach(function(n){n.remove();});
+    pins.forEach(function(p,i){
+      var d=document.createElement('div'); d.className='pin'; d.textContent=i+1; d.style.left=p.x+'px'; d.style.top=p.y+'px'; d.title=p.ctx;
+      d.addEventListener('click',function(ev){ ev.stopPropagation(); p.open=!p.open; draw(); });
+      document.body.appendChild(d);
+      if(p.open){ var b=document.createElement('div'); b.className='pin-box'; b.style.left=p.x+'px'; b.style.top=p.y+'px';
+        b.innerHTML='<small>#'+(i+1)+' · '+p.ctx.replace(/</g,'&lt;')+'</small><textarea placeholder="Poznámka…"></textarea><div class="row"><button data-del>Smazat</button><button data-ok>Hotovo</button></div>';
+        b.querySelector('textarea').value=p.text||'';
+        b.addEventListener('click',function(ev){ev.stopPropagation();});
+        b.querySelector('textarea').addEventListener('input',function(ev){ p.text=ev.target.value; savePins(); });
+        b.querySelector('[data-del]').addEventListener('click',function(){ pins.splice(i,1); savePins(); draw(); });
+        b.querySelector('[data-ok]').addEventListener('click',function(){ p.open=false; savePins(); draw(); });
+        document.body.appendChild(b); b.querySelector('textarea').focus(); }
+    });
+  }
+  tg.addEventListener('click',function(){ on=!on; document.body.classList.toggle('kom',on); tg.setAttribute('aria-pressed',on); tg.classList.toggle('on',on); tg.textContent='Komentáře: '+(on?'ZAPNUTO (klikni na místo)':'vypnuto'); });
+  document.addEventListener('click',function(e){ if(!on) return; if(e.target.closest('header.top,.pin,.pin-box,a[href]')) return; var x=e.pageX,y=e.pageY; pins.forEach(function(p){p.open=false;}); pins.push({x:x,y:y,ctx:ctxOf(x,y),text:'',open:true,lang:S.lang,var:S.var}); savePins(); draw(); });
+  document.getElementById('kom-copy').addEventListener('click',function(){ if(!pins.length){say('Žádné komentáře');return;} var t=pins.map(function(p,i){return '#'+(i+1)+' ['+p.ctx+' · '+p.lang.toUpperCase()+' · '+p.var+']: '+(p.text||'(prázdné)');}).join('\n'); var done=function(){say('Zkopírováno '+pins.length+' komentářů');}; if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(done,function(){ fallback(t); done(); }); } else { fallback(t); done(); } function fallback(s){ var ta=document.createElement('textarea'); ta.value=s; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} ta.remove(); } });
+  document.getElementById('kom-clear').addEventListener('click',function(){ if(!pins.length) return; if(confirm('Smazat všech '+pins.length+' komentářů?')){ pins=[]; savePins(); draw(); } });
+  draw();
+})();
+</script>
+</body>
+</html>

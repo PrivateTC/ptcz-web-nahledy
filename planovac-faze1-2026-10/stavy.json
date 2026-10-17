@@ -1,0 +1,222 @@
+{
+  "verze": "1.0",
+  "datum": "2026-10-17",
+  "zarizeni": {
+    "iphone": {
+      "viewport": "393×852",
+      "dpr": 3,
+      "dotyk": true,
+      "ua": "iPhone iOS 17.5 Safari + PTCZ-predloha"
+    },
+    "desktop": {
+      "viewport": "1440×900",
+      "dpr": 2,
+      "dotyk": false,
+      "ua": "Chrome 126 macOS + PTCZ-predloha"
+    }
+  },
+  "jazyky": {
+    "en": "/en/trip-planner/",
+    "cs": "/planovac-vyletu/"
+  },
+  "rezimy": {
+    "dnes": "produkce bez úpravy",
+    "predloha": "produkce + faze1.css + faze1.js (bez doplňků: legacy nabídka přestylovaná CSS)",
+    "doplnky": "produkce + faze1.css + faze1.js (s doplňky z nového webu: vlastní nabídka .ptcz-ac s typem místa, ikonou, skupinou, tipy)"
+  },
+  "masky": [
+    "mapa (#map, .map-wrapper)",
+    "cena (hodnota se mění s kurzem/trasou)",
+    "datum",
+    "cookie lišta (odmítnuta před snímkem)"
+  ],
+  "stavy": [
+    {
+      "id": "01-prazdny",
+      "nazev": "Prázdný formulář",
+      "popis": "Čerstvá stránka (localStorage prázdný), odscrolováno na pole Start. Předloha: nový nadpis Startu a placeholder, nápověda u Zastávek, prázdná lišta bez čísla.",
+      "kroky": [
+        "goto plánovač",
+        "localStorage.clear()",
+        "odmítnout cookies (.cmplz-deny)",
+        "scroll na #autoComplete1"
+      ],
+      "kontrola": [
+        "sekce 0: pole 16 px, rámeček 1,5 px #e5e7eb, zaoblení 16 px, Inter Tight",
+        "sekce 1 [M]: nadpis „Where do we pick you up?“, placeholder „Hotel, address or place in Prague“, nápověda u Zastávek",
+        "sekce 7: lišta ≤ 76 px, prázdný stav „Add a stop to see the price“",
+        "sekce 11: šipka nahoru nevykreslena"
+      ],
+      "doplnky": false
+    },
+    {
+      "id": "02-fokus-start",
+      "nazev": "Fokus v poli Start",
+      "popis": "Klik do prázdného Startu. Předloha: zaoblení se nemění (16 px), prstenec 3 px rgba(30,136,181,.28), bez outline; na mobilu lišta a WhatsApp skryté.",
+      "kroky": [
+        "klik #autoComplete1"
+      ],
+      "kontrola": [
+        "sekce 0: computed border-radius ve fokusu = 16 px, outline-style none, box-shadow prstenec",
+        "sekce 7: .tlacitko.sticky-fixed.is-hidden při fokusu",
+        "sekce 11: WhatsApp .is-hidden při fokusu"
+      ],
+      "doplnky": false
+    },
+    {
+      "id": "03-naseptavac-prague",
+      "nazev": "Našeptávač – „Prague“ ve Startu",
+      "popis": "Napsáno „Prague“. Dnes: Arial 11 px, 31 px položky, roh 2 px, i „Prague, OK, USA“. Předloha: Inter Tight, položka ≥ 48 px, ikona v kruhu 32 px, název 15/600 se shodou modře, podřádek 13 px, zaoblení 14 px, jen cz/at/de/pl/sk. S doplňky: podřádek s typem místa (airport / castle / town…), ikona podle typu, hlavička skupiny „Places“, patička „Czechia and neighbouring countries · Google“.",
+      "kroky": [
+        "type „Prague“ do #autoComplete1",
+        "čekat 1,8 s na nabídku"
+      ],
+      "kontrola": [
+        "sekce 1: font-family položky Inter Tight, výška ≥ 48 px, kontejner border-radius 14 px",
+        "sekce 1: žádná položka mimo cz/at/de/pl/sk (USA pryč)",
+        "doplňky: podřádek každé položky obsahuje typ místa; ikona odpovídá typu (data-type)"
+      ],
+      "doplnky": true
+    },
+    {
+      "id": "04a-tipy-zastavky-fokus",
+      "nazev": "Zastávky – tipy při fokusu prázdného pole (jen s doplňky)",
+      "popis": "Fokus do prázdného pole Zastávky ukáže 5 statických tipů z našich výletů (Kutná Hora, Karlštejn, Český Krumlov, Bohemian Switzerland, Karlovy Vary) pod hlavičkou „From our tours“. Volitelné; klik vyplní text a nechá vyhledat.",
+      "kroky": [
+        "Start vybrán (Prague)",
+        "klik #search-poi (prázdné)"
+      ],
+      "kontrola": [
+        "doplňky: .ptcz-ac otevřená s 5 položkami a hlavičkou „From our tours“",
+        "položky mají ikonu podle typu a podřádek"
+      ],
+      "doplnky": true,
+      "jen_doplnky": true
+    },
+    {
+      "id": "04-naseptavac-castle-zastavky",
+      "nazev": "Našeptávač – „castle“ v Zastávkách",
+      "popis": "Dnes vrací Castle Combe (UK), Castle Rock (USA), Castle Hill (AU)… Předloha: jen hrady a místa v ČR a sousedních zemích (componentRestrictions + bias na ČR).",
+      "kroky": [
+        "Start vybrán (Prague)",
+        "type „castle“ do #search-poi"
+      ],
+      "kontrola": [
+        "sekce 1: 0 položek mimo cz/at/de/pl/sk",
+        "sekce 1: vzhled položek jako ve stavu 03",
+        "doplňky: typ „castle“ s ikonou hradu"
+      ],
+      "doplnky": true
+    },
+    {
+      "id": "05-naseptavac-karl",
+      "nazev": "Našeptávač – „Karl“ v Zastávkách",
+      "popis": "Napsáno „Karl“: Karlštejn, Karlovy Vary, Karlův most… Předloha ukazuje shodu modře a podřádek s obcí; s doplňky typ místa.",
+      "kroky": [
+        "type „Karl“ do #search-poi"
+      ],
+      "kontrola": [
+        "sekce 1: max 5 položek, shoda zvýrazněná #1E88B5",
+        "sekce 1: po výběru se pole Zastávky vyprázdní a vrátí fokus"
+      ],
+      "doplnky": true
+    },
+    {
+      "id": "06-klavesnice-otevrena",
+      "nazev": "iPhone s otevřenou klávesnicí (visual viewport ≈ 520 px)",
+      "popis": "Simulace klávesnice zmenšením viewportu na 393×520 při psaní v Zastávkách. Dnes: lišta 154 px zakryje pole a nabídku. Předloha: lišta i WhatsApp skryté (třída is-hidden), vidět pole + ≥ 3 položky nabídky.",
+      "kroky": [
+        "setViewportSize 393×520",
+        "fokus #search-poi s textem „Karl“",
+        "scroll tak, aby pole bylo nahoře"
+      ],
+      "kontrola": [
+        "sekce 1: pole i ≥ 3 položky nabídky ve viewportu",
+        "sekce 7: lišta má třídu skrytí; elementFromPoint nad polem nevrací lištu",
+        "sekce 11: WhatsApp skrytý"
+      ],
+      "doplnky": true,
+      "jen_iphone": true
+    },
+    {
+      "id": "07-chyba-prazdne-continue",
+      "nazev": "Continue s prázdným formulářem",
+      "popis": "Dnes: modál „Error – You must select a valid Start.“ (jen první chyba, pole bez označení). Předloha: všechny chyby najednou inline (Start, Datum, Cíl), pole aria-invalid + červený rámeček a pozadí, souhrn „3 things to fix“ nad tlačítkem, fokus v prvním chybném poli, #notice se neotevře.",
+      "kroky": [
+        "čerstvá stránka",
+        "klik #continue-btn"
+      ],
+      "kontrola": [
+        "sekce 8: do 100 ms aria-invalid=\"true\" na Startu i Datu a viditelná zpráva",
+        "sekce 8: #notice není otevřený",
+        "sekce 8: fokus v prvním chybném poli, pole ve viewportu",
+        "sekce 8: souhrn role=status",
+        "T1: dataLayer planner_validation_error + planner_field_error"
+      ],
+      "doplnky": false
+    },
+    {
+      "id": "08-chyba-volny-text",
+      "nazev": "Volný text ve Startu bez výběru z nabídky",
+      "popis": "Napsáno „xqzv1234 nowhere“ a pole opuštěno. Dnes: nic. Předloha: do 100 ms po opuštění zpráva „Please choose your pickup place from the list.“, stav pole invalid, tlačítko ×.",
+      "kroky": [
+        "type „xqzv1234 nowhere“ do #autoComplete1",
+        "Escape, Tab (blur)"
+      ],
+      "kontrola": [
+        "sekce 1/8: zpráva u pole do 100 ms po blur, aria-invalid",
+        "sekce 1: data-state=\"invalid\", × viditelné (44 px)",
+        "po výběru z nabídky zpráva zmizí bez Continue"
+      ],
+      "doplnky": false
+    },
+    {
+      "id": "09-lista-cena",
+      "nazev": "Pevná lišta s cenou (Prague → Karlštejn)",
+      "popis": "Po přidání zastávky. Dnes: 154 px, 4 řádky, platební věta 12 px #9b9b9b (kontrast 2,7:1). Předloha: 72 px + safe-area, vlevo cena 20/700 + „i“ + podřádek 12 px „whole car, up to 8 · tap for details“, vpravo Continue 150×44. Snímek 09b: detail ceny (dnes rozbalení v liště, předloha spodní list s rozpisem, „v ceně“, platební větou a WhatsApp řádkem). Pozn.: dnešní nabídka na „Karl“ Karlštejn vůbec nenabídne (Karlsruhe, Karlovac, Karlstad…), proto má snímek „dnes“ zastávku Karlsruhe a jinou cenu – to je přesně chyba, kterou sekce 1 řeší.",
+      "kroky": [
+        "Start Prague",
+        "Zastávka Karlštejn",
+        "scroll na začátek formuláře",
+        "09b: klepnutí na cenu / ikonu i"
+      ],
+      "kontrola": [
+        "sekce 7: computed výška lišty ≤ 76 px + safe-area",
+        "sekce 7: lišta obsahuje jen cenu, podřádek a Continue (viditelné potomky)",
+        "sekce 7: kontrast textů v liště ≥ 4,5:1",
+        "sekce 7: při otevřeném listu je lišta pod ztmavením (elementFromPoint ≠ lišta)",
+        "T1: planner_price_details_open"
+      ],
+      "doplnky": false
+    },
+    {
+      "id": "10-whatsapp-umisteni",
+      "nazev": "WhatsApp nad lištou, mimo ovládání zastávek",
+      "popis": "Scroll na kartu zastávky. Dnes: WhatsApp 56 px + šipka nahoru leží přesně nad sloupcem × a ≡ karty. Předloha: šipka pryč, WhatsApp 44 px vpravo 12 px nad lištou, při psaní skrytý. Pozn.: nad plnou šířkou formuláře se nelze vyhnout každému překryvu při každém scrollu – brána měří překryv v klidovém stavu každého stavu (viz README, otázka pro majitele). Snímek „dnes“ má zastávku Karlsruhe (viz 09).",
+      "kroky": [
+        "scroll na #stops-list"
+      ],
+      "kontrola": [
+        "sekce 11: .ptcz-btt počet = 0",
+        "sekce 11: WhatsApp 44×44, nad lištou, nepřekrývá pole ani ovládací prvek ve viditelném stavu (průnik 0 px²)",
+        "sekce 11: position:fixed prvky s výškou > 20 px = hlavička + lišta + WhatsApp (šipka pryč)"
+      ],
+      "doplnky": false
+    },
+    {
+      "id": "11-krok2-chyby",
+      "nazev": "Krok 2 – Continue s prázdnými údaji",
+      "popis": "Stránka údajů (bez odeslání – validace běží před jakýmkoli požadavkem). Dnes: modál „Please enter your full name (at least 5 characters)“. Předloha: tři zprávy najednou (jméno, e-mail, telefon), aria-invalid, souhrn „3 things to fix“.",
+      "kroky": [
+        "goto krok 2 (data z kroku 1 v localStorage)",
+        "klik #continue-btn s prázdnými poli"
+      ],
+      "kontrola": [
+        "sekce 8: tři zprávy najednou",
+        "sekce 8: „john@gmail“ + blur = návrh „john@gmail.com“; „john@gmail.com“ zprávu odstraní (brána)",
+        "sekce 12 (atributy): autocomplete/inputmode doplněné – jen informativně, sekce 12 je Fáze 3"
+      ],
+      "doplnky": false
+    }
+  ]
+}

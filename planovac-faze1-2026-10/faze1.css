@@ -1,0 +1,514 @@
+/* ============================================================================
+   PrivateToursCzech – Plánovač výletů, Fáze 1 (sekce 0, 1, 7, 8, 11 + T1)
+   faze1.css · verze 1.0 · 2026-10-17
+   Zdroj zadání: zadání vývojáři (dokument „Plánovač výletů – vyladění UI“) 
+
+   Platí pro /en/trip-planner/*, /planovac-vyletu/*, /en/prague-private-tours/*,
+   /planovac-vyletu-na-miru/* (kroky 1–3). Soubor je samostatný: načíst PO
+   form.css / custom.css. Nepoužívá žádné knihovny.
+
+   Struktura:
+     0. Tokeny (sekce 0)
+     1. Pole a fokus (sekce 0)
+     2. Dotykové cíle ≥ 44 px (sekce 0)
+     3. Pole s našeptávačem: wrapper, ×, nápověda, stav (sekce 1)
+     4. Našeptávač A – přestylovaný legacy .pac-container (bez doplňků)
+     5. Našeptávač B – vlastní combobox .ptcz-ac (s doplňky z nového webu)
+     6. Chyby a validace (sekce 8)
+     7. Pevná spodní lišta + spodní list s cenou (sekce 7)
+     8. WhatsApp a šipka nahoru (sekce 11)
+     9. Pohyb / reduced motion
+   ========================================================================== */
+
+/* ---------- 0. Tokeny ---------------------------------------------------- */
+:root {
+  --ptcz-font: "Inter Tight", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ptcz-primary: #1E88B5;
+  --ptcz-primary-hover: #176F93;
+  --ptcz-primary-10: rgba(30, 136, 181, .10);
+  --ptcz-ring: rgba(30, 136, 181, .28);
+  --ptcz-text: #1c1c2e;
+  --ptcz-muted: #6B6B6B;
+  --ptcz-border: #e5e7eb;
+  --ptcz-error: #d92d20;
+  --ptcz-error-bg: #fef3f2;
+  --ptcz-error-ring: rgba(217, 45, 32, .22);
+  --ptcz-success: #12b76a;
+  --ptcz-disabled: #c4c7cc;
+  --ptcz-r-field: 16px;
+  --ptcz-r-pop: 14px;
+  --ptcz-r-item: 10px;
+  --ptcz-shadow-card: 0 2px 12px rgba(0, 0, 0, .05);
+  --ptcz-shadow-pop: 0 12px 32px rgba(28, 28, 46, .14);
+  --ptcz-ease: 200ms ease-out;
+  --ptcz-bar-h: 72px;
+  --ptcz-z-bar: 9000;
+  --ptcz-z-pop: 9500;
+  --ptcz-z-sheet: 9700;
+  --ptcz-z-wa: 9400;
+}
+
+/* ---------- 1. Pole a fokus (sekce 0) ------------------------------------ */
+.ptcz-reservation input[type="text"],
+.ptcz-reservation input[type="email"],
+.ptcz-reservation input[type="tel"],
+.ptcz-reservation textarea,
+.ptcz-reservation select {
+  font-family: var(--ptcz-font);
+  font-size: 16px;                 /* iOS nezoomuje */
+  color: var(--ptcz-text);
+  border: 1.5px solid var(--ptcz-border);
+  border-radius: var(--ptcz-r-field);
+  transition: border-color var(--ptcz-ease), box-shadow var(--ptcz-ease);
+}
+/* Fokus: zaoblení se NEMĚNÍ, outline nahrazen prstencem (jednotně) */
+.ptcz-reservation input[type="text"]:focus,
+.ptcz-reservation input[type="email"]:focus,
+.ptcz-reservation input[type="tel"]:focus,
+.ptcz-reservation textarea:focus,
+.ptcz-reservation select:focus {
+  border-radius: var(--ptcz-r-field) !important;
+  outline: none !important;
+  border-color: var(--ptcz-primary) !important;
+  box-shadow: 0 0 0 3px var(--ptcz-ring) !important;
+}
+.ptcz-reservation label,
+.ptcz-reservation .labelz {
+  font-family: var(--ptcz-font);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ptcz-text);
+}
+.ptcz-reservation button:focus-visible,
+.ptcz-reservation a:focus-visible,
+.ptcz-reservation [role="button"]:focus-visible,
+.tlacitko button:focus-visible,
+.ptcz-sheet button:focus-visible,
+#ptcz-wa-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ptcz-ring);
+}
+/* Nápověda pod polem (serverový text, viz faze1-html.md) */
+.ptcz-reservation .ptcz-hint {
+  font-family: var(--ptcz-font);
+  font-size: 13px !important;
+  line-height: 1.4;
+  color: var(--ptcz-muted) !important;
+  margin: 0;
+}
+/* Rytmus mezer: pole má v šabloně margin-bottom 25 px; s nápovědou/chybou se mezera přesune pod ně */
+.ptcz-fld__wrap > input { margin-bottom: 0 !important; }
+.ptcz-fld__wrap { margin-bottom: 25px; }
+.ptcz-fld__wrap:has(~ .ptcz-hint:not(:empty)),
+.ptcz-fld__wrap:has(~ .ptcz-msg:not(:empty)),
+.destination-input-wrap:has(~ .ptcz-hint:not(:empty)),
+.destination-input-wrap:has(~ .ptcz-msg:not(:empty)) { margin-bottom: 8px; }
+.ptcz-reservation .ptcz-hint:not(:empty),
+.ptcz-reservation .ptcz-msg:not(:empty) { margin: 0 0 25px; }
+.ptcz-reservation .ptcz-hint:not(:empty):has(+ .ptcz-msg:not(:empty)) { margin-bottom: 8px; }
+.ptcz-fld.err > input,
+.ptcz-fld.err > .input-wrapper > input,
+.ptcz-fld.err .iti > input { margin-bottom: 8px !important; }
+.destination-wrapper .ptcz-hint:not(:empty), .destination-wrapper .ptcz-msg:not(:empty) { margin-bottom: 0; }
+/* Starý odstavec s nápovědou u zastávek („Unesco, castle or water…“) – nahrazen .ptcz-hint */
+.ptcz-reservation .form-group > p.ptcz-hint--old { display: none; }
+
+/* ---------- 2. Dotykové cíle ≥ 44 px (sekce 0) --------------------------- */
+.ptcz-reservation .qty-btn,
+.ptcz-reservation .info-button,
+.ptcz-reservation .remove-stop,
+.ptcz-reservation .drag-handle,
+.ptcz-reservation .modal .close,
+#notice .close,
+.tlacitko .info-toggle-btn,
+.ptcz-sheet__close {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+.ptcz-reservation .qty-btn { border-radius: 50%; font-size: 22px; color: var(--ptcz-primary); background: #fff; }
+.ptcz-reservation .qty-btn:hover { background: var(--ptcz-primary-10); }
+.ptcz-reservation .info-button { padding: 0; margin: 0 -8px; background: transparent; }
+.ptcz-reservation .remove-stop,
+.ptcz-reservation .drag-handle { padding: 0; }
+.header_curr #selectedCurrency { min-width: 44px; min-height: 44px; padding: 0 14px; }
+#currencyOptions button { min-height: 44px; min-width: 64px; }
+/* hlavička a nástroje jen na plánovači: vlajka jazyka, Menu, Nová rezervace / Sdílet, poznámka, zaškrtávací řádky */
+body.ptcz-planner .header_lang a { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; }
+body.ptcz-planner .ptcz-mm-open { min-height: 44px; }
+body.ptcz-planner .ptcz-icon-btn { min-width: 44px; min-height: 44px; }
+body.ptcz-planner .add-note { min-height: 44px; }
+body.ptcz-planner .seat-label { display: flex; align-items: center; min-height: 44px; gap: 8px; cursor: pointer; }
+.tlacitko .info-toggle-btn { margin-left: 0 !important; }
+
+/* ---------- 3. Pole s našeptávačem (sekce 1) ----------------------------- */
+.ptcz-fld { position: relative; }
+.ptcz-fld__wrap { position: relative; }
+.ptcz-fld__wrap > input {
+  width: 100%;
+  padding-right: 52px !important;    /* místo pro × */
+}
+.ptcz-fld__wrap > input::placeholder { color: #9aa0a6; opacity: 1; }
+/* Tlačítko × – 44 px, viditelné jen ve stavu typing/selected/invalid */
+.ptcz-fld__clear {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  width: 44px;
+  height: 44px;
+  margin-top: -22px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ptcz-muted);
+  font-size: 0;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.ptcz-fld__clear::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M9 9l6 6M15 9l-6 6'/%3E%3C/svg%3E") center/20px no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M9 9l6 6M15 9l-6 6'/%3E%3C/svg%3E") center/20px no-repeat;
+}
+.ptcz-fld__clear:hover { color: var(--ptcz-text); background: var(--ptcz-primary-10); }
+.ptcz-fld[data-state="typing"] .ptcz-fld__clear,
+.ptcz-fld[data-state="selected"] .ptcz-fld__clear,
+.ptcz-fld[data-state="invalid"] .ptcz-fld__clear { display: inline-flex; }
+/* Stav selected: zelená fajfka vlevo od × není nutná – pole jen zůstává čisté. */
+/* Ikona lupy u zastávek překáží × → schovat (× má stejnou funkci) */
+.ptcz-fld .search-icon { display: none !important; }
+/* Pole Cíl – „Same as pickup“ řeší nápověda pod polem (.ptcz-hint[data-same]) */
+.ptcz-hint[data-same="1"]::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin: 0 6px -2px 0;
+  background: var(--ptcz-success);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E") center/14px no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E") center/14px no-repeat;
+}
+
+/* ---------- 4. Našeptávač A – legacy .pac-container (bez doplňků) -------- */
+/* Platí, když vývojář ponechá google.maps.places.Autocomplete a jen přestyluje. */
+.pac-container::before {                      /* patička vlevo (text z překladů – zde přes lang) */
+  content: "Czechia and neighbouring countries";
+  position: absolute;
+  left: 14px;
+  bottom: 11px;
+  font-size: 11px;
+  color: var(--ptcz-muted);
+}
+html[lang^="cs"] .pac-container::before { content: "Česko a sousední země"; }
+.pac-container {
+  font-family: var(--ptcz-font) !important;
+  background: #fff;
+  border: 1.5px solid var(--ptcz-border);
+  border-top: 1.5px solid var(--ptcz-border);
+  border-radius: var(--ptcz-r-pop);
+  box-shadow: var(--ptcz-shadow-pop);
+  margin-top: 6px;
+  padding: 6px;
+  z-index: var(--ptcz-z-pop) !important;
+  overflow: hidden;
+}
+.pac-container::after {                       /* „powered by Google“ (licence) */
+  height: 20px;
+  margin: 6px 4px 2px;
+  background-position: right center;
+}
+.pac-item {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 12px;
+  align-items: center;
+  min-height: 48px;
+  padding: 6px 8px;
+  border: 0;
+  border-radius: var(--ptcz-r-item);
+  line-height: 1.3;
+  font-size: 15px;
+  color: var(--ptcz-text);
+  cursor: pointer;
+}
+.pac-item:hover,
+.pac-item-selected { background: var(--ptcz-primary-10); }
+.pac-icon {
+  grid-row: 1 / span 2;
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  border-radius: 50%;
+  background: var(--ptcz-primary-10) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231E88B5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E") center/16px no-repeat !important;
+}
+.pac-item-query { font-size: 15px; font-weight: 600; color: var(--ptcz-text); padding: 0; }
+.pac-item-query .pac-matched { color: var(--ptcz-primary); font-weight: 700; }
+.pac-item > span:last-child:not(.pac-item-query) {
+  grid-column: 2;
+  font-size: 13px;
+  color: var(--ptcz-muted);
+}
+
+/* ---------- 5. Našeptávač B – vlastní combobox .ptcz-ac (s doplňky) ------ */
+.ptcz-ac {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: var(--ptcz-z-pop);
+  background: #fff;
+  border: 1.5px solid var(--ptcz-border);
+  border-radius: var(--ptcz-r-pop);
+  box-shadow: var(--ptcz-shadow-pop);
+  padding: 6px;
+  font-family: var(--ptcz-font);
+  display: none;
+}
+.ptcz-ac[data-open="1"] { display: block; }
+.ptcz-ac__group {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ptcz-muted);
+  padding: 8px 10px 4px;
+}
+.ptcz-ac__item {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  column-gap: 12px;
+  align-items: center;
+  min-height: 48px;
+  padding: 6px 8px;
+  border-radius: var(--ptcz-r-item);
+  cursor: pointer;
+}
+.ptcz-ac__item:hover,
+.ptcz-ac__item[aria-selected="true"] { background: var(--ptcz-primary-10); }
+.ptcz-ac__ico {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--ptcz-primary-10);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ptcz-primary);
+}
+.ptcz-ac__ico svg { width: 16px; height: 16px; }
+.ptcz-ac__txt { min-width: 0; }  /* ať podřádek nepřetéká – elipsa */
+.ptcz-ac__name { display: block; font-size: 15px; font-weight: 600; color: var(--ptcz-text); line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ptcz-ac__name b { color: var(--ptcz-primary); font-weight: 700; }
+.ptcz-ac__sub { display: block; font-size: 13px; color: var(--ptcz-muted); line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ptcz-ac__empty { padding: 14px 10px; font-size: 14px; color: var(--ptcz-muted); line-height: 1.4; }
+.ptcz-ac__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px 4px;
+  font-size: 11px;
+  color: var(--ptcz-muted);
+  border-top: 1px solid var(--ptcz-border);
+  margin-top: 4px;
+}
+.ptcz-ac__foot img { height: 14px; width: auto; }
+/* Ve variantě B je legacy nabídka jen datový zdroj – nezobrazuje se */
+.ptcz-ac-mode .pac-container { opacity: 0 !important; pointer-events: none !important; height: 0 !important; overflow: hidden !important; margin: 0 !important; padding: 0 !important; border: 0 !important; }
+
+/* ---------- 6. Chyby a validace (sekce 8) -------------------------------- */
+.ptcz-reservation .ptcz-msg, .ptcz-msg {
+  display: none;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 0;
+  font-family: var(--ptcz-font);
+  font-size: 13.5px !important;
+  line-height: 1.4;
+  color: var(--ptcz-error) !important;
+}
+.ptcz-msg:not(:empty) { display: flex; }
+.ptcz-msg::before {
+  content: "";
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  margin-top: 1px;
+  background: var(--ptcz-error);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000'%3E%3Cpath d='M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1 5h2v7h-2V7zm0 9h2v2h-2v-2z'/%3E%3C/svg%3E") center/16px no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000'%3E%3Cpath d='M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1 5h2v7h-2V7zm0 9h2v2h-2v-2z'/%3E%3C/svg%3E") center/16px no-repeat;
+}
+.ptcz-fld.err input,
+.ptcz-fld.err textarea,
+.ptcz-fld.err .iti input {
+  border-color: var(--ptcz-error) !important;
+  background-color: var(--ptcz-error-bg) !important;
+}
+.ptcz-reservation .ptcz-fld.err input:focus,
+.ptcz-reservation .ptcz-fld.err textarea:focus,
+.ptcz-fld.err input:focus,
+.ptcz-fld.err textarea:focus {
+  border-color: var(--ptcz-error) !important;
+  box-shadow: 0 0 0 3px var(--ptcz-error-ring) !important;
+}
+/* Souhrn nad tlačítkem Continue */
+.ptcz-errsum {
+  display: none;
+  margin: 0 0 10px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--ptcz-error-bg);
+  color: var(--ptcz-error);
+  font-family: var(--ptcz-font);
+  font-size: 14px;
+  font-weight: 600;
+}
+.ptcz-errsum:not(:empty) { display: block; }
+/* Systémový modál #notice (jen pro výpadky, ne pro validaci) */
+#notice .modal-content { border-radius: 20px; }
+
+/* ---------- 7. Pevná spodní lišta (sekce 7) – jen mobil ------------------ */
+@media (max-width: 991px) {
+  body.ptcz-planner { padding-bottom: calc(var(--ptcz-bar-h) + env(safe-area-inset-bottom, 0px) + 16px); }
+  .tlacitko.sticky-fixed {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: var(--ptcz-z-bar);
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 10px;
+    height: calc(var(--ptcz-bar-h) + env(safe-area-inset-bottom, 0px));
+    box-sizing: border-box;
+    padding: 0 16px env(safe-area-inset-bottom, 0px);
+    background: #fff;
+    border-top: 1px solid var(--ptcz-border);
+    box-shadow: 0 -4px 16px rgba(28, 28, 46, .06);
+    transition: transform var(--ptcz-ease);
+  }
+  /* skryto při klávesnici / pod listem */
+  .tlacitko.sticky-fixed.is-hidden { transform: translateY(110%); }
+  /* staré části lišty: do spodního listu */
+  .tlacitko.sticky-fixed > #summary-breakdown-wrapper-down,
+  .tlacitko.sticky-fixed > .tlacitko-info,
+  .tlacitko.sticky-fixed > .text-pod-cenou-wrapper,
+  .tlacitko.sticky-fixed > .payment { display: none !important; }
+  .tlacitko.sticky-fixed .ptcz-bar__price {
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    row-gap: 2px;
+    min-height: 44px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    text-align: left;
+    font-family: var(--ptcz-font);
+    color: var(--ptcz-text);
+    cursor: pointer;
+    min-width: 0;
+  }
+  .ptcz-bar__top { display: inline-flex; align-items: center; gap: 6px; max-width: 100%; }
+  .ptcz-bar__val { font-size: 20px; font-weight: 700; line-height: 1.2; white-space: nowrap; }
+  .ptcz-bar__val[data-empty="1"] { font-size: 15px; font-weight: 600; white-space: normal; }
+  .ptcz-bar__i {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--ptcz-primary);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000'%3E%3Cpath d='M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'/%3E%3C/svg%3E") center/16px no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000'%3E%3Cpath d='M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z'/%3E%3C/svg%3E") center/16px no-repeat;
+  }
+  .ptcz-bar__sub { max-width: 100%; font-size: 12px; color: var(--ptcz-muted); line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .tlacitko.sticky-fixed > #continue-btn {
+    grid-column: 2;
+    min-width: 140px;
+    height: 44px;
+    margin: 0;
+    padding: 0 20px;
+    border-radius: 999px;
+    font-family: var(--ptcz-font);
+    font-size: 19px !important;   /* ≥ 18,66 px tučné = „velký text“ podle WCAG 1.4.3 → stačí 3:1; !important přebíjí theme .newbutton */
+    font-weight: 700 !important;
+    white-space: nowrap;
+    background: var(--ptcz-primary) !important; /* značková #1E88B5: bílý text 4,0:1 – pod 4,5:1 ze sekce 7; při 19 px/700 jde o „velký text“ (WCAG ≥ 3:1) – rozhodnutí majitele v index.html */
+    color: #fff;
+    border: 0;
+  }
+  .tlacitko.sticky-fixed > #continue-btn:hover { background: var(--ptcz-primary-hover) !important; }
+}
+/* Spodní list s cenou (mobil i počítač – na počítači jako dialog uprostřed) */
+.ptcz-sheet { position: fixed; inset: 0; z-index: var(--ptcz-z-sheet); display: none; }
+.ptcz-sheet[data-open="1"] { display: block; }
+.ptcz-sheet__dim { position: absolute; inset: 0; background: rgba(28, 28, 46, .35); }
+.ptcz-sheet__panel {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  max-height: 88vh;
+  overflow: auto;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  padding: 10px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+  font-family: var(--ptcz-font);
+  color: var(--ptcz-text);
+  box-shadow: var(--ptcz-shadow-pop);
+  transform: translateY(0);
+  transition: transform var(--ptcz-ease);
+}
+.ptcz-sheet__grip { width: 40px; height: 4px; border-radius: 2px; background: var(--ptcz-border); margin: 4px auto 12px; }
+.ptcz-sheet__head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.ptcz-sheet__title { font-size: 18px; font-weight: 700; margin: 0; }
+.ptcz-sheet__close { border: 0; background: transparent; border-radius: 50%; font-size: 26px; line-height: 1; color: var(--ptcz-muted); cursor: pointer; }
+.ptcz-sheet__total { display: flex; justify-content: space-between; align-items: baseline; margin: 10px 0 2px; }
+.ptcz-sheet__total b { font-size: 30px; font-weight: 700; }
+.ptcz-sheet__for { font-size: 13.5px; color: var(--ptcz-muted); margin: 0 0 14px; }
+.ptcz-sheet__inc { list-style: none; margin: 0 0 14px; padding: 0; font-size: 14px; }
+.ptcz-sheet__inc li { position: relative; padding-left: 24px; margin: 6px 0; }
+.ptcz-sheet__inc li::before {
+  content: ""; position: absolute; left: 0; top: 3px; width: 16px; height: 16px;
+  background: var(--ptcz-success);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E") center/16px no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E") center/16px no-repeat;
+}
+.ptcz-sheet__detail summary { font-size: 14px; font-weight: 600; cursor: pointer; padding: 8px 0; }
+.ptcz-sheet__detail ul { margin: 4px 0 0; padding: 0 0 0 2px; list-style: none; }
+.ptcz-sheet__detail li { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; padding: 5px 0; border-bottom: 1px solid var(--ptcz-border); }
+.ptcz-sheet__pay { font-size: 13.5px; color: var(--ptcz-muted); margin: 14px 0 0; }
+.ptcz-sheet__wa { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin-top: 8px; font-size: 14px; font-weight: 600; color: var(--ptcz-primary); text-decoration: none; }
+@media (min-width: 992px) {
+  .tlacitko .ptcz-bar__price { display: none; } /* na počítači je cena v pravém sloupci */
+  .ptcz-sheet__panel { left: 50%; right: auto; bottom: auto; top: 50%; width: 420px; transform: translate(-50%, -50%); border-radius: 20px; }
+  .ptcz-sheet__grip { display: none; }
+}
+
+/* ---------- 8. WhatsApp a šipka nahoru (sekce 11) ------------------------ */
+body.ptcz-planner #ptcz-btt { display: none !important; }
+body.ptcz-planner #ptcz-wa-btn {
+  width: 44px !important;
+  height: 44px !important;
+  right: 12px !important;
+  bottom: 24px !important;
+  z-index: var(--ptcz-z-wa) !important;
+  box-shadow: 0 4px 14px rgba(28, 28, 46, .18);
+  transition: transform var(--ptcz-ease), opacity var(--ptcz-ease);
+}
+body.ptcz-planner #ptcz-wa-btn svg { width: 22px !important; height: 22px !important; }
+@media (max-width: 991px) {
+  body.ptcz-planner #ptcz-wa-btn {
+    bottom: calc(var(--ptcz-bar-h) + env(safe-area-inset-bottom, 0px) + 12px) !important;
+  }
+  body.ptcz-planner #ptcz-wa-btn.is-hidden { transform: translateY(140%); opacity: 0; pointer-events: none; }
+}
+
+/* ---------- 9. Pohyb ----------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .ptcz-reservation *, .tlacitko, .ptcz-sheet__panel, #ptcz-wa-btn, .ptcz-ac, .pac-container { transition: none !important; animation: none !important; }
+}
