@@ -1,0 +1,192 @@
+<!DOCTYPE html><html lang="cs"><head>
+<meta name="robots" content="noindex, nofollow"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Karty PO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#fff;font-family:"Inter Tight",-apple-system,sans-serif;color:#1C1C2E}
+.container{max-width:1180px;margin:0 auto;padding:0 22px}
+.ptcz-why h2{font-size:30px;margin:0 0 10px}
+.ptcz-why .check{list-style:none;padding:0}
+.newbutton{display:inline-block;background:#1C1C2E;color:#fff;padding:14px 26px;border-radius:999px;text-decoration:none;font-weight:600}
+.odk{color:#1E88B5}
+img{max-width:100%}
+.pruh{background:#1E88B5;color:#fff;font:600 13px/1.4 sans-serif;padding:8px 22px}
+</style>
+<style id="ptcz-why-css">
+/* ===== Sekce „Proč si nás hosté vybírají“ (869ff05p2) ===== */
+.ptcz-why{background:#fff}
+.ptcz-why .container{position:relative}
+.ptcz-why h2{margin-bottom:8px!important;width:auto!important}
+.ptcz-why .eyebrow{display:inline-block;color:#1E88B5;font-weight:600;font-size:13px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.ptcz-why .lead{font-size:17px;line-height:1.55;color:#6B6B6B;max-width:720px;margin:0 0 28px}
+.ptcz-why h3{font-size:20px;line-height:1.3;font-weight:600;color:#1c1c2e;margin:0 0 8px;padding:0}
+.ptcz-why p{font-size:16px;line-height:1.6;color:#6B6B6B;margin:0 0 14px}
+.ptcz-why p.ptcz-why-sub{font-size:16px;color:#1c1c2e;font-weight:500;margin:-2px 0 12px}
+.ptcz-why ul{margin:0 0 18px;padding-left:0;list-style:none}
+.ptcz-why ul.check li{position:relative;padding-left:30px;margin:0 0 8px;font-size:16px;line-height:1.55;color:#6B6B6B}
+.ptcz-why ul.check li::before{content:"";position:absolute;left:0;top:.35em;width:20px;height:20px;border-radius:50%;background:#e6f3f9}
+.ptcz-why ul.check li::after{content:"";position:absolute;left:7px;top:.55em;width:6px;height:10px;border:solid #1E88B5;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.ptcz-why figure{margin:0;position:relative}
+.ptcz-why figure img{width:100%;height:auto;display:block;border-radius:16px}
+.ptcz-why figcaption{font-size:13px;color:#8a8a8a;margin-top:6px}
+.ptcz-why .note{background:#fff7e0;border:1px solid #f0c76a;border-radius:16px;padding:16px 18px;margin:6px 0 0}
+.ptcz-why .note h3{font-size:16px;margin-bottom:6px}
+.ptcz-why .note p{margin:0;font-size:15px}
+.ptcz-why .a-driver{display:grid;grid-template-columns:1fr;gap:22px;align-items:start;margin-bottom:34px}
+.ptcz-why .photos{display:grid;grid-template-columns:1fr;gap:14px}
+.ptcz-why .a-cards{display:grid;grid-template-columns:1fr;gap:18px;margin:0 0 26px}
+.ptcz-why .card{background:#fff;border:1.5px solid #e5e7eb;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.ptcz-why .card img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:50% 50%;display:block}
+.ptcz-why .card .body{padding:20px 22px 22px}
+.ptcz-why .card h3{font-size:18px}
+.ptcz-why .card p{margin:0;font-size:15px}
+.ptcz-why .cta-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+@media(min-width:768px){.ptcz-why .a-cards{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:992px){.ptcz-why .a-driver{grid-template-columns:5fr 6fr;gap:40px}}
+/* ===== #produkty — nové karty, celá karta je odkaz ===== */
+#produkty.ptcz-produkty-new .obrazek img{aspect-ratio:1138/644;object-fit:cover;object-position:50% 50%;height:auto;width:100%}
+#produkty.ptcz-produkty-new .ptcz-card-link{display:block;position:relative;color:inherit;text-decoration:none}
+#produkty.ptcz-produkty-new .ptcz-card-link .infop{pointer-events:none}
+#produkty.ptcz-produkty-new .obrazek::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 20%,rgba(0,0,0,.78) 100%);z-index:1;pointer-events:none}
+#produkty.ptcz-produkty-new .infop{z-index:2}
+/* ===== hero — podnadpis a druhý řádek: varianta A (Robert 16. 10. 2026) =====
+   Dva odstavce stejné velikosti těsně u sebe, štítky pod tlačítky v řádku zarovnané vlevo.
+   Na mobilu jsou štítky odsazené zprava o místo ikony WhatsApp (#ptcz-wa-btn), aby ji nic nezakrývalo. */
+.banner .ptcz-hero-sub2{color:rgba(255,255,255,.92)}
+.banner .podnadpis,.banner .ptcz-hero-sub2{font-size:17px!important;line-height:1.55!important;font-weight:300!important;max-width:580px!important;opacity:1!important}
+.banner .podnadpis{margin:16px 0 8px!important;padding-bottom:0!important}
+.banner .ptcz-hero-sub2{margin:0 0 24px!important}
+.banner .ptcz-cro-badges{justify-content:flex-start!important;flex-wrap:wrap!important;column-gap:16px!important;row-gap:6px!important;margin-top:14px!important;padding-left:0!important}
+.banner .ptcz-cro-badges li{font-size:12px!important}
+@media (max-width:767px){
+  .banner .podnadpis,.banner .ptcz-hero-sub2{font-size:15px!important;line-height:1.5!important}
+  .banner .podnadpis{margin:12px 0 6px!important}
+  .banner .ptcz-hero-sub2{margin:0 0 18px!important}
+  .banner .ptcz-cro-badges{padding-right:64px!important}
+}
+/* ===== hero — jeden řádek, tmavší spodek fotky, štítky na střed (1ame4r2zt0k, Robert 25. 10. 2026) =====
+   Jen když šablona dosadila jeden řádek (třída ptcz-hero-1r na .banner); jinak platí blok výše.
+   Přechod ::after přes spodní polovinu fotky leží nad vodorovným přechodem ::before (ptcz-v41.css) a pod textem.
+   Štítky (.ptcz-cro-badges z cro-group-b.js, jediná viditelná sada) na desktopu v řádku na střed pod tlačítky,
+   na mobilu mřížka 2 × 2 na střed. Ikona WhatsApp je na mobilu níž než hero, odsazení zprava už není potřeba. */
+.banner.ptcz-hero-1r{position:relative}
+.banner.ptcz-hero-1r::after{content:"";position:absolute;left:0;right:0;bottom:0;height:60%;background:linear-gradient(180deg,rgba(6,6,20,0) 0%,rgba(6,6,20,.55) 55%,rgba(6,6,20,.78) 100%);z-index:1;pointer-events:none}
+.banner.ptcz-hero-1r>.container{position:relative;z-index:2}
+.banner.ptcz-hero-1r .podnadpis{margin:16px 0 24px!important;max-width:none!important}
+.banner.ptcz-hero-1r .ptcz-cro-badges{justify-content:center!important}
+@media (max-width:767px){
+  .banner.ptcz-hero-1r::after{height:85%;background:linear-gradient(180deg,rgba(6,6,20,0) 0%,rgba(6,6,20,.5) 30%,rgba(6,6,20,.8) 100%)}
+  .banner.ptcz-hero-1r .podnadpis{margin:12px 0 18px!important}
+  .banner.ptcz-hero-1r .ptcz-cro-badges{display:grid!important;grid-template-columns:repeat(2,max-content);justify-content:center!important;justify-items:start;column-gap:16px!important;row-gap:8px!important;padding:0!important}
+}
+/* ===== MOBIL (do 767 px) — schválený návrh 2 ===== */
+@media (max-width:767px){
+  /* Populární výlety: kompaktní karta, ovládání posuvníku skryté (listuje se prstem) */
+  .vylety-carousel:not(.blog-hp) .vylety-slider .carousel-item{width:86%!important;padding:6px!important}
+  .vylety-carousel:not(.blog-hp) .vylet-img-wrap{height:150px!important;min-height:0!important}
+  .vylety-carousel:not(.blog-hp) .vylet-img-wrap img{height:150px!important;min-height:0!important}
+  .vylety-carousel:not(.blog-hp) .vylet-content{padding:14px 14px 12px!important}
+  .vylety-carousel:not(.blog-hp) .vylet-content h3{font-size:16px!important;line-height:1.3!important}
+  .vylety-carousel:not(.blog-hp) .vylet-cats{margin:8px 0 8px!important;gap:6px!important}
+  .vylety-carousel:not(.blog-hp) .vylet-cat-chip{font-size:11px!important;padding:3px 8px!important;line-height:1.2!important}
+  .vylety-carousel:not(.blog-hp) .vylet-harmonogram{margin:0 0 10px!important;font-size:13px!important}
+  .vylety-carousel:not(.blog-hp) .vylet-harmonogram li{margin-bottom:2px!important}
+  .vylety-carousel:not(.blog-hp) .vylet-harmonogram .nazv{font-weight:600!important;line-height:1.3!important}
+  .vylety-carousel:not(.blog-hp) .vylet-harmonogram .timev{display:block!important;margin-left:0!important;font-weight:500!important;font-size:12px!important;line-height:1.3!important}
+  .vylety-carousel:not(.blog-hp) .vylety-nav{display:none!important}
+  .vylety-carousel:not(.blog-hp) .vylet-actions .naplanovat-btn{min-height:44px!important;padding:10px 14px!important;font-size:15px!important}
+  .vylety-carousel:not(.blog-hp) .ptcz-pp-card summary{min-height:44px;display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px}
+  .vylety-carousel:not(.blog-hp) .vylety-slider{margin-top:18px!important}
+  /* Pro ty, kteří chtějí cestovat po svém: karty pod sebou, fotka vlevo, celá karta je odkaz */
+  #produkty.ptcz-produkty-new .container{padding-right:15px!important}
+  #produkty.ptcz-produkty-new .produkty-slider{display:flex!important;flex-direction:column;gap:14px;margin:0}
+  #produkty.ptcz-produkty-new .produkth{width:100%!important;max-width:100%;margin:0!important;padding:0!important}
+  #produkty.ptcz-produkty-new .produkt{border-radius:16px;background:#fff;border:1.5px solid #e5e7eb;box-shadow:0 2px 12px rgba(0,0,0,.05);overflow:hidden}
+  #produkty.ptcz-produkty-new .obrazek{border-radius:0;display:block;height:auto!important;min-height:0!important}
+  #produkty.ptcz-produkty-new .obrazek::after{display:none}
+  #produkty.ptcz-produkty-new .ptcz-card-link{display:flex;flex-direction:row;align-items:stretch;min-height:44px}
+  #produkty.ptcz-produkty-new .obrazek img{order:1;flex:0 0 118px!important;width:118px!important;max-width:118px!important;min-height:150px!important;height:auto!important;aspect-ratio:auto!important;object-fit:cover!important;align-self:stretch}
+  #produkty.ptcz-produkty-new .infop{order:2;position:static;color:#1c1c2e;padding:12px 14px!important;flex:1;pointer-events:none}
+  #produkty.ptcz-produkty-new .infop h3{color:#1c1c2e!important;font-size:15px!important;line-height:1.3!important;margin:0 0 6px!important}
+  #produkty.ptcz-produkty-new .infop p{color:#6B6B6B!important;font-size:13px!important;line-height:1.45!important;margin:0!important}
+  #produkty.ptcz-produkty-new .infop p::after{content:" →";color:#1E88B5;font-weight:600;speak:never}
+}
+</style>
+<style id="navrh-kompakt">
+/* NÁVRH v2 — 24. 11. 2026: kompaktní jako původní web PTC (malá ikona nahoře, ne fotka přes celou kartu) */
+.ptcz-why .a-cards{gap:16px;margin:0 0 22px}
+.ptcz-why .card .body{padding:14px 18px 18px}
+.ptcz-why .card h3{font-size:17px;margin:0 0 6px}
+.ptcz-why .card p{font-size:14.5px;line-height:1.55}
+/* fotky vozu a sedačky jako malá ilustrace nahoře, ne pás přes celou kartu */
+.ptcz-why .card img{box-sizing:border-box;width:auto;max-width:62%;height:92px;aspect-ratio:auto;object-fit:contain;object-position:left center;display:block;margin:16px 18px 2px;background:transparent}
+/* třetí karta: názorný výčet místo fotky, stejně vysoký jako ilustrace */
+.ptcz-why .vcene{box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:6px;margin:16px 18px 2px;min-height:92px}
+.ptcz-why .vcene__h{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#1E88B5}
+.ptcz-why .vcene__l{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:4px 14px}
+.ptcz-why .vcene__l li{display:flex;align-items:center;gap:7px;font-size:14.5px;font-weight:600;color:#1C1C2E}
+.ptcz-why .vcene__l li::before{content:"";width:15px;height:15px;flex:0 0 15px;border-radius:50%;background:#1E88B5 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>") center/10px no-repeat}
+.ptcz-why .vcene__p{font-size:12.5px;color:#6B6B6B}
+</style>
+</head><body>
+<div class="pruh">PO v2 — kompaktní jako původní web (24. 11. 2026)</div>
+<section class="vyhody ptcz-why pt-5 mt-30 pb-5" id="why-us" aria-labelledby="why-us-h">
+  <div class="container">
+    <span class="eyebrow">Soukromé jednodenní i vícedenní výlety z Prahy</span>
+    <h2 id="why-us-h">Proč si nás hosté vybírají</h2>
+    <p class="lead">Soukromý vůz s anglicky mluvícím řidičem, konečná cena za celý vůz a hotová trasa, nebo ta, kterou si naplánujete sami v online plánovači.</p>
+    <div class="a-driver">
+      <div class="photos">
+        <figure>
+          <img src="https://privatetoursczech.cz/wp-content/themes/main/img/hp-proc-my/pravcicka-brana-bohemian-switzerland-768.jpg" srcset="https://privatetoursczech.cz/wp-content/themes/main/img/hp-proc-my/pravcicka-brana-bohemian-switzerland-480.jpg 480w,   https://privatetoursczech.cz/wp-content/themes/main/img/hp-proc-my/pravcicka-brana-bohemian-switzerland-768.jpg 768w,   https://privatetoursczech.cz/wp-content/themes/main/img/hp-proc-my/pravcicka-brana-bohemian-switzerland-1200.jpg 1200w" sizes="(min-width: 992px) 45vw, 100vw" width="1200" height="900" alt="Pravčická brána v Českém Švýcarsku, největší pískovcová skalní brána v Evropě" loading="lazy" decoding="async">          <figcaption>České Švýcarsko: Pravčická brána</figcaption>
+        </figure>
+        <figure>
+          <img src="https://privatetoursczech.cz/wp-content/themes/main/img/hp-proc-my/cesky-krumlov-couple-viewpoint-768.jpg" srcset="https://privatetoursczech.cz/wp-content/themes/main/img/hp-proc-my/cesky-krumlov-couple-viewpoint-480.jpg 480w,   https://privatetoursczech.cz/wp-content/themes/main/img/hp-proc-my/cesky-krumlov-couple-viewpoint-768.jpg 768w,   https://privatetoursczech.cz/wp-content/themes/main/img/hp-proc-my/cesky-krumlov-couple-viewpoint-1200.jpg 1200w" sizes="(min-width: 992px) 45vw, 100vw" width="1200" height="900" alt="Pár na vyhlídce nad Českým Krumlovem ukazuje na střechy historického centra" loading="lazy" decoding="async">          <figcaption>Výhled na Český Krumlov</figcaption>
+        </figure>
+      </div>
+      <div>
+        <h3>Váš řidič: vybíráme a školíme ho my</h3>
+        <p class="ptcz-why-sub">Řidič se o vás po celou cestu stará: poradí, kam zajít, cestou zavolá do restaurace, jestli mají místo, a pomůže s orientací na místě.</p>
+        <p>Řidič mluví česky a dobře anglicky, zná místa, která navštívíte, a je v ceně. Není licencovaný průvodce a nepodává výklad k historii a památkám. Průvodce můžete přidat jako volitelnou službu, viz níže.</p>
+        <h3>Co pro vás řidič udělá</h3>
+        <ul class="check">
+                    <li>Poradí, co stihnout a co stojí za vidění, kde je nejhezčí výhled a kde se najíst.</li>
+                    <li>Pomůže na místě koupit vstupenky a sehnat stůl na oběd.</li>
+                    <li>Dovede vás ke vchodu a půjde s vámi, kamkoli potřebujete, i během prohlídek. Nebo počká u vozu, když chcete jít sami.</li>
+                  </ul>
+        <h3>Jak řidiče vybíráme a připravujeme</h3>
+        <p>Naše řidiče dobře známe – jezdí s námi dlouhodobě. Nové vybíráme pečlivě: hledáme lidi s ověřenou spolehlivostí, dobrou angličtinou, empatií a příjemným, profesionálním vystupováním. Každý nový řidič projde vstupním školením v bezpečné jízdě a péči o hosty, aby cesta proběhla hladce, i když se plán změní. Všechny řidiče pravidelně hodnotíme a naše standardy upravujeme podle změn v zákonech i zpětné vazby hostů.</p>
+        <aside class="note">
+          <h3>Co přidá licencovaný průvodce (volitelně)</h3>
+          <p>Odborný výklad k historii a památkám. Pokud o něj stojíte, zajistíme licencovaného místního průvodce: pošleme cenu pro váš termín a obvykle do 24 hodin potvrdíme. Když se žádný nenajde, výlet proběhne i bez něj a za průvodce nic neplatíte.</p>
+        </aside>
+      </div>
+    </div>
+    <div class="a-cards">
+            <article class="card">
+        <img src="https://privatetoursczech.cz/wp-content/themes/main/img/hp-proc-my/hyundai-staria-4x4-white-background-768.jpg" srcset="https://privatetoursczech.cz/wp-content/themes/main/img/hp-proc-my/hyundai-staria-4x4-white-background-480.jpg 480w,   https://privatetoursczech.cz/wp-content/themes/main/img/hp-proc-my/hyundai-staria-4x4-white-background-768.jpg 768w,   https://privatetoursczech.cz/wp-content/themes/main/img/hp-proc-my/hyundai-staria-4x4-white-background-1200.jpg 1200w" sizes="(min-width: 768px) 33vw, 100vw" width="1200" height="900" alt="Černý Hyundai Staria 4×4 na bílém pozadí" loading="lazy" decoding="async">        <div class="body">
+          <h3>Vůz: Hyundai Staria 4×4</h3>
+          <p>Místo až pro 8 osob a jejich zavazadla. Kožená sedadla, klimatizace, USB nabíjení, elektrické posuvné dveře a tónovaná skla. Pravidelně kontrolovaný, pojištěný a čistý.</p>
+        </div>
+      </article>
+            <article class="card">
+        <img src="https://privatetoursczech.cz/wp-content/themes/main/img/hp-proc-my/britax-romer-kidfix-child-seat-orange-768.jpg" srcset="https://privatetoursczech.cz/wp-content/themes/main/img/hp-proc-my/britax-romer-kidfix-child-seat-orange-480.jpg 480w,   https://privatetoursczech.cz/wp-content/themes/main/img/hp-proc-my/britax-romer-kidfix-child-seat-orange-768.jpg 768w,   https://privatetoursczech.cz/wp-content/themes/main/img/hp-proc-my/britax-romer-kidfix-child-seat-orange-1200.jpg 1200w" sizes="(min-width: 768px) 33vw, 100vw" width="1200" height="900" alt="Oranžová dětská autosedačka Britax Römer Kidfix" loading="lazy" decoding="async">        <div class="body">
+          <h3>Bezpečnost a pohodlí ve voze</h3>
+          <p>Airbagy a ABS. Dětské sedačky Britax Römer na vyžádání zdarma. Voda Vittel zdarma pro všechny.<br><a class="odk" href="#more-3" role="button" data-toggle="modal" data-target="#more-3">Více informací</a></p>
+        </div>
+      </article>
+            <article class="card">
+        <div class="vcene" role="img" aria-label="V ceně je řidič, palivo, mýtné a parkovné; bez zálohy, až 8 osob"><span class="vcene__h">V ceně za celý vůz</span><ul class="vcene__l"><li>řidič</li><li>palivo</li><li>mýtné</li><li>parkovné</li></ul><span class="vcene__p">Bez zálohy · až 8 osob · platíte řidiči v den výletu</span></div>        <div class="body">
+          <h3>Konečná cena za celý vůz</h3>
+          <p>Cena platí za celý vůz, ne za osobu — i když jedete ve dvou. Vyberte hotovou trasu, nebo si ji sestavte v plánovači.</p>
+        </div>
+      </article>
+          </div>
+    <div class="cta-row">
+      <a class="newbutton" href="/planovac-vyletu/">Naplánovat výlet</a>
+    </div>
+  </div>
+</section>
+</body></html>
