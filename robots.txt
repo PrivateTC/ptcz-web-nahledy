@@ -1,0 +1,4 @@
+# Náhledy webu PrivateToursCzech — rozpracované verze, nepatří do vyhledávání.
+# Doplněno 24. 11. 2026 (okno Inbox, pokyn RF): stránky mají navíc meta robots noindex, nofollow.
+User-agent: *
+Disallow: /
