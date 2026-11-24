@@ -1,0 +1,136 @@
+/* PrivateToursCzech v1 — varianta „po uhlazení“ v3 (30. 10. 2026; v2 29. 10. večer). Načítá se po ptcz-homepage.css jen v index-po.html.
+   RF: „tmavé fotky ne, chce to život, pozitivitu, důvěru, bezpečí“ + prvky a fotky ze starších verzí webu (auto, dětské sedačky).
+   Mění vzhled, ne obsah: všechny texty zůstávají v HTML (SEO, AI). Podklad: ../uhlazeni-a-fotky-2026-10-29.md */
+
+/* náhled: štítky „návrh“ a poznámky do produkce nejdou */
+.ptcz-draft,.demo-note{display:none!important}
+
+/* ---------- Úvod: Karlštejn z dronu v ranní mlze (RF 30. 10.), karta „Jak to funguje“ pod fotkou ---------- */
+.ptcz-hero__media img{object-position:50% 38%}
+.ptcz-hero__shade{background:
+  linear-gradient(90deg,rgba(24,26,44,.55) 0%,rgba(24,26,44,.22) 40%,rgba(24,26,44,0) 62%),
+  linear-gradient(180deg,rgba(24,26,44,.25) 0%,rgba(24,26,44,0) 20%)}
+@media (min-width:900px){
+  .ptcz-hero{min-height:auto}
+  .ptcz-hero__grid{grid-template-columns:1fr;padding-bottom:0;min-height:0}
+  .ptcz-hero__copy{padding-block:48px 160px}
+  .ptcz-how{max-width:none;margin:0 0 -64px;padding:24px 28px;background:#fff;color:var(--ptcz-ink);border:0;box-shadow:0 24px 60px rgba(24,26,44,.22);-webkit-backdrop-filter:none;backdrop-filter:none}
+  .ptcz-how__title{color:var(--ptcz-accent)}
+  .ptcz-steps{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:12px}
+  .ptcz-steps li+li::before{display:none}
+  .ptcz-steps__n{background:var(--ptcz-primary);color:#fff;border:0}
+  .ptcz-steps p{color:var(--ptcz-muted)}
+  .ptcz-intro{padding-top:calc(64px + var(--ptcz-space-10))}
+}
+@media (max-width:899px){
+  .ptcz-hero{background:var(--ptcz-ink)}
+  .ptcz-hero__media{bottom:auto;height:calc(var(--ptcz-header-h) + 90vw)}
+  .ptcz-hero__media img{object-position:38% 50%}
+  .ptcz-hero__grid{padding-top:calc(var(--ptcz-header-h) + 60vw)}
+  .ptcz-hero__shade{background:linear-gradient(180deg,rgba(24,26,44,.35) 0%,rgba(24,26,44,0) 16%,rgba(24,26,44,0) 55%,rgba(24,26,44,.75) 82%,var(--ptcz-ink) 100%)}
+}
+
+/* úvodní odstavec patří k výletům, ne do prázdné plochy */
+.ptcz-intro{padding-bottom:0}
+.ptcz-intro p{color:var(--ptcz-ink)}
+#vylety{padding-top:var(--ptcz-space-8)}
+
+/* ---------- Karty: klidnější, víc vzduchu ---------- */
+.ptcz-card{transition:transform var(--ptcz-ease),box-shadow var(--ptcz-ease)}
+.ptcz-card:not(.ptcz-card--all):hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(24,26,44,.12)}
+.ptcz-card__media{overflow:hidden}
+.ptcz-card__media img{transition:transform .5s ease}
+.ptcz-card:hover .ptcz-card__media img{transform:scale(1.03)}
+.ptcz-chips{gap:4px;margin-top:10px}
+.ptcz-chip{min-height:22px;padding:0 8px;font-size:12px;border-color:var(--ptcz-border);background:var(--ptcz-bg-band)}
+.ptcz-card__unit{font-size:12.5px}
+.ptcz-card__actions{margin-top:12px}
+.ptcz-card__actions .ptcz-link{font-size:14px}
+
+/* dlaždice „Všech 26 výletů“: mozaika světlých fotek */
+.ptcz-card--all{border:0;background:var(--ptcz-ink);overflow:hidden}
+.ptcz-card--all__link{position:relative;justify-content:flex-end;color:#fff;min-height:100%;width:100%;align-self:stretch}
+.po-mosaic{position:absolute;inset:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr) minmax(0,1fr);gap:2px}
+.po-mosaic img{width:100%;height:100%;min-width:0;min-height:0;display:block;object-fit:cover}
+.po-mosaic::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(24,26,44,0) 45%,rgba(24,26,44,.72) 100%)}
+.ptcz-card--all__link>.i,.ptcz-card--all__link>.ptcz-h3{position:relative;z-index:1;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.35)}
+.ptcz-card--all:hover{background:var(--ptcz-ink)}
+
+/* v kostce: čísla tučně */
+.ptcz-fact .ptcz-money,.ptcz-fact b{font-weight:600;color:var(--ptcz-ink)}
+.ptcz-fact{line-height:1.55}
+
+/* ---------- Široký pás: hosté nad Krumlovem ---------- */
+.ptcz-break img{object-position:50% 0%}
+
+/* ---------- Proč si nás: skuteční hosté, dvě fotky ---------- */
+.po-guests{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.po-guests img{width:100%;height:auto;aspect-ratio:3/4!important;object-fit:cover;border-radius:var(--ptcz-r-lg)}
+.po-guests img:first-child{object-position:50% 50%}
+.po-guests img+img{margin-top:32px}
+.po-guests figcaption{grid-column:1/-1}
+
+/* vůz: Staria na bílém jako v plánovači (RF 30. 10.) */
+.po-car img,.ptcz-trio__card.po-car img{object-fit:contain!important;background:#fff!important;aspect-ratio:16/9!important;padding:7% 10% 3%;box-sizing:border-box}
+.ptcz-rent__media.po-car{background:#fff;display:flex;align-items:center;justify-content:center}
+.ptcz-rent__media.po-car img{height:auto!important;width:100%;max-width:520px;aspect-ratio:auto!important;padding:24px}
+
+/* krémové karty (RF 31. 10.): fotky nahoře na bílém, důraz na bezpečnost a pohodlí */
+.ptcz-trio__card>img,.po-seats{margin:10px 10px 0;width:calc(100% - 20px)!important;border-radius:calc(var(--ptcz-r-lg) - 6px)}
+.ptcz-trio__card>img{object-position:50% 60%}
+.po-seats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:end;gap:4px;aspect-ratio:16/9;padding:8% 6% 5%;background:#fff;box-sizing:border-box}
+.po-seats img{width:100%!important;height:100%!important;aspect-ratio:auto!important;object-fit:contain!important;background:#fff!important;min-width:0}
+.po-seats--one{display:block;position:relative;padding:0;overflow:hidden}
+.po-seats--one img{position:absolute;inset:6% 0 3%;margin:auto}
+.po-kit__h{margin-top:12px!important;font-size:12px!important;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ptcz-ink)!important}
+.po-kit{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 0;padding:0;list-style:none}
+.po-kit li{padding:3px 10px;border-radius:999px;background:#fff;font-size:13px;line-height:1.4;color:var(--ptcz-ink)}
+.po-checks{display:grid;gap:7px;margin:12px 0 4px;padding:0;list-style:none}
+.po-checks li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:8px;align-items:start;font-size:14px;line-height:1.45;color:var(--ptcz-ink)}
+.po-checks .i{width:20px;height:20px;padding:3px;border-radius:50%;background:var(--ptcz-primary);color:#fff;box-sizing:border-box;margin-top:1px}
+
+.po-price{margin-top:10px!important;font-size:14px!important;color:var(--ptcz-ink)!important}
+.po-price+.ptcz-link{margin-top:2px}
+
+
+/* krémové karty: stejná výška, doplňující text v rozbalovacím bloku „po-more“ dole (RF 1. 11.; sbalený všude, karty nižší a stejně vysoké) */
+.ptcz-trio__body{display:flex;flex-direction:column;flex:1}
+.po-more{margin-top:auto;padding-top:12px}
+.ptcz-trio:has(.po-more[open]){align-items:start} /* roste jen rozbalená karta */
+.po-more>summary{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;border-top:1px solid var(--ptcz-border);list-style:none;cursor:pointer;font-size:14px;font-weight:600;color:var(--ptcz-primary)}
+.po-more>summary::-webkit-details-marker{display:none}
+.po-more>summary .i{width:18px;height:18px;transition:transform var(--ptcz-ease)}
+.po-more[open]>summary .i{transform:rotate(180deg)}
+.po-more__body .po-kit,.po-more__body .po-checks{margin-top:4px}
+.po-more__body .ptcz-link{margin-top:8px}
+
+/* sedačky přehledně s fotkami (RF 31. 10.) */
+.po-seatlist{margin-top:var(--ptcz-space-8)}
+.po-seatlist__h{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ptcz-ink);margin:0 0 10px}
+.po-seatlist ul{display:grid;gap:12px;margin:0;padding:0;list-style:none}
+.po-seatlist li{display:grid;grid-template-columns:92px minmax(0,1fr);gap:14px;align-items:center;padding:10px;background:var(--ptcz-bg-band);border-radius:var(--ptcz-r-lg)}
+.po-seatlist img{width:92px;height:92px;object-fit:contain;background:#fff;border-radius:calc(var(--ptcz-r-lg) - 6px);padding:6px;box-sizing:border-box}
+.po-seatlist__n{margin:0;font-size:16px;font-weight:600;line-height:1.3;color:var(--ptcz-ink)}
+.po-seatlist__a{margin:2px 0 0;font-size:14px;font-weight:600;color:var(--ptcz-primary)}
+.po-seatlist li p:not(.po-seatlist__a){margin:4px 0 0;font-size:13.5px;line-height:1.45;color:var(--ptcz-muted)}
+.po-seatlist__note{margin:10px 0 0;font-size:14px;color:var(--ptcz-muted)}
+@media (min-width:900px){.po-seatlist ul{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* doplňkové služby: kompaktnější */
+.ptcz-serv li{padding:14px 0}
+.ptcz-serv h3{font-size:16px}
+
+/* ---------- Tmavý pás: slunný Mělník vpravo ---------- */
+.ptcz-plan{background:
+  linear-gradient(90deg,var(--ptcz-bg-dark) 0%,var(--ptcz-bg-dark) 36%,rgba(28,28,46,.55) 62%,rgba(28,28,46,.12) 100%),
+  url(../img/ext/po-plan-melnik.jpg) 70% 40%/cover no-repeat,var(--ptcz-bg-dark)}
+@media (max-width:899px){.ptcz-plan{background:linear-gradient(180deg,rgba(28,28,46,.9),rgba(28,28,46,.72)),url(../img/ext/po-plan-melnik.jpg) 50% 40%/cover no-repeat,var(--ptcz-bg-dark)}}
+
+/* přepínač před/po (jen náhled) */
+.po-switch{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:60;display:inline-flex;align-items:center;justify-content:center;min-width:64px;min-height:40px;padding:0 16px;border-radius:999px 0 0 999px;font:600 14px/1 var(--ptcz-font,system-ui);text-decoration:none;background:#fff;color:var(--ptcz-ink);box-shadow:0 4px 16px rgba(24,26,44,.22);transform:translateX(-100%)}
+.po-switch--on{border-radius:0 999px 999px 0;background:var(--ptcz-primary);color:#fff;transform:none}
+/* 24. 11. 2026 (okno Inbox, jen v tomhle náhledu): na telefonu přepínač Před/Po plul přesně přes obě hlavní
+   tlačítka v úvodu — ověřeno na iPhonu 17 (iOS 27.2, Safari) i na emulátoru Androidu 17 v Chrome.
+   Pod 900 px se proto skrývá; přepnout na verzi PŘED jde dál odkazem v horní liště náhledu.
+   Původní pravidlo: @media (max-width:899px){.po-switch{bottom:calc(84px + env(safe-area-inset-bottom,0px))}} */
+@media (max-width:899px){.po-switch{display:none}}
