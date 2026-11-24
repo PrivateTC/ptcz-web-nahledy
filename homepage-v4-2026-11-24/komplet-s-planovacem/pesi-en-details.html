@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="img/logo-dark.svg">
+<title>Walking tour — booking, steps 2–3 (EN) · PrivateToursCzech v1</title>
+<meta name="description" content="The new PrivateToursCzech trip planner: pick the places, the car and the date – you see the whole-car price right away.">
+<!-- Statický náhled nového plánovače (krok 1) v design systému PrivateToursCzech v1 – stejné CSS jako homepage (css/ptcz-homepage.css) + css/ptcz-planovac.css.
+     Jeden markup pro mobil i počítač, bez knihoven. Data: js/stops-data.js (= stops-data.v1.json). Logika: js/planovac.js. -->
+<link rel="stylesheet" href="fonts/inter-tight-embed.css">
+<link rel="stylesheet" href="css/ptcz-tokens.css">
+<link rel="stylesheet" href="css/ptcz-homepage.css">
+<link rel="stylesheet" href="css/ptcz-planovac.css">
+<script>window.PTCZ_T = {"lang":"en","title":"Trip Planner — new planner, steps 1–3 (EN) · PrivateToursCzech v1","home":"en.html","otherPage":"planovac.html","otherLang":"cs","otherLabel":"Česká verze","desc":"The new PrivateToursCzech trip planner: pick the places, the car and the date – you see the whole-car price right away.","demoBar":"<b>New planner preview · steps 1–3 · PrivateToursCzech v1</b> · 27 Oct 2026 · the price is calculated live from the car rates (Staria 34 / 7 / 100 · Tesla 27 / 5.6 / 80 CZK; 3,000 minimum) and the driving-time matrix (× 1.1 for time only); km of a custom route = estimate (production: Google Directions) · “Other place…” search is a static mock · steps 2–3: contact and summary, nothing is sent (texts marked ✎ are new, for approval)","demoTesla":"Demo: block 15 Dec 2026 for the Tesla","demoBoth":"Demo: block 15 Dec for the Staria too","demoDate":"Set the date to 15 Dec 2026","back":"Back to home","logoAria":"PrivateToursCzech – home","currency":"CZK","currencyAria":"Currency: CZK","menu":"Menu","h1":"Trip Planner","lead":"Pick the places, the car and the date. You see the price for the whole car with a driver right away – book with no deposit.","steps":["Route & car","Contact","Summary"],"start":"Start","startHint":"Hotel or address – in Prague or beyond. The planner calculates the price from your pickup point.","startVal":"Prague","stops":"Stops","date":"Date","dateHint":"Pickup is usually at 9:00; you set the exact time in the next step.","dest":"Destination","sameAsStart":"Same as pickup","destHint":"Where should we take you at the end of the day?","change":"Change","group":"Car and passengers","persons":"People","personsSub":"including children","bags":"Bags","bagsSub":"large pieces","seats":"Child seats","seatsSub":"free, Britax Römer","vehicleLegend":"Car","vehicleFor":"price for your route","srcDefault":"preselected by group size","srcUser":"your choice","srcUrl":"preselected from the link","srcCapacity":"chosen by capacity and availability","stariaMeta":"up to 8 guests · large luggage","teslaMeta":"up to 4 guests · smaller luggage","cheaper":"cheaper","capPersons":"{car}: up to {n} guests","capSeats":"{car}: up to {n} child seats","capBags":"{car}: up to {n} bags","blocked":"Not available on this date","minNote":"The Tesla is below the 3,000 CZK minimum order – add a stop or choose the Hyundai Staria.","guideNoteTesla":"If the guide rides with you in the car, the Tesla Model Y seats up to 3 guests – choose the Staria.","guideNoteStaria":"With a guide in the car, the Staria seats up to 7 guests.","noVehicle":"We have no car free on this date. Try another day, or message us (<a href=\"https://wa.me/420737194194\" target=\"_blank\" rel=\"noopener\">WhatsApp</a> / <a href=\"mailto:booking@privatetoursczech.cz\">email</a>) – we’ll try to sort something out.","noVehicleShort":"No car free on this date","services":"Additional services","svcDriverGuide":"Driver-guide","svcDriverGuideD":"Stays with you on foot at the stops and shows you around as a local. +200 CZK per hour of the trip.","svcLicensed":"Licensed guide on request","svcLicensedD":"Expert commentary: meets you on site, or rides with you in the car all day. We send a price for your date and usually confirm within 24 hours.","onRequest":"price on request","svcSeats":"Free child seats","svcSeatsD":"Britax Römer Swivel, Kidfix and an iBooster booster – set the number above, tell us the children’s ages when you book.","empty":"Add a stop to see the price","noPrice":"add a stop","barSub":"whole car, up to {n} · tap for details","carLine":"Car: {car} (up to {n})","upTo":"up to {n} guests","tripPrice":"Price of the ready-made trip “{trip}” – applies as long as you don’t change the route.","priceLab":"Your price","priceFor":"Price for the whole car with driver","breakdown":"Price breakdown","total":"Total","rowKm":"Driving {km} km × {rate} CZK","kmEstimate":"km estimated – production: Google Directions","kmTrip":"km from the trip data","rowStops":"Stops {n} × {rate} CZK","rowStay":"Time at stops {min} min × {rate} CZK","rowOvernight":"Driver’s overnight stay {n} ×","rowMinimum":"Top-up to the 3,000 CZK minimum order","rowGuide":"Driver-guide {h} h × 200 CZK","included":["Car with driver, fuel, tolls and parking","Pickup wherever you choose","Child seats and water"],"pay":"Pay your driver on the day, no deposit, free cancellation up to 24 h before pickup.","waQ":"Questions? WhatsApp us","newTab":"opens in a new tab","cont":"Continue","errDate":"Please choose the date of your trip.","errStops":"Add at least one stop.","toFix":"Please complete {n} field(s)","q":"Where would you like to go?","other":"Other place…","add":"Type a place – e.g. Telč, Lednice Castle","hint":"Czechia and neighbouring countries. Pick the place from the list.","none":"No match in Czechia or nearby – try the town name (e.g. Kutná Hora).","fits":"Fits with {place}","moreDest":"More destinations","lessDest":"Hide more destinations","longDay":"long day","veryLong":"very long day – consider fewer stops","warnLong":"Long day – consider fewer stops","stay":"Stay","changeTime":"Change time at {place}","time":"Time at this stop","overnight":"Overnight","dep":"departure next morning","include":"Include","incIn":"You can include:","typ":"Typical visit","fromP":"From Prague","toRoute":"Added to your route","seeTrip":"See our trip page","addStop":"Add stop","done":"Done","quick":"Add without details: {place}","ask":"What would you like to do here?","ph":"e.g. lunch here, photos from the viewpoint, only from outside","save":"Save","cancel":"Cancel","removed":"{place} removed","undo":"Undo","up":"Move up","down":"Move down","remove":"Remove stop","stopsN1":"1 stop","stopsN2":"{n} stops","stopsN5":"{n} stops","at":"at stops","drive":"driving","d2d":"door to door","twoDays":"two-day trip","close":"Close","details":"{place} – details","ft1":"Czechia and neighbouring countries","ftDemo":"mock · production: Google","prague":"Prague","none2":"none","tags":{"castle":"castle","town":"town","city":"city","nature":"nature","beer":"beer","wine":"wine","unesco":"UNESCO","memorial":"memorial","spa":"spa","church":"church","cave":"cave","family":"family"},"yourTrip":"Your trip","editRoute":"Edit route","editContact":"Edit","k2H":"Contact details","k2Lead":"We’ll send your booking summary and confirmation here.","pickTime":"Pickup time","pickTimeHint":"Usually 9:00 – pick the time that suits you.","pickPlace":"Pickup point","name":"Your full name","namePh":"John Smith","email":"Email","emailPh":"smith@gmail.com","emailHint":"","phone":"Telephone number","phoneHint":"In case your driver needs to reach you on the day of your trip – WhatsApp works too.","phoneCc":"Country code","note":"Note for your driver","optional":"optional","notePh":"E.g. room number, a slower pace, special requests…","noteSeats":"Please add the children’s ages – we’ll bring the right seats.","heard":"How did you hear about us?","heardNone":"—","heardOpts":[["google","Google search"],["ai_assistant","ChatGPT or another AI assistant"],["tripadvisor","TripAdvisor"],["friend","Recommended by a friend"],["hotel","Recommended by my hotel"],["social","Social media"],["other","Other"]],"errName":"Please enter your full name (at least 5 characters).","errEmail":"Please enter a valid email address.","errPhone":"Please enter a valid phone number.","backStep":"Back","k3H":"Check your booking","k3Lead":"Look over the route and your details – use Edit if anything’s wrong.","sRoute":"Route","sWhen":"Date and time","sCar":"Car and passengers","sServices":"Additional services","sContact":"Contact","sNote":"Note for your driver","pickup":"Pickup","back2":"Return","backAround":"around {t}","stayAt":"{d} stay","nextMorning":"overnight, departure next morning","dayLen":"About {d} in total · {km} km","people":["{n} person","{n} people","{n} people"],"bagsN":["{n} bag","{n} bags","{n} bags"],"seatsN":["{n} child seat","{n} child seats","{n} child seats"],"nextH":"What happens next","nextGuide":"We’ll send the licensed guide’s price for your date separately, usually within 24 hours. If no guide is available, your trip goes ahead as planned and you pay nothing for it.","notIncl":"not included in the price","approx":"~","nextDay":"next day","tlNote":"Times are estimates – based on normal traffic, without hold-ups or meal breaks.","lateWarn":"You’d be back late in the evening – consider an earlier pickup or fewer stops.","sPrice":"Price","upToA":["up to {n} guest","up to {n} guests","up to {n} guests"],"next":["Send your booking – nothing to pay now. It’s a request until we confirm it.","We’ll confirm your booking by email as soon as your driver or guide confirms it – usually within 48 hours.","On the day, you pay your driver – by card or in cash. Free cancellation up to 24 h before pickup."],"gdpr":"I agree with the <a href=\"https://www.privatetoursczech.cz/gdpr-en/\" target=\"_blank\" rel=\"noopener\">processing of my personal data</a>.","terms":"I agree with the <a href=\"https://www.privatetoursczech.cz/terms-of-service/\" target=\"_blank\" rel=\"noopener\">terms of service</a>.","errConsent":"You must agree to the terms of service and GDPR.","book":"Book your trip","sending":"Sending your booking…","okH":"Booking request received","okText":"Thank you for your booking request. This is not a confirmation yet. We will confirm your booking by e-mail as soon as your driver or guide confirms it – usually within 48 hours, and always in good time before your departure. If your trip is sooner or anything is urgent, please contact us on WhatsApp +420 737 194 194.","okHome":"Back to home page","demoSent":"Nothing was sent in this preview.","footCompany":"MAJESTIC s.r.o., Company ID (IČO) 02016699","wa":"https://wa.me/420737194194?text=Hello%2C%20I%20have%20a%20question%20about%20planning%20a%20trip."};</script>
+<script>window.PTCZ_W = {"w":{"title":"Walking tour — booking, steps 2–3 (EN) · PrivateToursCzech v1","files":["pesi-en-details.html","pesi-en-summary.html"],"other":["pesi-udaje.html","pesi-rekapitulace.html"],"demoBar":"<b>Preview: walking tour · steps 2–3 · PrivateToursCzech v1</b> · 27 Oct 2026 · guests arrive from “Book walking tour” on the tour page (step 1 is skipped) · fixed price per group · nothing is sent","demoPick":"Sample tour:","h1":"{tour} — Reservation","lead":"A private walking tour of Prague with a licensed English-speaking guide. One price for the whole group – no deposit.","steps":["Tour","Contact","Summary"],"stepTourAria":"Tour – back to the tour page","yourTour":"Your tour","backTour":"Back to the tour","dur":"about {d}","upTo4":"up to 4 people","whenH":"Tour date and time","dateLab":"Date","timeLab":"Start time","timeHint":"Usually at 9:00. At this time of year ({season}) you can start between {from} and {to}, so the tour fits the opening hours of Prague Castle and the other stops.","season":{"leto":"April to September","zima":"October to March"},"timeMoved":"We moved the start to {t} – at this time of year ({season}) the tour can start between {from} and {to}.","sunday":"On Sundays St Vitus Cathedral opens at 12:00 – with an earlier start you will probably only see it from the outside.","meet":"Meeting point: in front of the main gate of Prague Castle (Hradčanské náměstí, Prague 1).","personsH":"Number of people","personsLab":"People","personsSub":"including children","personsHint":"Up to 4 people. The price is for the whole group, not per person.","maxPersons":"The tour is for up to 4 people. For a larger group, message us on WhatsApp.","note":"Note for your guide","notePh":"E.g. a slower pace, what interests you most, special requests…","phoneHint":"In case your guide needs to reach you on the day of your tour.","errDate":"Choose the date of your tour.","okText":"Thank you for your booking request. This is not a confirmation yet. We will confirm your booking by e-mail as soon as your guide confirms it – usually within 48 hours, and always in good time before your tour starts. If your tour is sooner or anything is urgent, please contact us on WhatsApp +420 737 194 194.","k3Lead":"Look over your tour and details – use Edit if anything’s wrong.","sTour":"Tour","sPersons":"Number of people","sNote":"Note for your guide","tlStart":"Start · in front of the main gate of Prague Castle","tlEnd":"Ends {end}","durNote":"These are approximate times – the actual duration depends on your pace.","priceFor":"Total price for a group (up to 4 people)","tourKind":"Walking tour with a licensed English-speaking guide","incl":[["check","Licensed English-speaking guide for the whole tour"],["check","Private tour – just you and your guide"],["x","Entrance fees not included – you pay them on site"]],"pay":"Pay your guide on the day – by card or in cash.","next":["Send your booking – nothing to pay now. It’s a request until we confirm it.","We’ll confirm your booking by email as soon as your guide confirms it – usually within 48 hours.","On the day, pay your guide on site – by card or in cash. Cancellation is free up to 24 hours before the tour starts.","You pay entrance fees yourself on site – see the official price lists of Prague Castle and the Petřín Lookout Tower."],"barSub":"per group, up to 4 people"},"walks":{"7458":{"lang":"cs","pair":7469,"win":{"leto":["09:00","13:00"],"zima":["09:00","11:00"]},"name":"To nejlepší z Prahy – půldenní trasa","mins":330,"price":8500,"end":"u Staroměstského náměstí","url":"https://privatetoursczech.cz/vylet/puldenni-trasa-praha-to-nejlepsi/","stops":[["Pražský hrad",60],["Nový Svět",30],["Petřín",45],["Kampa",45],["Čertovka",30],["Karlův most",45]]},"7469":{"lang":"en","pair":7458,"win":{"leto":["09:00","13:00"],"zima":["09:00","11:00"]},"name":"Half-day trip in Prague (Best of)","mins":330,"price":8500,"end":"near Old Town Square","url":"https://privatetoursczech.cz/en/trip/half-day-prague-highlights-hidden-gems/","stops":[["Prague Castle",60],["Nový Svět",30],["Petřín Hill",45],["Kampa",45],["Čertovka Canal",30],["Karlův most (Charles Bridge)",45]]},"7950":{"lang":"en","pair":7999,"win":{"leto":["09:00","10:30"],"zima":["09:00","09:30"]},"name":"Full-day Prague trip (All Highlights)","mins":540,"price":12500,"end":"by the National Theatre","url":"https://privatetoursczech.cz/en/trip/full-day-prague-all-highlights/","stops":[["Prague Castle",60],["Nový Svět",30],["Loreto",20],["Nerudova",30],["Petřín",45],["Velkopřevorský Mlýn",30],["Kampa Park",45],["Čertovka Canal",30],["Charles Bridge",45],["Prague Jewish Quarter",60],["Old Town Square",45]]},"7999":{"lang":"cs","pair":7950,"win":{"leto":["09:00","10:30"],"zima":["09:00","09:30"]},"name":"To nejlepší z Prahy – celodenní trasa","mins":540,"price":12500,"end":"u Národního divadla","url":"https://privatetoursczech.cz/vylet/celodenni-trasa-praha-to-nejlepsi/","stops":[["Pražský hrad",60],["Nový Svět",30],["Loreta Praha",20],["Nerudova",30],["Petřín",45],["Velkopřevorský mlýn",30],["Kampa",45],["Čertovka",30],["Karlův most",45],["Židovská čtvrť",60],["Staroměstské náměstí",45]]}},"page":2,"files":["pesi-en-details.html","pesi-en-summary.html"],"lang":"en"};</script>
+<script src="js/pesi.js" defer></script>
+</head>
+<body class="ptcz-planner ptcz-walk" data-page-type="planner" data-walk="1" data-step="2">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="5" cy="18" r="2.25"/><circle cx="19" cy="6" r="2.25"/><path d="M7.2 17.2C12 16 12 8 16.8 6.8"/></symbol>
+    <symbol id="i-route-long" viewBox="0 0 48 20"><circle cx="4" cy="16" r="2.5"/><circle cx="24" cy="6" r="2.5"/><circle cx="44" cy="14" r="2.5"/><path d="M6.5 15.5c8-1 10-8 15-9m2.5 0c8 1 10 7 17.5 7.5" stroke-dasharray="3 3"/></symbol>
+    <symbol id="i-van" viewBox="0 0 24 24"><path d="M2.5 16v-4.4L4.9 7h10.6l4.2 4.6h1.8V16"/><path d="M4.9 11.6h15.6M9 7v4.6M15.5 7v4.6"/><path d="M9.2 16h5.6M2.5 16h2.3M19.2 16h2.3"/><circle cx="7" cy="16.5" r="2"/><circle cx="17" cy="16.5" r="2"/></symbol>
+    <symbol id="i-suv" viewBox="0 0 24 24"><path d="M2.5 16v-3.2l2.6-1 2.3-4h7.8l3.3 4.1 2.7.9V16"/><path d="M5.1 11.8h13.4"/><path d="M9.2 16h5.6M2.5 16h2.3M19.2 16h2.3"/><circle cx="7" cy="16.5" r="2"/><circle cx="17" cy="16.5" r="2"/><path d="M12.4 3.2 11 6h2.2l-1.3 2.6"/></symbol>
+    <symbol id="i-car" viewBox="0 0 24 24"><path d="M3 15.5v-3l2-.6 2.2-4.4h9.6L19 11.9l2 .6v3"/><path d="M5 11.9h14M3 15.5h2.2M18.8 15.5H21M9 15.5h6"/><circle cx="7" cy="16" r="1.9"/><circle cx="17" cy="16" r="1.9"/></symbol>
+    <symbol id="i-walk" viewBox="0 0 24 24"><circle cx="13.5" cy="4" r="1.75"/><path d="M9.5 21l2-6.2 2.6 2.4V21M8 11.5l2-3.1 3.2-.9 2.3 3.1 2.5 1.2M11.5 14.8l-1.3-3"/></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></symbol>
+
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21.5s-6.5-5.6-6.5-10.8a6.5 6.5 0 0 1 13 0C18.5 15.9 12 21.5 12 21.5Z"/><circle cx="12" cy="10.7" r="2.3"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1.3"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/></symbol>
+    <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="9" r="5.25"/><path d="M8.6 13.4 7.2 21l4.8-2.4 4.8 2.4-1.4-7.6"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.8 4.5 5.8v5.6c0 4.6 3.1 8.2 7.5 9.8 4.4-1.6 7.5-5.2 7.5-9.8V5.8L12 2.8Z"/><path d="m9 12 2 2 4-4.2"/></symbol>
+    <symbol id="i-seat" viewBox="0 0 24 24"><path d="M6 3h3.4l2.3 8.6H19l-1 4.4H10.2L6 3Z"/><circle cx="10.5" cy="20" r="1.5"/><circle cx="16.5" cy="20" r="1.5"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M3.5 7.5A2.5 2.5 0 0 1 6 5h12.5v3"/><path d="M3.5 7.5V17a2.5 2.5 0 0 0 2.5 2.5h14.5V8H6a2.5 2.5 0 0 1-2.5-.5Z"/><circle cx="16.5" cy="13.8" r="1.2"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4.5"/><path d="m11.2 11.8 8.3-8.3M16 7l2.5 2.5M19 4l1.5 1.5"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20h4l10.5-10.5a2.1 2.1 0 0 0-3-3L5 17v3Z"/><path d="m13.5 8.5 3 3"/></symbol>
+
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13M10 11v5M14 11v5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.5"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4.5M5 5h12l-2 4 2 4H5"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.3-4.3"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.5 2.8 19.5h18.4L12 3.5Z"/><path d="M12 10v4.5M12 17v.5"/></symbol>
+  </defs>
+</svg>
+
+<div class="demo-bar"><b>Preview: walking tour · steps 2–3 · PrivateToursCzech v1</b> · 27 Oct 2026 · guests arrive from “Book walking tour” on the tour page (step 1 is skipped) · fixed price per group · nothing is sent</div>
+<div class="demo-bar demo-bar--tools"><b>Sample tour:</b> <span data-demo-tours></span></div>
+
+<header class="ptcz-header ptcz-header--solid">
+  <div class="ptcz-container ptcz-header__in">
+    <a class="ptcz-header__back" href="en.html" data-cta-id="back_home" data-placement="header"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg><span>Back to home</span></a>
+    <a class="ptcz-logo" href="en.html" aria-label="PrivateToursCzech – home" data-cta-id="logo" data-cta-role="tertiary" data-placement="header"><img src="img/logo-dark.svg" alt="PrivateToursCzech" width="159" height="24"></a>
+    <a class="ptcz-hbtn ptcz-hbtn--icon" id="lang-switch" href="pesi-udaje.html" data-keep-trip hreflang="cs" lang="cs" aria-label="Česká verze" data-cta-id="lang_switch" data-placement="header"><svg class="ptcz-flag" viewBox="0 0 26 26" aria-hidden="true"><clipPath id="fc"><circle cx="13" cy="13" r="13"/></clipPath><g clip-path="url(#fc)"><rect width="26" height="26" fill="#1C2E6B"/><path d="M0 0l26 26M26 0L0 26" stroke="#fff" stroke-width="5"/><path d="M0 0l26 26M26 0L0 26" stroke="#C8102E" stroke-width="2"/><path d="M13 0v26M0 13h26" stroke="#fff" stroke-width="7"/><path d="M13 0v26M0 13h26" stroke="#C8102E" stroke-width="4"/></g></svg></a>
+    <button class="ptcz-hbtn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Currency: CZK">CZK</button>
+    <button class="ptcz-hbtn" type="button" aria-expanded="false"><svg class="i" aria-hidden="true"><use href="#i-menu"/></svg>Menu</button>
+  </div>
+</header>
+
+<main id="obsah">
+<div class="ptcz-container ptcz-pl" id="planner">
+  <div class="ptcz-pl__form">
+    <div class="ptcz-pl__head">
+      <h1 class="ptcz-h1" data-h1></h1>
+      <p class="ptcz-lead">A private walking tour of Prague with a licensed English-speaking guide. One price for the whole group – no deposit.<sup class="ptcz-new" title="new text for approval">✎</sup></p>
+      <ol class="ptcz-steps-nav" aria-label="Booking steps">
+        <li class="is-done"><a class="ptcz-steps-nav__b" data-tour-link href="#" aria-label="Tour – back to the tour page"><span class="ptcz-steps__n" aria-hidden="true">1</span><span>Tour</span></a></li>
+        <li aria-current="step"><span class="ptcz-steps-nav__b"><span class="ptcz-steps__n" aria-hidden="true">2</span><span>Contact</span></span></li>
+        <li><span class="ptcz-steps-nav__b"><span class="ptcz-steps__n" aria-hidden="true">3</span><span>Summary</span></span></li>
+      </ol>
+    </div>
+    <div class="ptcz-view" data-view="2">
+    <section class="ptcz-blk ptcz-trip" aria-labelledby="lab-trip2">
+      <div class="ptcz-trip__head"><h2 class="ptcz-blk__lab" id="lab-trip2"><span class="ptcz-ico-circle"><svg class="i" aria-hidden="true"><use href="#i-route"/></svg></span>Your tour</h2><a class="ptcz-linkbtn" data-tour-link href="#"><svg class="i i--back" aria-hidden="true"><use href="#i-arrow"/></svg>Back to the tour</a></div>
+      <p class="ptcz-trip__line" data-trip-line></p>
+    </section>
+
+    <section class="ptcz-blk" aria-labelledby="lab-when">
+      <h2 class="ptcz-blk__lab" id="lab-when"><span class="ptcz-ico-circle"><svg class="i" aria-hidden="true"><use href="#i-calendar"/></svg></span>Tour date and time<sup class="ptcz-new" title="new text for approval">✎</sup></h2>
+      <div class="ptcz-form ptcz-form--2">
+        <div class="ptcz-f" data-f="date">
+          <label class="ptcz-f__lab" for="date">Date</label>
+          <div class="ptcz-fld ptcz-fld--date"><input class="ptcz-fld__in" id="date" type="date" required aria-required="true" aria-describedby="err-date"></div>
+          <p class="ptcz-msg" id="err-date"></p>
+        </div>
+        <div class="ptcz-f" data-f="pick-time">
+          <label class="ptcz-f__lab" for="pick-time">Start time</label>
+          <div class="ptcz-fld ptcz-fld--select"><select class="ptcz-fld__in" id="pick-time" aria-describedby="time-hint"><option>00:00</option><option>00:15</option><option>00:30</option><option>00:45</option><option>01:00</option><option>01:15</option><option>01:30</option><option>01:45</option><option>02:00</option><option>02:15</option><option>02:30</option><option>02:45</option><option>03:00</option><option>03:15</option><option>03:30</option><option>03:45</option><option>04:00</option><option>04:15</option><option>04:30</option><option>04:45</option><option>05:00</option><option>05:15</option><option>05:30</option><option>05:45</option><option>06:00</option><option>06:15</option><option>06:30</option><option>06:45</option><option>07:00</option><option>07:15</option><option>07:30</option><option>07:45</option><option>08:00</option><option>08:15</option><option>08:30</option><option>08:45</option><option selected>09:00</option><option>09:15</option><option>09:30</option><option>09:45</option><option>10:00</option><option>10:15</option><option>10:30</option><option>10:45</option><option>11:00</option><option>11:15</option><option>11:30</option><option>11:45</option><option>12:00</option><option>12:15</option><option>12:30</option><option>12:45</option><option>13:00</option><option>13:15</option><option>13:30</option><option>13:45</option><option>14:00</option><option>14:15</option><option>14:30</option><option>14:45</option><option>15:00</option><option>15:15</option><option>15:30</option><option>15:45</option><option>16:00</option><option>16:15</option><option>16:30</option><option>16:45</option><option>17:00</option><option>17:15</option><option>17:30</option><option>17:45</option><option>18:00</option><option>18:15</option><option>18:30</option><option>18:45</option><option>19:00</option><option>19:15</option><option>19:30</option><option>19:45</option><option>20:00</option><option>20:15</option><option>20:30</option><option>20:45</option><option>21:00</option><option>21:15</option><option>21:30</option><option>21:45</option><option>22:00</option><option>22:15</option><option>22:30</option><option>22:45</option><option>23:00</option><option>23:15</option><option>23:30</option><option>23:45</option></select><svg class="i ptcz-fld__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></div>
+          <p class="ptcz-msg" id="err-pick-time"></p>
+        </div>
+      </div>
+      <p class="ptcz-blk__hint" id="time-hint"></p>
+      <p class="ptcz-note" id="time-moved" role="status" hidden><svg class="i" aria-hidden="true"><use href="#i-info"/></svg><span></span></p>
+      <p class="ptcz-note" id="sunday-note" hidden><svg class="i" aria-hidden="true"><use href="#i-info"/></svg><span>On Sundays St Vitus Cathedral opens at 12:00 – with an earlier start you will probably only see it from the outside.</span></p>
+      <p class="ptcz-blk__hint"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg> Meeting point: in front of the main gate of Prague Castle (Hradčanské náměstí, Prague 1).</p>
+    </section>
+
+    <section class="ptcz-blk" aria-labelledby="lab-persons-h">
+      <h2 class="ptcz-blk__lab" id="lab-persons-h" tabindex="-1"><span class="ptcz-ico-circle"><svg class="i" aria-hidden="true"><use href="#i-user"/></svg></span>Number of people</h2>
+      <div class="ptcz-steppers ptcz-steppers--one">
+        <div class="ptcz-stepper"><span class="ptcz-stepper__lab" id="lab-persons">People<small>including children</small></span>
+          <span class="ptcz-stepper__ctl" role="group" aria-labelledby="lab-persons"><button type="button" data-step="persons" data-dir="-1" aria-label="Fewer: People"><span><svg class="i" aria-hidden="true"><use href="#i-minus"/></svg></span></button><span class="ptcz-stepper__v" data-val="persons" aria-live="polite">2</span><button type="button" data-step="persons" data-dir="1" aria-label="More: People"><span><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></span></button></span></div>
+      </div>
+      <p class="ptcz-blk__hint" id="persons-hint">Up to 4 people. The price is for the whole group, not per person.</p>
+      <p class="ptcz-note" id="persons-max" role="status" hidden><svg class="i" aria-hidden="true"><use href="#i-info"/></svg><span>The tour is for up to 4 people. For a larger group, message us on WhatsApp.<sup class="ptcz-new" title="new text for approval">✎</sup></span></p>
+    </section>
+
+    <section class="ptcz-blk" aria-labelledby="lab-contact">
+      <h2 class="ptcz-blk__lab" id="lab-contact"><span class="ptcz-ico-circle"><svg class="i" aria-hidden="true"><use href="#i-user"/></svg></span>Contact details</h2>
+      <p class="ptcz-blk__hint ptcz-blk__hint--lead">We’ll send your booking summary and confirmation here.<sup class="ptcz-new" title="new text for approval">✎</sup></p>
+      <p class="ptcz-errbox" id="errbox2" role="alert" tabindex="-1" hidden></p>
+      <div class="ptcz-form" id="contact-form">
+        <div class="ptcz-f" data-f="your-name">
+          <label class="ptcz-f__lab" for="your-name">Your full name</label>
+          <input class="ptcz-fld__in" id="your-name" name="your-name" type="text" placeholder="John Smith" autocomplete="name" autocapitalize="words" enterkeyhint="next" required aria-required="true" aria-describedby="err-your-name">
+          <p class="ptcz-msg" id="err-your-name"></p>
+        </div>
+        <div class="ptcz-f" data-f="your-email">
+          <label class="ptcz-f__lab" for="your-email">Email</label>
+          <input class="ptcz-fld__in" id="your-email" name="your-email" type="email" placeholder="smith@gmail.com" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" enterkeyhint="next" required aria-required="true" aria-describedby="err-your-email">
+          <p class="ptcz-msg" id="err-your-email"></p>
+        </div>
+        <div class="ptcz-f" data-f="phone">
+          <label class="ptcz-f__lab" for="phone">Telephone number</label>
+          <div class="ptcz-tel"><span class="ptcz-fld ptcz-fld--select ptcz-tel__cc"><select class="ptcz-fld__in" id="phone-cc" aria-label="Country code" autocomplete="tel-country-code"><option value="+420">CZ +420</option><option value="+421">SK +421</option><option value="+49">DE +49</option><option value="+43">AT +43</option><option value="+48">PL +48</option><option value="+44" selected>GB +44</option><option value="+1">US/CA +1</option><option value="+33">FR +33</option><option value="+39">IT +39</option><option value="+34">ES +34</option><option value="+31">NL +31</option><option value="+61">AU +61</option><option value="+972">IL +972</option><option value="+82">KR +82</option></select><svg class="i ptcz-fld__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span><input class="ptcz-fld__in" id="phone" name="your-phone" type="tel" placeholder="7700 900123" autocomplete="tel-national" inputmode="tel" enterkeyhint="next" required aria-required="true" aria-describedby="hint-phone err-phone"></div>
+          <p class="ptcz-blk__hint" id="hint-phone">In case your guide needs to reach you on the day of your tour.<sup class="ptcz-new" title="new text for approval">✎</sup></p>
+          <p class="ptcz-msg" id="err-phone"></p>
+        </div>
+        <div class="ptcz-f" data-f="customer-note">
+          <label class="ptcz-f__lab" for="customer-note">Note for your guide <span class="ptcz-f__opt">(optional)</span><sup class="ptcz-new" title="new text for approval">✎</sup></label>
+          <textarea class="ptcz-fld__in ptcz-fld__ta" id="customer-note" name="customer-note" rows="3" maxlength="500" placeholder="E.g. a slower pace, what interests you most, special requests…"></textarea>
+          <p class="ptcz-msg" id="err-customer-note"></p>
+        </div>
+        <div class="ptcz-f" data-f="how-heard">
+          <label class="ptcz-f__lab" for="how-heard">How did you hear about us? <span class="ptcz-f__opt">(optional)</span></label>
+          <div class="ptcz-fld ptcz-fld--select"><select class="ptcz-fld__in" id="how-heard" name="how-heard"><option value="">—</option><option value="google">Google search</option><option value="ai_assistant">ChatGPT or another AI assistant</option><option value="tripadvisor">TripAdvisor</option><option value="friend">Recommended by a friend</option><option value="hotel">Recommended by my hotel</option><option value="social">Social media</option><option value="other">Other</option></select><svg class="i ptcz-fld__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></div>
+          <p class="ptcz-msg" id="err-how-heard"></p>
+        </div>
+      </div>
+    </section>
+    <div class="ptcz-stepnav ptcz-stepnav--one"><button type="button" class="ptcz-btn ptcz-btn--primary" data-next>Continue <svg class="i i--arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+    </div>
+  </div>
+
+  <aside class="ptcz-pl__side" aria-label="Your price">
+    <div class="ptcz-pricecard">
+      <p class="ptcz-pricecard__lab">Your price</p>
+      <p class="ptcz-pricecard__val" data-price-val></p>
+      <p class="ptcz-pricecard__car">Walking tour with a licensed English-speaking guide<sup class="ptcz-new" title="new text for approval">✎</sup></p>
+      <p class="ptcz-pricecard__sub">Total price for a group (up to 4 people)</p>
+      <ul class="ptcz-inc-list ptcz-inc-list--walk"><li class="is-check"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Licensed English-speaking guide for the whole tour</li><li class="is-check"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Private tour – just you and your guide</li><li class="is-x"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg>Entrance fees not included – you pay them on site</li></ul>
+      <button type="button" class="ptcz-btn ptcz-btn--primary ptcz-btn--block" id="continue">Continue <svg class="i i--arrow" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      <p class="ptcz-pricecard__pay">Pay your guide on the day – by card or in cash.</p>
+      <a class="ptcz-link" href="https://wa.me/420737194194?text=Hello%2C%20I%20have%20a%20question%20about%20planning%20a%20trip." target="_blank" rel="noopener"><svg class="i i--fill" aria-hidden="true"><use href="#i-wa"/></svg> Questions? WhatsApp us<span class="ptcz-sr-only"> (opens in a new tab)</span></a>
+    </div>
+  </aside>
+</div>
+
+</main>
+
+<footer class="ptcz-footer">
+  <div class="ptcz-container ptcz-footer__in">
+    <div><img src="img/logo.svg" alt="PrivateToursCzech" width="159" height="24"><p style="margin-top:12px"><small>MAJESTIC s.r.o., Company ID (IČO) 02016699 · <a href="tel:+420737194194" style="display:inline;min-height:0">+420 737 194 194</a></small></p></div>
+    <div class="ptcz-footer__route" aria-hidden="true"><svg class="i" viewBox="0 0 48 20"><use href="#i-route-long"/></svg></div>
+  </div>
+</footer>
+
+<!-- lišta (mobil): pevná cena za skupinu, Pokračovat -->
+<div class="ptcz-bar ptcz-bar--planner" id="bar">
+  <p class="ptcz-bar__price"><span class="ptcz-bar__top"><span class="ptcz-bar__val" data-price-val></span></span><span class="ptcz-bar__sub">per group, up to 4 people</span></p>
+  <button type="button" class="ptcz-btn ptcz-btn--primary" id="continue-bar">Continue</button>
+</div>
+<a class="ptcz-wa ptcz-wa--fab ptcz-wa--planner" id="wa-fab" href="https://wa.me/420737194194?text=Hello%2C%20I%20have%20a%20question%20about%20planning%20a%20trip." aria-label="WhatsApp (opens in a new tab)" target="_blank" rel="noopener"><svg class="i i--fill" aria-hidden="true"><use href="#i-wa"/></svg></a>
+
+<!-- jeden panel na stránku: detail místa · délka pobytu · rozpad ceny -->
+<div class="ptcz-toast" id="toast" role="status" aria-live="polite"><span></span><button type="button">Undo</button></div>
+
+</body>
+</html>

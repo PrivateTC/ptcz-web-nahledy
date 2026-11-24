@@ -1,0 +1,443 @@
+/* =====================================================================
+   PrivateToursCzech v1 — plánovač, krok 1 (v4-s-planovacem). Načítá se PO css/ptcz-homepage.css
+   (sdílené komponenty: tlačítka, dlaždice, výběr vozu, lišta, WhatsApp, patička) a čte tokeny z ptcz-tokens.css.
+   ===================================================================== */
+
+/* skryté prvky: atribut hidden vítězí nad display komponent */
+[hidden]{display:none!important}
+
+/* ---------- hlavička na bílém podkladu (plánovač nemá fotku v úvodu) ---------- */
+.ptcz-header--solid{position:sticky;top:0;inset:auto;background:#fff;border-bottom:1px solid var(--ptcz-border)}
+.ptcz-header--solid .ptcz-hbtn{border-color:var(--ptcz-border-strong);color:var(--ptcz-ink)}
+.ptcz-header--solid .ptcz-hbtn:hover{background:var(--ptcz-ink);color:#fff}
+.ptcz-header--solid .ptcz-hbtn--icon:hover{background:var(--ptcz-primary-10);color:var(--ptcz-ink)}
+.ptcz-header--solid .ptcz-flag{box-shadow:0 0 0 1.5px var(--ptcz-border-strong)}
+.ptcz-header__back{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:var(--ptcz-tap);min-width:var(--ptcz-tap);padding:0 8px 0 0;color:var(--ptcz-muted);font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap}
+.ptcz-header__back .i{width:18px;height:18px;transform:rotate(180deg)}
+.ptcz-header__back:hover{color:var(--ptcz-primary)}
+@media (max-width:599px){.ptcz-header__back{padding:0}.ptcz-header__back span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}}
+
+/* ---------- demo lišta s přepínači (jen náhled) ---------- */
+.demo-bar--tools{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 18px;text-align:left}
+.demo-bar--tools label{display:inline-flex;align-items:center;gap:6px;min-height:28px;cursor:pointer}
+.demo-bar--tools input{accent-color:var(--ptcz-brand-cyan);width:16px;height:16px;margin:0}
+.demo-bar--tools button{min-height:28px;padding:0 10px;border-radius:var(--ptcz-r-pill);border:1px solid rgba(255,255,255,.5);background:transparent;color:#fff;font-size:12px;font-weight:600;cursor:pointer}
+.demo-bar--tools button:hover{background:rgba(255,255,255,.14)}
+
+/* ---------- rozvržení ---------- */
+body.ptcz-planner{padding-bottom:calc(var(--ptcz-bar-h) + env(safe-area-inset-bottom,0px) + 16px)}
+.ptcz-pl{display:grid;gap:var(--ptcz-space-8);padding:var(--ptcz-space-6) var(--ptcz-margin-x) var(--ptcz-space-12)}
+.ptcz-pl__head{margin-bottom:var(--ptcz-space-2)}
+.ptcz-pl__head .ptcz-h1{font-size:28px;line-height:1.15}
+.ptcz-pl__head .ptcz-lead{margin-top:8px;font-size:var(--ptcz-fs-small)}
+.ptcz-steps-nav{padding:0;list-style:none;display:flex;gap:6px;margin-top:14px;font-size:13px;font-weight:600;color:var(--ptcz-muted)}
+.ptcz-steps-nav li{display:inline-flex;align-items:center;gap:6px;min-height:28px;padding:0 10px 0 4px;border-radius:var(--ptcz-r-pill);border:1px solid var(--ptcz-border)}
+.ptcz-steps-nav li[aria-current]{border-color:var(--ptcz-primary);color:var(--ptcz-primary);background:var(--ptcz-primary-10)}
+.ptcz-steps-nav .ptcz-steps__n{width:20px;height:20px;font-size:11px;background:var(--ptcz-primary);color:#fff;border:0}
+.ptcz-steps-nav li:not([aria-current]) .ptcz-steps__n{background:var(--ptcz-bg-band-2);color:var(--ptcz-muted)}
+@media (max-width:599px){.ptcz-steps-nav li:not([aria-current]) span:last-child{display:none}}
+.ptcz-pl__form{display:grid;gap:var(--ptcz-space-8);min-width:0}
+.ptcz-pl__side{display:none}
+@media (min-width:900px){
+  .ptcz-pl{grid-template-columns:minmax(0,7fr) minmax(300px,5fr);column-gap:var(--ptcz-space-12);padding-top:var(--ptcz-space-10)}
+  .ptcz-pl__head .ptcz-h1{font-size:36px}
+  .ptcz-pl__side{display:block;position:sticky;top:calc(var(--ptcz-header-h) + 24px);align-self:start}
+  body.ptcz-planner{padding-bottom:0}
+}
+
+/* ---------- blok pole ---------- */
+.ptcz-blk{display:grid;gap:10px}
+.ptcz-blk__lab{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:600;line-height:1.3}
+.ptcz-blk__lab .ptcz-ico-circle{width:30px;height:30px}.ptcz-blk__lab .ptcz-ico-circle .i{width:16px;height:16px}
+.ptcz-blk__hint{font-size:var(--ptcz-fs-meta);line-height:var(--ptcz-lh-meta);color:var(--ptcz-muted)}
+.ptcz-blk__hint a,.ptcz-blk__hint button{font:inherit;font-weight:600;color:var(--ptcz-primary);background:none;border:0;padding:0;cursor:pointer;min-height:var(--ptcz-tap);display:inline-flex;align-items:center}
+.ptcz-fld{position:relative}
+.ptcz-fld__in{width:100%;height:var(--ptcz-field-h);border:1.5px solid var(--ptcz-border-strong);border-radius:var(--ptcz-r-lg);padding:0 48px 0 16px;font:16px var(--ptcz-font);color:var(--ptcz-text);background:#fff;transition:border-color var(--ptcz-ease),box-shadow var(--ptcz-ease)}
+.ptcz-fld__in::placeholder{color:#8a8f9c}
+.ptcz-fld__in:focus{border-color:var(--ptcz-primary);box-shadow:0 0 0 3px var(--ptcz-ring);outline:none}
+.ptcz-fld__in[readonly]{background:var(--ptcz-bg-band);border-color:var(--ptcz-border)}
+.ptcz-fld--icon .ptcz-fld__in{padding-left:44px}
+.ptcz-fld__ico{position:absolute;left:14px;top:calc(var(--ptcz-field-h)/2);transform:translateY(-50%);width:20px;height:20px;color:var(--ptcz-muted);pointer-events:none}
+.ptcz-fld__clear{position:absolute;right:4px;top:calc(var(--ptcz-field-h)/2);transform:translateY(-50%);width:var(--ptcz-tap);height:var(--ptcz-tap);border:0;background:transparent;border-radius:50%;display:none;align-items:center;justify-content:center;color:var(--ptcz-muted);cursor:pointer}
+.has-text .ptcz-fld__clear{display:inline-flex}
+.ptcz-fld__clear:hover{background:var(--ptcz-primary-10);color:var(--ptcz-text)}
+.ptcz-fld--date .ptcz-fld__in{padding-right:16px;-webkit-appearance:none;appearance:none;min-width:0}
+.has-error .ptcz-fld__in{border-color:var(--ptcz-error);background:var(--ptcz-error-bg)}
+.ptcz-msg{display:none;align-items:flex-start;gap:6px;font-size:var(--ptcz-fs-meta);line-height:1.4;color:var(--ptcz-error);font-weight:600}
+.ptcz-msg:not(:empty){display:flex}
+.ptcz-errsum{font-size:var(--ptcz-fs-meta);font-weight:600;color:var(--ptcz-error);min-height:0}
+.ptcz-errsum:empty{display:none}
+
+/* ---------- mřížka cílů (dlaždice z DS jako tlačítka) ---------- */
+.ptcz-pl__q{font-size:var(--ptcz-fs-small);color:var(--ptcz-muted)}
+.ptcz-tiles--pick{margin-top:10px;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (min-width:600px){.ptcz-tiles--pick{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}}
+.ptcz-tile--btn{cursor:pointer}
+.ptcz-tile__ini{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:44px;font-weight:700;color:rgba(255,255,255,.9)}
+.ptcz-tile__qa{border:0;background:transparent;padding:0;cursor:pointer;color:var(--ptcz-ink)}
+.ptcz-tile__qa:hover span{background:var(--ptcz-primary);color:#fff}
+.ptcz-tile__qa:focus-visible{box-shadow:none}.ptcz-tile__qa:focus-visible span{box-shadow:0 0 0 3px #fff,0 0 0 5px var(--ptcz-primary)}
+#more-grid .ptcz-tiles--pick{margin-top:12px}
+
+/* ---------- seznam zastávek: karta zastávky (DS kap. 7) ---------- */
+.ptcz-stops{display:grid;gap:10px}
+.ptcz-stop{position:relative;display:grid;grid-template-columns:26px 56px minmax(0,1fr) 44px;grid-template-rows:auto auto auto auto;column-gap:10px;align-items:start;padding:10px 6px 8px 12px;background:#fff;border:1px solid var(--ptcz-border);border-radius:var(--ptcz-r-lg);box-shadow:var(--ptcz-shadow-card)}
+.ptcz-stop.is-new{animation:ptczIn var(--ptcz-ease-slow)}
+@keyframes ptczIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.ptcz-stop__n{grid-column:1;grid-row:1;width:26px;height:26px;margin-top:15px;border-radius:50%;background:var(--ptcz-primary);color:#fff;font-size:13px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+.ptcz-stop__ph{grid-column:2;grid-row:1;width:56px;height:56px;padding:0;border:0;border-radius:var(--ptcz-r-md);overflow:hidden;color:#fff;font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.ptcz-stop__ph img{width:100%;height:100%;object-fit:cover}
+.ptcz-stop__main{grid-column:3;grid-row:1;min-width:0;min-height:56px;padding:2px 6px;margin-left:-6px;border:0;background:transparent;border-radius:var(--ptcz-r-sm);text-align:left;display:flex;flex-direction:column;justify-content:center;cursor:pointer}
+.ptcz-stop__main:hover .ptcz-stop__nm{color:var(--ptcz-primary)}
+.ptcz-stop__nm{font-size:16px;font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ptcz-stop__sb{font-size:13px;line-height:1.35;color:var(--ptcz-muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ptcz-stop__ud{grid-column:4;grid-row:1/span 4;display:flex;flex-direction:column;align-items:center}
+.ptcz-ib{width:var(--ptcz-tap);height:var(--ptcz-tap);padding:0;border:0;background:transparent;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:var(--ptcz-muted);cursor:pointer}
+.ptcz-ib .i{width:20px;height:20px;stroke-width:2}
+.ptcz-ib:hover{background:var(--ptcz-bg-band);color:var(--ptcz-text)}
+.ptcz-ib--rm:hover{background:var(--ptcz-error-bg);color:var(--ptcz-error)}
+.ptcz-ib[disabled]{opacity:.3;pointer-events:none}
+.ptcz-stop__stay{grid-column:2/span 2;grid-row:2;display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px;margin-left:-6px}
+.ptcz-stop__stayb{min-height:var(--ptcz-tap);padding:0 6px;border:0;background:transparent;border-radius:var(--ptcz-r-pill);display:inline-flex;align-items:center;gap:5px;font-size:13px;color:var(--ptcz-muted);cursor:pointer}
+.ptcz-stop__stayb b{font-size:16px;font-weight:600;color:var(--ptcz-primary)}
+.ptcz-stop__stayb .i{width:16px;height:16px;color:var(--ptcz-primary);stroke-width:2.2}
+.ptcz-stop__stayb:hover{background:var(--ptcz-primary-10)}
+.ptcz-tag{display:inline-flex;align-items:center;min-height:22px;padding:0 8px;border-radius:var(--ptcz-r-pill);font-size:11px;font-weight:700;letter-spacing:.02em;line-height:1}
+.ptcz-tag--warn{background:var(--ptcz-warning-bg);color:var(--ptcz-warning)}
+.ptcz-tag--err{background:var(--ptcz-error-bg);color:var(--ptcz-error)}
+.ptcz-stop__inc{grid-column:2/span 2;grid-row:3;margin-left:-6px}
+.ptcz-stop__incline{min-height:var(--ptcz-tap);max-width:100%;padding:0 6px;border:0;background:transparent;border-radius:var(--ptcz-r-pill);display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--ptcz-muted);cursor:pointer;text-align:left}
+.ptcz-stop__incline b{font-weight:500;color:var(--ptcz-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ptcz-stop__pl{font-size:16px;color:var(--ptcz-primary)}
+.ptcz-stop__incline:hover{background:var(--ptcz-bg-band)}
+.ptcz-stop__inclist{display:none;flex-wrap:wrap;gap:0 10px;padding-left:6px}
+.ptcz-stop__inclist label,.ptcz-sheet__incs label{display:inline-flex;align-items:center;gap:8px;min-height:var(--ptcz-tap);font-size:14px;cursor:pointer}
+.ptcz-stop__inclist input,.ptcz-sheet__incs input{width:18px;height:18px;margin:0;accent-color:var(--ptcz-primary)}
+.ptcz-stop__st{color:var(--ptcz-muted);font-size:13px}
+.ptcz-stop__inc[data-open="1"] .ptcz-stop__inclist{display:flex}
+.ptcz-stop__inc[data-open="1"] .ptcz-stop__incline{display:none}
+.ptcz-stop__wish{grid-column:2/span 2;grid-row:4;min-width:0;margin-left:-6px}
+.ptcz-stop__ask{min-height:var(--ptcz-tap);padding:0 6px;border:0;background:transparent;border-radius:var(--ptcz-r-pill);display:inline-flex;align-items:center;gap:6px;max-width:100%;font-size:13px;color:var(--ptcz-muted);cursor:pointer;text-align:left;text-decoration:underline;text-decoration-color:rgba(91,96,112,.4);text-underline-offset:3px}
+.ptcz-stop__ask .i{width:14px;height:14px;flex:none}
+.ptcz-stop__ask span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-decoration:none}
+.ptcz-stop__ask:hover{color:var(--ptcz-primary)}
+.ptcz-stop__wish.has .ptcz-stop__ask{text-decoration:none}
+.ptcz-stop__ed{display:none;padding:4px 8px 6px 6px}
+.ptcz-stop__wish.is-editing .ptcz-stop__ask{display:none}.ptcz-stop__wish.is-editing .ptcz-stop__ed{display:block}
+.ptcz-stop__ed textarea{width:100%;min-height:64px;border:1.5px solid var(--ptcz-border-strong);border-radius:var(--ptcz-r-md);padding:10px 12px;font:14px/1.4 var(--ptcz-font);color:var(--ptcz-text);resize:vertical}
+.ptcz-stop__ed textarea:focus{border-color:var(--ptcz-primary);box-shadow:0 0 0 3px var(--ptcz-ring);outline:none}
+.ptcz-stop__edrow{display:flex;gap:12px;margin-top:2px}
+.ptcz-link--muted{color:var(--ptcz-muted);font-weight:500}
+button.ptcz-link{border:0;background:none;cursor:pointer;font:inherit;font-weight:600;font-size:15px}
+
+/* ---------- řada „K zastávce … se hodí“ ---------- */
+.ptcz-fits__lbl{font-size:13px;color:var(--ptcz-muted);margin-bottom:6px}
+.ptcz-fits__lbl b{color:var(--ptcz-text);font-weight:600}
+.ptcz-fits__row{display:flex;flex-wrap:wrap;gap:8px}
+.ptcz-chipbtn{display:inline-flex;align-items:center;gap:8px;min-height:56px;padding:6px 14px 6px 6px;border:1.5px solid var(--ptcz-border-strong);border-radius:var(--ptcz-r-pill);background:#fff;font:500 14px var(--ptcz-font);color:var(--ptcz-text);cursor:pointer;text-align:left;max-width:100%;transition:border-color var(--ptcz-ease),background-color var(--ptcz-ease)}
+.ptcz-chipbtn img,.ptcz-chipbtn__ini{width:40px;height:40px;border-radius:50%;object-fit:cover;flex:none}
+.ptcz-chipbtn__ini{display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff}
+.ptcz-chipbtn:hover{border-color:var(--ptcz-primary);background:var(--ptcz-primary-10)}
+.ptcz-chipbtn.is-long{border-style:dashed}
+.ptcz-chipbtn__tx{display:flex;flex-direction:column;min-width:0}
+.ptcz-chipbtn__n1{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-weight:600}
+.ptcz-chipbtn__n2{font-size:12px;color:var(--ptcz-muted);font-weight:400;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:230px}
+.ptcz-chipbtn__m{font-size:12px;color:var(--ptcz-muted);font-weight:500}
+.ptcz-chipbtn--txt{min-height:var(--ptcz-tap);padding:0 14px;border-color:transparent;background:var(--ptcz-primary-10);color:var(--ptcz-primary);font-weight:600}
+
+/* ---------- Jiné místo… + hledání (statická ukázka) ---------- */
+.ptcz-other{display:flex;align-items:center;gap:8px;width:100%;min-height:48px;padding:0 16px;border:1.5px dashed var(--ptcz-border-strong);border-radius:var(--ptcz-r-lg);background:#fff;font:500 14px var(--ptcz-font);color:var(--ptcz-muted);cursor:pointer;text-align:left}
+.ptcz-other:hover{border-color:var(--ptcz-primary);color:var(--ptcz-primary)}
+.ptcz-ac{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:var(--ptcz-z-pop);background:#fff;border:1.5px solid var(--ptcz-border);border-radius:var(--ptcz-r-md);box-shadow:var(--ptcz-shadow-pop);padding:6px}
+.ptcz-ac__item{display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;align-items:center;width:100%;min-height:48px;padding:6px 10px;border:0;border-radius:var(--ptcz-r-sm);background:transparent;cursor:pointer;text-align:left;font:inherit;color:inherit}
+.ptcz-ac__item:hover,.ptcz-ac__item:focus-visible{background:var(--ptcz-primary-10)}
+.ptcz-ac__ico{width:32px;height:32px;padding:7px;border-radius:50%;background:var(--ptcz-primary-10);color:var(--ptcz-primary)}
+.ptcz-ac__name{display:block;font-size:15px;font-weight:600;line-height:1.3}
+.ptcz-ac__sub{display:block;font-size:13px;color:var(--ptcz-muted);line-height:1.3}
+.ptcz-ac__empty{padding:12px 10px;font-size:13px;color:var(--ptcz-muted)}
+.ptcz-ac__foot{display:flex;justify-content:space-between;gap:12px;padding:8px 10px 4px;font-size:11px;color:var(--ptcz-muted)}
+.ptcz-day{display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px 12px;font-size:13px;color:var(--ptcz-muted)}
+.ptcz-day__warn{color:var(--ptcz-warning);font-weight:600}
+
+/* ---------- steppery + výběr vozu + služby ---------- */
+.ptcz-steppers{display:grid;gap:8px}
+.ptcz-stepper{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;min-height:56px;padding:4px 4px 4px 14px;border:1px solid var(--ptcz-border);border-radius:var(--ptcz-r-lg);background:#fff}
+.ptcz-stepper__lab{font-size:15px;font-weight:600}
+.ptcz-stepper__lab small{display:block;font-size:13px;font-weight:400;color:var(--ptcz-muted)}
+.ptcz-stepper__ctl{display:inline-flex;align-items:center}
+.ptcz-stepper__ctl button{width:var(--ptcz-tap);height:var(--ptcz-tap);border:0;background:transparent;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ptcz-text);padding:0}
+.ptcz-stepper__ctl button span{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--ptcz-border-strong);display:inline-flex;align-items:center;justify-content:center;color:var(--ptcz-primary);transition:border-color var(--ptcz-ease),background-color var(--ptcz-ease)}
+.ptcz-stepper__ctl button span .i{width:16px;height:16px;stroke-width:2.25}
+.ptcz-stepper__ctl button:hover:not([disabled]) span{border-color:var(--ptcz-primary);background:var(--ptcz-primary-10)}
+.ptcz-stepper__ctl button[disabled]{opacity:.3;cursor:default}
+.ptcz-stepper__ctl button:focus-visible{box-shadow:none}.ptcz-stepper__ctl button:focus-visible span{box-shadow:0 0 0 3px var(--ptcz-ring)}
+.ptcz-stepper__v{min-width:36px;text-align:center;font-size:17px;font-weight:700;font-variant-numeric:tabular-nums}
+@media (min-width:600px){.ptcz-steppers{grid-template-columns:repeat(3,minmax(0,1fr))}.ptcz-stepper{grid-template-columns:minmax(0,1fr);gap:4px;padding:12px 12px 6px 14px}}
+
+.ptcz-vehicle{margin-top:4px}
+.ptcz-vehicle legend{display:flex;flex-wrap:wrap;gap:4px 10px;width:100%}
+.ptcz-vehicle legend small{font-weight:400}
+.ptcz-vehicle__opt{grid-template-columns:28px minmax(0,1fr) auto;grid-template-rows:auto auto auto;min-height:84px;padding:12px 14px}
+.ptcz-vehicle__ico{grid-row:1/span 3}
+.ptcz-vehicle__name{white-space:normal}
+.ptcz-vehicle__price{grid-column:3;grid-row:1/span 2;align-self:center;display:inline-flex;align-items:center;gap:6px;font-size:18px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ptcz-vehicle__dash{font-size:13px;font-weight:500;color:var(--ptcz-muted);white-space:normal;text-align:right;max-width:9ch}
+.ptcz-vehicle__check{grid-column:3;grid-row:3;justify-self:end;width:18px;height:18px}
+.ptcz-vehicle__why{grid-column:2/span 2;grid-row:3;font-size:13px;font-weight:600;color:var(--ptcz-warning);line-height:1.3}
+.ptcz-vehicle__opt:has(input:disabled){opacity:1;background:var(--ptcz-bg-band);border-color:var(--ptcz-border);cursor:not-allowed}
+.ptcz-vehicle__opt:has(input:disabled) .ptcz-vehicle__name,.ptcz-vehicle__opt:has(input:disabled) .ptcz-vehicle__price{color:var(--ptcz-muted)}
+.ptcz-vehicle__opt:has(input:disabled) .ptcz-vehicle__ico{opacity:.5}
+.ptcz-vehicle__opt:has(input:disabled) .ptcz-vehicle__check{display:none}
+.ptcz-vehicle__opt:has(input:disabled):hover{border-color:var(--ptcz-border)}
+@media (min-width:900px){.ptcz-vehicle{grid-template-columns:1fr 1fr}}
+.ptcz-note{display:flex;gap:8px;align-items:flex-start;padding:10px 12px;border-radius:var(--ptcz-r-md);background:var(--ptcz-warning-bg);color:var(--ptcz-warning);font-size:var(--ptcz-fs-meta);line-height:1.4;font-weight:500}
+.ptcz-note .i{width:18px;height:18px;flex:none;margin-top:1px}
+.ptcz-note--err{background:var(--ptcz-error-bg);color:var(--ptcz-error)}
+.ptcz-note a{color:inherit;font-weight:700}
+
+.ptcz-svc{display:grid;gap:0;border-top:1px solid var(--ptcz-border)}
+.ptcz-svc li{border-bottom:1px solid var(--ptcz-border)}
+.ptcz-svc label{display:grid;grid-template-columns:22px minmax(0,1fr) auto;column-gap:12px;align-items:start;min-height:56px;padding:12px 0;cursor:pointer}
+.ptcz-svc input{width:22px;height:22px;margin:1px 0 0;accent-color:var(--ptcz-primary)}
+.ptcz-svc__t{display:block;font-size:15px;font-weight:600;line-height:1.3}
+.ptcz-svc__d{display:block;font-size:13px;line-height:1.4;color:var(--ptcz-muted);margin-top:2px}
+.ptcz-svc__a{font-size:14px;font-weight:600;white-space:nowrap;color:var(--ptcz-text);font-variant-numeric:tabular-nums}
+.ptcz-svc li .ptcz-note{margin:0 0 12px 34px}
+.ptcz-svc__static{display:grid;grid-template-columns:22px minmax(0,1fr);column-gap:12px;min-height:56px;padding:12px 0;align-items:start}
+.ptcz-svc__static .i{width:22px;height:22px;color:var(--ptcz-success)}
+
+/* ---------- cena: pravý sloupec (počítač) ---------- */
+.ptcz-pricecard{background:#fff;border:1px solid var(--ptcz-border);border-radius:var(--ptcz-r-lg);box-shadow:var(--ptcz-shadow-card);padding:22px 24px 24px}
+.ptcz-pricecard__lab{font-size:var(--ptcz-fs-eyebrow);font-weight:600;letter-spacing:var(--ptcz-ls-eyebrow);text-transform:uppercase;color:var(--ptcz-accent)}
+.ptcz-pricecard__val{margin-top:8px;font-size:34px;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums;letter-spacing:-0.01em}
+.ptcz-pricecard__val[data-empty="1"]{font-size:18px;font-weight:600;color:var(--ptcz-muted);line-height:1.3}
+.ptcz-pricecard__sub,.ptcz-pricecard__car{margin-top:4px;font-size:var(--ptcz-fs-meta);line-height:1.4;color:var(--ptcz-muted)}
+.ptcz-pricecard__trip{margin-top:10px;font-size:13px;line-height:1.4;color:var(--ptcz-success);font-weight:600}
+.ptcz-pricecard__trip:empty{display:none}
+.ptcz-pricecard .ptcz-btn{margin-top:18px}
+.ptcz-pricecard__pay{margin-top:12px;font-size:13px;line-height:1.45;color:var(--ptcz-muted)}
+.ptcz-pricecard .ptcz-link{margin-top:4px}
+.ptcz-rows{display:grid;gap:0;margin-top:12px;border-top:1px solid var(--ptcz-border)}
+.ptcz-rows li{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--ptcz-border);font-size:14px;line-height:1.35}
+.ptcz-rows li small{display:block;font-size:12px;color:var(--ptcz-muted)}
+.ptcz-rows li b{white-space:nowrap;font-variant-numeric:tabular-nums}
+.ptcz-rows__total{font-weight:700;font-size:16px}
+.ptcz-inc-list{display:grid;gap:4px;margin-top:12px;font-size:14px}
+.ptcz-inc-list li{display:flex;gap:8px;align-items:flex-start}
+.ptcz-inc-list .i{width:16px;height:16px;color:var(--ptcz-success);stroke-width:2.5;margin-top:3px}
+
+/* ---------- lišta (mobil): cena + Pokračovat ---------- */
+.ptcz-bar--planner{grid-template-columns:minmax(0,1fr) auto}
+.ptcz-bar__price{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;row-gap:2px;min-height:var(--ptcz-tap);min-width:0;padding:0;border:0;background:transparent;text-align:left;cursor:pointer;color:var(--ptcz-text)}
+.ptcz-bar__top{display:inline-flex;align-items:center;gap:6px;max-width:100%}
+.ptcz-bar__val{font-size:20px;font-weight:700;line-height:1.2;white-space:nowrap;font-variant-numeric:tabular-nums}
+.ptcz-bar__val[data-empty="1"]{font-size:15px;font-weight:600;white-space:normal}
+.ptcz-bar__i{width:18px;height:18px;color:var(--ptcz-primary);flex:none}
+.ptcz-bar__sub{max-width:100%;font-size:12px;line-height:1.3;color:var(--ptcz-muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ptcz-bar__sub:empty{display:none}
+.ptcz-bar .ptcz-btn--primary{min-width:150px;font-size:17px}
+.ptcz-bar .ptcz-btn[disabled]{background:var(--ptcz-disabled);border-color:var(--ptcz-disabled);box-shadow:none;cursor:not-allowed}
+.ptcz-pricecard .ptcz-btn[disabled]{background:var(--ptcz-disabled);border-color:var(--ptcz-disabled);box-shadow:none;cursor:not-allowed}
+.ptcz-wa--planner{width:var(--ptcz-tap);height:var(--ptcz-tap);bottom:calc(var(--ptcz-bar-h) + env(safe-area-inset-bottom,0px) + 12px);right:12px;transition:transform var(--ptcz-ease),opacity var(--ptcz-ease)}
+@media (max-width:899px){.ptcz-wa--planner{display:inline-flex;position:fixed;z-index:var(--ptcz-z-wa);box-shadow:var(--ptcz-shadow-fab)}.ptcz-wa--planner.is-hidden{transform:translateY(140%);opacity:0;pointer-events:none}}
+@media (min-width:900px){.ptcz-wa--planner{width:var(--ptcz-wa-size);height:var(--ptcz-wa-size);bottom:20px;right:20px}}
+
+/* ---------- spodní list / popover / dialog (detail místa, délka, rozpad ceny) ---------- */
+.ptcz-sheet{position:fixed;inset:0;z-index:var(--ptcz-z-sheet);display:none}
+.ptcz-sheet.is-open{display:block}
+.ptcz-sheet__dim{position:absolute;inset:0;background:var(--ptcz-overlay)}
+.ptcz-sheet__panel{position:absolute;left:0;right:0;bottom:0;max-height:92%;overflow:auto;background:#fff;border-radius:var(--ptcz-r-xl) var(--ptcz-r-xl) 0 0;box-shadow:var(--ptcz-shadow-pop);padding:0 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.ptcz-sheet__grip{position:sticky;top:0;width:40px;height:4px;border-radius:2px;background:var(--ptcz-border-strong);margin:8px auto 12px;touch-action:none}
+.ptcz-sheet__x{position:absolute;right:4px;top:6px;width:var(--ptcz-tap);height:var(--ptcz-tap);border:0;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ptcz-muted);cursor:pointer;z-index:2}
+.ptcz-sheet__x:hover{background:var(--ptcz-bg-band)}
+.ptcz-sheet__pic{width:100%;aspect-ratio:16/9;border-radius:var(--ptcz-r-md);object-fit:cover;margin:4px 0 12px;background:var(--ptcz-bg-band-2)}
+.ptcz-sheet__pic--ini{display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.9);font-size:48px;font-weight:700}
+.ptcz-sheet__h{font-size:20px;font-weight:700;line-height:1.2;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-right:40px}
+.ptcz-sheet__h--sm{font-size:16px;margin:4px 0 6px}
+.ptcz-sheet__rg{font-size:13px;color:var(--ptcz-muted);margin:2px 0 10px}
+.ptcz-sheet__tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.ptcz-sheet__tags span{font-size:11px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;padding:4px 8px;border-radius:var(--ptcz-r-pill);background:var(--ptcz-bg-band);color:var(--ptcz-muted)}
+.ptcz-sheet__p{font-size:14px;line-height:1.5;margin-bottom:12px}
+.ptcz-sheet__facts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.ptcz-sheet__facts div{background:var(--ptcz-bg-band);border-radius:var(--ptcz-r-md);padding:10px 12px;font-size:13px;color:var(--ptcz-muted)}
+.ptcz-sheet__facts b{display:block;color:var(--ptcz-text);font-size:15px;font-weight:600;margin-top:2px}
+.ptcz-sheet__incs{margin-bottom:8px}
+.ptcz-sheet__incs p{font-size:13px;color:var(--ptcz-muted)}
+.ptcz-sheet__incs label{display:flex}
+.ptcz-sheet__incs label span:first-of-type{flex:1}
+.ptcz-sheet__add{margin-top:8px}
+.ptcz-opts{display:grid;gap:2px}
+.ptcz-opt{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:48px;padding:0 12px;border:0;background:transparent;border-radius:var(--ptcz-r-sm);font:500 15px var(--ptcz-font);color:var(--ptcz-text);cursor:pointer;text-align:left}
+.ptcz-opt small{font-weight:400;color:var(--ptcz-muted);margin-left:6px}
+.ptcz-opt[aria-selected="true"]{background:var(--ptcz-primary-10);color:var(--ptcz-primary);font-weight:600}
+.ptcz-opt:hover{background:var(--ptcz-bg-band)}
+.ptcz-opt .i{width:18px;height:18px;stroke-width:2.2}
+.ptcz-sheet--price .ptcz-sheet__total{display:flex;justify-content:space-between;align-items:baseline;margin:4px 0 2px}
+.ptcz-sheet--price .ptcz-sheet__total b{font-size:30px;font-weight:700;font-variant-numeric:tabular-nums}
+.ptcz-sheet__for{font-size:13.5px;color:var(--ptcz-muted)}
+.ptcz-sheet__pay{font-size:13.5px;color:var(--ptcz-muted);margin-top:14px}
+@media (min-width:900px){
+  .ptcz-sheet__panel{left:50%;top:50%;right:auto;bottom:auto;width:440px;max-width:calc(100% - 32px);max-height:calc(100% - 32px);transform:translate(-50%,-50%);border-radius:var(--ptcz-r-xl);padding-top:12px}
+  .ptcz-sheet__grip{display:none}
+  .ptcz-sheet--stay .ptcz-sheet__panel{width:320px}
+}
+
+/* ---------- toast ---------- */
+.ptcz-toast{position:fixed;left:50%;bottom:calc(var(--ptcz-bar-h) + env(safe-area-inset-bottom,0px) + 12px);z-index:var(--ptcz-z-toast);transform:translateX(-50%) translateY(20px);display:flex;align-items:center;gap:10px;height:48px;padding:0 6px 0 18px;border-radius:var(--ptcz-r-pill);background:var(--ptcz-ink);color:#fff;font-size:14px;box-shadow:var(--ptcz-shadow-pop);opacity:0;pointer-events:none;transition:opacity var(--ptcz-ease),transform var(--ptcz-ease);max-width:calc(100vw - 32px);white-space:nowrap}
+.ptcz-toast.is-show{opacity:1;transform:translateX(-50%);pointer-events:auto}
+.ptcz-toast button{min-height:var(--ptcz-tap);padding:0 12px;border:0;background:transparent;border-radius:var(--ptcz-r-pill);color:var(--ptcz-brand-cyan);font:700 14px var(--ptcz-font);cursor:pointer}
+.ptcz-toast button:hover{background:rgba(255,255,255,.1)}
+@media (min-width:900px){.ptcz-toast{bottom:24px}}
+
+/* ---------- krok 2–3: statická ukázka souhrnu ---------- */
+.ptcz-summary{background:var(--ptcz-bg-band)}
+.ptcz-summary__grid{display:grid;gap:var(--ptcz-space-6);margin-top:var(--ptcz-section-gap)}
+.ptcz-summary__card{background:#fff;border:1px solid var(--ptcz-border);border-radius:var(--ptcz-r-lg);padding:20px 22px}
+.ptcz-summary__card h3{font-size:17px;font-weight:600;margin-bottom:12px}
+.ptcz-summary__card dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:8px 16px;font-size:15px;line-height:1.4}
+.ptcz-summary__card dt{color:var(--ptcz-muted)}
+.ptcz-summary__card dd{font-weight:500;overflow-wrap:anywhere}
+.ptcz-summary__card dd.ptcz-summary__price{font-size:22px;font-weight:700}
+.ptcz-summary__form{display:grid;gap:10px}
+.ptcz-summary__form .ptcz-fld__in{height:48px}
+.ptcz-summary__note{font-size:13px;color:var(--ptcz-muted);margin-top:10px}
+@media (min-width:900px){.ptcz-summary__grid{grid-template-columns:1fr 1fr}}
+
+/* ---------- pohyb ---------- */
+@media (prefers-reduced-motion:reduce){.ptcz-stop.is-new{animation:none}.ptcz-toast,.ptcz-sheet__panel{transition:none}}
+
+/* ===== Krok 2 (Kontakt) a 3 (Souhrn) – 27. 10. 2026 (RF: navrhnout znovu v design systému) ===== */
+.ptcz-view{display:grid;gap:var(--ptcz-space-8);min-width:0}
+.ptcz-view[hidden]{display:none!important}
+.ptcz-steps-nav li.is-done{border-color:var(--ptcz-success);color:var(--ptcz-success)}
+.ptcz-steps-nav li.is-done .ptcz-steps__n{background:var(--ptcz-success);color:#fff}
+.ptcz-new{font-size:11px;font-weight:700;color:var(--ptcz-accent);margin-left:3px;cursor:help}
+.ptcz-linkbtn{display:inline-flex;align-items:center;gap:6px;min-height:var(--ptcz-tap);padding:0 4px;background:none;border:0;font:600 var(--ptcz-fs-meta) var(--ptcz-font);color:var(--ptcz-primary);cursor:pointer;border-radius:var(--ptcz-r-sm)}
+.ptcz-linkbtn .i{width:16px;height:16px}
+.ptcz-linkbtn:hover{text-decoration:underline}
+.ptcz-linkbtn:focus-visible{outline:2px solid var(--ptcz-primary);outline-offset:2px}
+.ptcz-blk__hint--lead{font-size:var(--ptcz-fs-small);margin-top:-4px}
+/* výlet v kostce nahoře v kroku 2 */
+.ptcz-trip{background:var(--ptcz-bg-band);border-radius:var(--ptcz-r-lg);padding:14px 16px 16px;gap:4px}
+.ptcz-trip__head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.ptcz-trip__line{font-size:var(--ptcz-fs-small);line-height:1.45;color:var(--ptcz-text)}
+/* pole formuláře */
+.ptcz-form{display:grid;gap:18px}
+.ptcz-f{display:grid;gap:6px;min-width:0}
+.ptcz-f__lab{font-size:15px;font-weight:600;line-height:1.3}
+.ptcz-f__opt{font-weight:400;color:var(--ptcz-muted)}
+.ptcz-f .ptcz-fld__in,.ptcz-tel .ptcz-fld__in{padding-right:16px}
+.ptcz-f.has-error .ptcz-fld__in:not(select){border-color:var(--ptcz-error);background:var(--ptcz-error-bg)}
+.ptcz-f .ptcz-msg .i,.ptcz-errbox .i,.ptcz-consent .ptcz-msg .i{width:16px;height:16px;flex:none;margin-top:1px}
+.ptcz-fld__ta{height:auto;min-height:96px;padding:12px 16px;line-height:1.45;resize:vertical}
+.ptcz-fld--select .ptcz-fld__in{-webkit-appearance:none;appearance:none;padding-right:44px!important;cursor:pointer;background:#fff}
+.ptcz-fld__chev{position:absolute;right:14px;top:50%;width:18px;height:18px;transform:translateY(-50%);color:var(--ptcz-muted);pointer-events:none}
+.ptcz-tel{display:grid;grid-template-columns:minmax(118px,auto) minmax(0,1fr);gap:8px}
+.ptcz-tel__cc .ptcz-fld__in{padding-left:12px}
+.ptcz-errbox{display:flex;gap:8px;align-items:flex-start;padding:12px 14px;border-radius:var(--ptcz-r-md);background:var(--ptcz-error-bg);color:var(--ptcz-error);font-size:var(--ptcz-fs-small);font-weight:600}
+.ptcz-errbox[hidden]{display:none}
+/* navigace mezi kroky */
+.ptcz-stepnav{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.ptcz-stepnav .ptcz-btn--primary{flex:1 1 220px}
+.i--back{transform:scaleX(-1)}
+/* mobil: v kroku 2–3 jedno CTA ve formuláři, lišta jen s cenou (DS kap. 7 – jedno CTA) */
+@media (max-width:899px){body[data-step="2"] #continue-bar,body[data-step="3"] #continue-bar{display:none}.ptcz-consent .ptcz-msg{padding-right:64px}}
+/* krok 3: karty souhrnu */
+.ptcz-k3head{display:grid;gap:8px}
+.ptcz-sumcards{display:grid;gap:12px}
+@media (min-width:600px){.ptcz-sumcards{grid-template-columns:repeat(2,minmax(0,1fr))}.ptcz-sumcard:first-child{grid-column:1/-1}}
+.ptcz-sumcard{background:#fff;border:1px solid var(--ptcz-border);border-radius:var(--ptcz-r-lg);padding:14px 16px 16px;display:grid;gap:8px;align-content:start;min-width:0}
+.ptcz-sumcard.is-empty .ptcz-sumcard__body{color:var(--ptcz-muted)}
+.ptcz-sumcard__head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.ptcz-sumcard__head h3{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;line-height:1.3}
+.ptcz-sumcard__head .ptcz-ico-circle{width:28px;height:28px}.ptcz-sumcard__head .ptcz-ico-circle .i{width:15px;height:15px}
+.ptcz-sumcard__body{font-size:var(--ptcz-fs-small);line-height:1.5;overflow-wrap:anywhere}
+.ptcz-sumcard__meta{margin-top:10px;font-size:var(--ptcz-fs-meta);color:var(--ptcz-muted)}
+/* časová osa trasy */
+.ptcz-tl{display:grid;gap:0;position:relative}
+.ptcz-tl li{display:grid;grid-template-columns:52px minmax(0,1fr);gap:10px;padding:6px 0 6px;position:relative}
+.ptcz-tl li::before{content:"";position:absolute;left:62px;top:14px;width:9px;height:9px;border-radius:50%;background:#fff;border:2px solid var(--ptcz-primary)}
+.ptcz-tl li:not(:last-child)::after{content:"";position:absolute;left:66px;top:25px;bottom:-8px;border-left:1.5px dashed var(--ptcz-border-strong)}
+.ptcz-tl li>span{padding-left:22px}
+.ptcz-tl li.ptcz-tl__pt::before{background:var(--ptcz-primary)}
+.ptcz-tl b{font-variant-numeric:tabular-nums;font-weight:600;color:var(--ptcz-ink)}
+.ptcz-tl small{color:var(--ptcz-muted);font-size:13px}
+.ptcz-tl em{display:block;font-style:normal;font-size:13px;color:var(--ptcz-muted)}
+/* co bude dál – na světlém pozadí (globální .ptcz-steps je od 900 px laděné do tmavého úvodu) */
+.ptcz-next{background:var(--ptcz-bg-band);border-radius:var(--ptcz-r-lg);padding:16px 18px 18px}
+.ptcz-next h3{font-size:15px;font-weight:600}
+.ptcz-next .ptcz-steps{margin-top:12px;gap:12px}
+.ptcz-next .ptcz-steps li+li::before{top:-12px;height:12px;border-color:var(--ptcz-border-strong)}
+.ptcz-next .ptcz-steps__n{background:var(--ptcz-primary);color:#fff;border:0;width:28px;height:28px;font-size:13px}
+.ptcz-next .ptcz-steps li{grid-template-columns:28px 1fr}
+.ptcz-next .ptcz-steps p{color:var(--ptcz-text);font-size:var(--ptcz-fs-small);margin-top:4px}
+/* souhlasy */
+.ptcz-consent{border:0;padding:0;margin:0;display:grid;gap:4px}
+.ptcz-check{display:grid;grid-template-columns:24px minmax(0,1fr);gap:10px;align-items:start;min-height:var(--ptcz-tap);padding:10px 0;font-size:var(--ptcz-fs-small);line-height:1.45;cursor:pointer}
+.ptcz-check input{width:22px;height:22px;margin:0;accent-color:var(--ptcz-primary)}
+.ptcz-check a{color:var(--ptcz-primary);font-weight:600}
+.ptcz-check.has-error span{color:var(--ptcz-error)}
+.ptcz-check.has-error input{outline:2px solid var(--ptcz-error);outline-offset:1px}
+.ptcz-book-pay{margin-top:-16px}
+.ptcz-spin{width:16px;height:16px;border-radius:50%;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;animation:ptczspin .8s linear infinite}
+@keyframes ptczspin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.ptcz-spin{animation-duration:2.4s}}
+.ptcz-btn[aria-busy="true"]{cursor:progress;opacity:.85}
+/* hotovo */
+.ptcz-done{justify-items:start;gap:14px;padding:var(--ptcz-space-6) 0}
+.ptcz-done__ico{width:56px;height:56px;border-radius:50%;background:var(--ptcz-success-bg);color:var(--ptcz-success);display:inline-flex;align-items:center;justify-content:center}
+.ptcz-done__ico .i{width:28px;height:28px}
+.ptcz-done__num{font-weight:600;font-variant-numeric:tabular-nums}
+.ptcz-done__text{max-width:60ch;line-height:1.55}
+body[data-step="4"] .ptcz-pl__side,body[data-step="4"] .ptcz-wa--planner{display:none}
+
+/* kroky jako tlačítka (hotové kroky jdou otevřít) */
+.ptcz-steps-nav__b{display:inline-flex;align-items:center;gap:6px;min-height:28px;padding:0;background:none;border:0;font:inherit;color:inherit;cursor:pointer}
+.ptcz-steps-nav__b:disabled{cursor:default;opacity:1}
+.ptcz-steps-nav li.is-done:hover{background:var(--ptcz-success-bg)}
+.ptcz-steps-nav__b:focus-visible{outline:2px solid var(--ptcz-primary);outline-offset:3px;border-radius:var(--ptcz-r-pill)}
+.ptcz-tl li.ptcz-tl__night::before{border-style:dashed}
+.ptcz-tl b small{font-weight:600;color:var(--ptcz-accent)}
+.ptcz-sumcard .ptcz-note{margin-top:10px}
+.ptcz-sumcard__total{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--ptcz-ink)}
+
+/* ukázka variant kroků 2–3 pro RF (jen náhled, Martin nepřebírá) */
+.ptcz-varbar{display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;padding:8px max(16px,env(safe-area-inset-left,0px));background:var(--ptcz-warning-bg);color:var(--ptcz-text);font-size:13px;line-height:1.4;border-bottom:1px solid var(--ptcz-border)}
+.ptcz-varbar a{color:var(--ptcz-primary);font-weight:600;text-decoration:none}
+.ptcz-varbar code{font:600 12px/1 ui-monospace,Menlo,monospace;background:var(--ptcz-bg);border:1px solid var(--ptcz-border);border-radius:6px;padding:3px 6px;word-break:break-all}
+.ptcz-varbar__how{color:var(--ptcz-text-muted)}
+.ptcz-varbar--a .ptcz-varbar__how{animation:ptcz-varflash 1.4s ease-out}
+@keyframes ptcz-varflash{0%{color:var(--ptcz-error);font-weight:700}100%{color:var(--ptcz-text-muted)}}
+
+/* pěší prohlídka – krok 2 a 3 (ukázka pro RF 27. 10.) */
+a.ptcz-steps-nav__b{text-decoration:none}
+span.ptcz-steps-nav__b{cursor:default}
+.ptcz-form--2{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.ptcz-walk .ptcz-blk__hint .i{width:16px;height:16px;vertical-align:-3px;color:var(--ptcz-primary)}
+@media (min-width:600px){.ptcz-steppers--one{grid-template-columns:minmax(0,320px)}}
+.ptcz-inc-list--walk li.is-x .i{color:var(--ptcz-muted)}
+.ptcz-inc-list--walk li.is-x{color:var(--ptcz-text-muted)}
+.ptcz-walk .ptcz-tl li:not(.ptcz-tl__pt) b{color:var(--ptcz-muted);text-align:center}
+.ptcz-walk .ptcz-sumcard__body > p:first-child + .ptcz-tl{margin-top:8px}
+@media (max-width:599px){.ptcz-steps-nav li:not([aria-current]) > span.ptcz-steps-nav__b{display:inline-flex}}
+.ptcz-stepnav--one{justify-content:flex-end}
+.ptcz-walk .ptcz-tl b{white-space:nowrap}
+
+/* dětské sedačky podle typu (RF 31. 10.): rozbalovací výběr s fotkami */
+.ptcz-steppers .ptcz-seatpick{grid-column:1/-1}
+.ptcz-seatpick{border:1px solid var(--ptcz-border);border-radius:var(--ptcz-r-lg);background:#fff}
+.ptcz-seatpick>summary{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-items:center;list-style:none;cursor:pointer;border:0;padding-right:14px}
+.ptcz-seatpick>summary::-webkit-details-marker{display:none}
+.ptcz-seatpick__sum{display:inline-flex;align-items:center;gap:10px;color:var(--ptcz-primary)}
+.ptcz-seatpick__n{min-width:28px;height:28px;padding:0 8px;border-radius:999px;background:var(--ptcz-bg-band);display:inline-flex;align-items:center;justify-content:center;font-weight:600;color:var(--ptcz-text)}
+.ptcz-seatpick.has-seats .ptcz-seatpick__n{background:var(--ptcz-primary);color:#fff}
+.ptcz-seatpick__sum .i{transition:transform var(--ptcz-ease)}
+.ptcz-seatpick[open] .ptcz-seatpick__sum .i{transform:rotate(180deg)}
+.ptcz-seatpick__list{display:grid;gap:8px;margin:0;padding:0 8px 8px;list-style:none}
+.ptcz-seatpick__list li{display:grid;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;gap:12px;padding:8px;border-radius:calc(var(--ptcz-r-lg) - 4px);background:var(--ptcz-bg-band)}
+.ptcz-seatpick__list img{width:64px;height:64px;object-fit:contain;background:#fff;border-radius:10px;padding:4px;box-sizing:border-box}
+.ptcz-seatpick__txt{display:flex;flex-direction:column;min-width:0;font-size:14px;line-height:1.35}
+.ptcz-seatpick__txt b{font-weight:600}
+.ptcz-seatpick__age{font-weight:600;color:var(--ptcz-primary);font-size:13px}
+.ptcz-seatpick__txt small{color:var(--ptcz-muted);font-size:12.5px}
+@media (max-width:359px){.ptcz-seatpick__list li{grid-template-columns:52px minmax(0,1fr);}.ptcz-seatpick__list img{width:52px;height:52px}.ptcz-seatpick__list .ptcz-stepper__ctl{grid-column:1/-1;justify-self:end;margin-top:-6px}}

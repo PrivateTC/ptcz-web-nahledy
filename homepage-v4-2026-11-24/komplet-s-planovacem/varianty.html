@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kroky 2–3: varianty</title>
+<link rel="stylesheet" href="fonts/inter-tight-embed.css">
+<link rel="stylesheet" href="css/ptcz-tokens.css">
+<style>
+  body{margin:0;background:var(--ptcz-bg-light);color:var(--ptcz-text);font-family:var(--ptcz-font);font-size:16px;line-height:1.5}
+  .w{max-width:1040px;margin:0 auto;padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .back{color:var(--ptcz-primary);font-weight:600;text-decoration:none;font-size:14px}
+  h1{font-size:clamp(26px,4vw,36px);line-height:1.15;margin:12px 0 8px;text-wrap:balance}
+  .lead{color:var(--ptcz-text-muted);max-width:62ch;margin:0 0 24px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px}
+  .card{background:var(--ptcz-bg);border:1px solid var(--ptcz-border);border-radius:var(--ptcz-r-lg);padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+  .card--rec{border:2px solid var(--ptcz-primary)}
+  .tag{align-self:flex-start;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border-radius:999px;background:var(--ptcz-primary-10);color:var(--ptcz-primary)}
+  .tag--muted{background:var(--ptcz-bg-light);color:var(--ptcz-text-muted)}
+  .card h2{font-size:22px;line-height:1.2;margin:0}
+  .card p{margin:0}
+  .flow{display:flex;align-items:stretch;gap:6px;overflow-x:auto;padding:4px 0}
+  .pg{flex:1 1 0;min-width:92px;border:1.5px solid var(--ptcz-border-strong);border-radius:10px;background:var(--ptcz-bg-light);padding:8px;display:flex;flex-direction:column;gap:4px}
+  .pg b{font-size:13px}
+  .pg code{font:600 11px/1.3 ui-monospace,Menlo,monospace;color:var(--ptcz-text-muted);word-break:break-all}
+  .arr{flex:0 0 auto;align-self:center;font-size:12px;font-weight:700;color:var(--ptcz-error);text-align:center;line-height:1.1}
+  .one{flex:1;border:1.5px solid var(--ptcz-border-strong);border-radius:10px;background:var(--ptcz-bg-light);padding:8px;display:flex;flex-direction:column;gap:6px}
+  .one__tabs{display:flex;gap:6px}
+  .one__tabs span{flex:1;background:var(--ptcz-bg);border:1px dashed var(--ptcz-border-strong);border-radius:8px;padding:6px;font-size:13px;font-weight:600;text-align:center}
+  .one code{font:600 11px/1.3 ui-monospace,Menlo,monospace;color:var(--ptcz-text-muted)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;border-radius:999px;font-weight:700;text-decoration:none;background:var(--ptcz-primary);color:#fff}
+  .btn--sec{background:var(--ptcz-bg);color:var(--ptcz-primary);border:1.5px solid var(--ptcz-primary)}
+  .try{color:var(--ptcz-text-muted);font-size:14px}
+  h3{font-size:20px;margin:36px 0 12px}
+  .tw{overflow-x:auto;border:1px solid var(--ptcz-border);border-radius:var(--ptcz-r-lg);background:var(--ptcz-bg)}
+  table{border-collapse:collapse;width:100%;min-width:640px;font-size:15px}
+  th,td{text-align:left;vertical-align:top;padding:12px 14px;border-bottom:1px solid var(--ptcz-border)}
+  thead th{background:var(--ptcz-bg-light);font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--ptcz-text-muted)}
+  tbody th{width:22%;font-weight:600}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  .ok{color:var(--ptcz-success);font-weight:700}
+  .warn{color:var(--ptcz-warning);font-weight:700}
+  .note{margin-top:20px;padding:14px 16px;border-radius:var(--ptcz-r-md);background:var(--ptcz-warning-bg);font-size:15px;max-width:75ch}
+</style>
+</head>
+<body>
+<div class="w">
+  <a class="back" href="index.html">← Náhled homepage</a>
+  <h1>Kroky 2 a 3 plánovače: tři stránky, nebo jedna?</h1>
+  <p class="lead">Host v obou variantách vidí <b>stejný vzhled, stejné texty i stejný souhrn</b>. Liší se, co se stane při přechodu mezi kroky a kolik práce to dá Martinovi. Obě varianty si projdi stejně: vyber zastávku a datum, klepni na Pokračovat, vyplň kontakt a dojdi do souhrnu. Pak zkus tlačítko Zpět v prohlížeči.</p>
+
+  <div class="cards">
+    <section class="card card--rec">
+      <span class="tag">Doporučuji</span>
+      <h2>A · Tři stránky jako dnes</h2>
+      <div class="flow" aria-label="Tři samostatné stránky">
+        <div class="pg"><b>1 Trasa a vůz</b><code>/planovac-vyletu/</code></div>
+        <div class="arr">↻<br>načte se</div>
+        <div class="pg"><b>2 Kontakt</b><code>/udaje/</code></div>
+        <div class="arr">↻<br>načte se</div>
+        <div class="pg"><b>3 Souhrn</b><code>/rekapitulace/</code></div>
+      </div>
+      <p>Každý krok je vlastní stránka. Po Pokračovat se další stránka načte z webu a skočí nahoru. Dnešní server odpoví asi za 0,3 s (změřeno 27. 10.), pak se načtou skripty stránky.</p>
+      <a class="btn" href="planovac-a.html">Vyzkoušet variantu A</a>
+    </section>
+    <section class="card">
+      <span class="tag tag--muted">Dražší</span>
+      <h2>B · Jedna stránka</h2>
+      <div class="flow" aria-label="Jedna stránka s přepínanými kroky">
+        <div class="one"><div class="one__tabs"><span>1 Trasa a vůz</span><span>2 Kontakt</span><span>3 Souhrn</span></div><code>/planovac-vyletu/ — adresa se nemění</code></div>
+      </div>
+      <p>Všechny kroky jsou na jedné stránce a přepínají se okamžitě, bez načítání. Je to o chlup plynulejší, ale Martin by musel tři dnešní stránky přepsat do jedné.</p>
+      <a class="btn btn--sec" href="planovac-b.html">Vyzkoušet variantu B</a>
+    </section>
+  </div>
+
+  <h3>V čem se liší</h3>
+  <div class="tw">
+    <table>
+      <thead><tr><th></th><th>A · tři stránky</th><th>B · jedna stránka</th></tr></thead>
+      <tbody>
+        <tr><th>Vzhled a texty</th><td>stejné</td><td>stejné</td></tr>
+        <tr><th>Přechod mezi kroky</th><td>stránka se znovu načte, krátce blikne</td><td class="ok">okamžitě</td></tr>
+        <tr><th>Adresa v prohlížeči</th><td>/udaje/, /rekapitulace/ jako dnes</td><td>stále /planovac-vyletu/</td></tr>
+        <tr><th>Zpět v prohlížeči a obnovení stránky</th><td class="ok">funguje jako dnes, údaje drží paměť prohlížeče</td><td class="warn">Martin musí doprogramovat, jinak host spadne na krok 1</td></tr>
+        <tr><th>Měření (GA4, Ads konverze, pondělní analýza)</th><td class="ok">beze změny</td><td class="warn">nové měření kroků, přenastavit trychtýř a znovu otestovat konverzi Ads</td></tr>
+        <tr><th>Ochrana proti robotům (Turnstile)</th><td class="ok">jako dnes</td><td class="warn">token platí 5 minut, musí se obnovovat</td></tr>
+        <tr><th>Pěší výlety, sdílení rezervace</th><td class="ok">beze změny</td><td class="warn">předělat</td></tr>
+        <tr><th>Práce pro Martina</th><td class="ok">nový vzhled do tří dnešních stránek, logika zůstává</td><td class="warn">přepis tří stránek a tří skriptů do jednoho, přesměrování starých adres</td></tr>
+        <tr><th>Riziko při spuštění</th><td class="ok">nízké</td><td class="warn">vyšší, jde o rezervace a tržby</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note"><b>Doporučení: A.</b> Host dostane celý nový design a menší riziko, měření i konverze zůstanou. Kdyby se později ukázalo, že lidé mezi kroky odpadávají kvůli načítání, dá se jedna stránka udělat jako samostatná druhá fáze.</p>
+</div>
+<script>
+  // čistý start ukázky: smaže uložený stav a jednorázové události z minulého proklikání
+  try { Object.keys(sessionStorage).forEach(function (k) { if (k === 'ptcz_demo_a' || k.indexOf('ptcz_track_') === 0) sessionStorage.removeItem(k); }); } catch (e) {}
+</script>
+</body>
+</html>

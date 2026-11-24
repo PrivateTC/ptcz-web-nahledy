@@ -1,0 +1,402 @@
+/* PrivateToursCzech v1 — komponenty homepage v4 (= v3 + sekce půjčení). Část 1 = <style> z design-system-2026-10/ukazka.html beze změny; část 2 = doplňky v3. */
+
+
+/* ---------- Základ ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;font-family:var(--ptcz-font);font-size:var(--ptcz-fs-body);line-height:var(--ptcz-lh-body);color:var(--ptcz-text);background:var(--ptcz-bg);-webkit-font-smoothing:antialiased;overflow-x:clip}
+img{display:block;max-width:100%}
+a{color:var(--ptcz-primary)}
+h1,h2,h3,h4,p,ul,figure{margin:0}
+ul{padding:0;list-style:none}
+button{font:inherit;color:inherit}
+svg.i{width:var(--ptcz-icon);height:var(--ptcz-icon);flex:none;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+svg.i--fill{fill:currentColor;stroke:none}
+:focus-visible{outline:none;box-shadow:0 0 0 3px var(--ptcz-ring)}
+.ptcz-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+.ptcz-container{width:100%;max-width:calc(var(--ptcz-container) + 2*var(--ptcz-margin-x));margin:0 auto;padding:0 var(--ptcz-margin-x)}
+.ptcz-section{padding:var(--ptcz-section-y) 0}
+.ptcz-section--band{background:var(--ptcz-bg-band)}
+.ptcz-h2{font-size:var(--ptcz-fs-h2);line-height:var(--ptcz-lh-h2);font-weight:var(--ptcz-fw-h2);letter-spacing:var(--ptcz-ls-tight);text-wrap:balance}
+.ptcz-h3{font-size:var(--ptcz-fs-h3);line-height:var(--ptcz-lh-h3);font-weight:var(--ptcz-fw-h3)}
+.ptcz-lead{font-size:var(--ptcz-fs-lead);line-height:var(--ptcz-lh-lead);color:var(--ptcz-muted);max-width:var(--ptcz-prose)}
+.ptcz-eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:var(--ptcz-fs-eyebrow);font-weight:600;letter-spacing:var(--ptcz-ls-eyebrow);text-transform:uppercase;color:var(--ptcz-accent);line-height:1.2}
+.ptcz-eyebrow .i{width:14px;height:14px}
+
+/* ---------- Tlačítka ---------- */
+.ptcz-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:var(--ptcz-btn-h);padding:0 24px;border-radius:var(--ptcz-r-pill);border:1.5px solid transparent;font-weight:700;font-size:16px;letter-spacing:.2px;line-height:1.2;text-decoration:none;cursor:pointer;background:none;transition:background-color var(--ptcz-ease),border-color var(--ptcz-ease),color var(--ptcz-ease),box-shadow var(--ptcz-ease);text-align:center}
+.ptcz-btn .i{width:var(--ptcz-icon-lg);height:var(--ptcz-icon-lg);transition:transform var(--ptcz-ease)}
+.ptcz-btn:hover .i--arrow{transform:translateX(var(--ptcz-nudge))}
+.ptcz-btn--primary{background:var(--ptcz-primary);border-color:var(--ptcz-primary);color:#fff}
+.ptcz-btn--primary:hover{background:var(--ptcz-primary-hover);border-color:var(--ptcz-primary-hover);box-shadow:var(--ptcz-shadow-btn-hover)}
+.ptcz-btn--secondary{border-color:var(--ptcz-ink);color:var(--ptcz-ink)}
+.ptcz-btn--secondary:hover{background:var(--ptcz-ink);color:#fff}
+.ptcz-btn--on-dark{border-color:rgba(255,255,255,.9);color:#fff}
+.ptcz-btn--on-dark:hover{background:#fff;color:var(--ptcz-ink)}
+.ptcz-btn--block{width:100%}
+.ptcz-btn--lg{min-height:var(--ptcz-btn-h-lg);font-size:17px}
+.ptcz-link{display:inline-flex;align-items:center;gap:6px;min-height:var(--ptcz-tap);font-weight:600;font-size:15px;color:var(--ptcz-primary);text-decoration:none;padding:0 2px}
+.ptcz-link .i{transition:transform var(--ptcz-ease)}
+.ptcz-link:hover{text-decoration:underline;text-underline-offset:3px}
+.ptcz-link:hover .i{transform:translateX(var(--ptcz-nudge))}
+
+/* ---------- Demo poznámky (nejsou součást systému) ---------- */
+.demo-bar{background:var(--ptcz-ink);color:var(--ptcz-on-dark-muted);font-size:13px;line-height:1.4;padding:8px var(--ptcz-margin-x);text-align:center}
+.demo-bar b{color:#fff;font-weight:600}
+.demo-note{font-size:13px;line-height:1.4;color:var(--ptcz-muted);border:1px dashed var(--ptcz-border-strong);border-radius:var(--ptcz-r-sm);padding:6px 10px;display:inline-block;margin-top:8px}
+
+/* ---------- Hlavička ---------- */
+.ptcz-header{position:absolute;inset:0 0 auto 0;z-index:var(--ptcz-z-header);height:var(--ptcz-header-h)}
+.ptcz-header__in{height:100%;display:flex;align-items:center;gap:6px}
+.ptcz-logo{display:inline-flex;align-items:center;min-height:var(--ptcz-tap);margin-right:auto}
+.ptcz-logo img{height:var(--ptcz-logo-h);width:auto}
+.ptcz-hbtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:var(--ptcz-tap);min-height:var(--ptcz-tap);padding:0 12px;border-radius:var(--ptcz-r-pill);border:1.5px solid rgba(255,255,255,.85);color:#fff;background:transparent;font-weight:600;font-size:15px;text-decoration:none;cursor:pointer;transition:background-color var(--ptcz-ease),color var(--ptcz-ease)}
+.ptcz-hbtn:hover{background:#fff;color:var(--ptcz-ink)}
+.ptcz-hbtn--icon{border-color:transparent;padding:0}
+.ptcz-hbtn--icon:hover{background:rgba(255,255,255,.14);color:#fff}
+.ptcz-flag{width:26px;height:26px;border-radius:50%;box-shadow:0 0 0 1.5px rgba(255,255,255,.85)}
+@media (max-width:374px){:root{--ptcz-logo-h:22px}}
+@media (min-width:900px){.ptcz-header__in{gap:12px}.ptcz-hbtn{padding:0 16px}}
+
+/* ---------- Hero ---------- */
+.ptcz-hero{position:relative;color:#fff;background:var(--ptcz-ink)}
+.ptcz-hero__media{position:absolute;inset:0;overflow:hidden}
+.ptcz-hero__media img{width:100%;height:100%;object-fit:cover;object-position:50% 35%}
+.ptcz-hero__shade{position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(28,28,46,.30) 0%,rgba(28,28,46,.22) 40%,rgba(28,28,46,.66) 100%),
+  linear-gradient(90deg,rgba(28,28,46,.42) 0%,rgba(28,28,46,.10) 60%,rgba(28,28,46,0) 100%)}
+.ptcz-hero__grid{position:relative;display:grid;gap:var(--ptcz-space-8);padding-top:calc(var(--ptcz-header-h) + 24px);padding-bottom:var(--ptcz-space-10);text-shadow:var(--ptcz-text-shadow-hero)}
+.ptcz-hero__copy{max-width:640px}
+.ptcz-h1{font-size:var(--ptcz-fs-h1);line-height:var(--ptcz-lh-h1);font-weight:var(--ptcz-fw-h1);letter-spacing:var(--ptcz-ls-tight)}
+.ptcz-hero__lead{margin-top:var(--ptcz-space-4);font-size:var(--ptcz-fs-lead);line-height:var(--ptcz-lh-lead);color:rgba(255,255,255,.92);max-width:36ch}
+.ptcz-hero__cta{display:flex;flex-direction:column;gap:12px;margin-top:var(--ptcz-space-6)}
+.ptcz-hero__cta .ptcz-btn{text-shadow:none}
+.ptcz-hero__feat{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;margin-top:var(--ptcz-space-6);font-size:15px;font-weight:500}
+.ptcz-hero__feat li{display:flex;align-items:center;gap:8px}
+.ptcz-hero__feat .i{color:var(--ptcz-brand-cyan);stroke-width:2.25}
+/* panel „Jak to funguje“: mobil = bílá karta pod hero, počítač = skleněný panel vpravo */
+.ptcz-how{position:relative;z-index:1;background:#fff;color:var(--ptcz-ink);border-radius:var(--ptcz-r-lg);padding:20px;box-shadow:var(--ptcz-shadow-pop);text-shadow:none;margin:0 0 -56px}
+.ptcz-how__title{font-size:var(--ptcz-fs-eyebrow);font-weight:600;letter-spacing:var(--ptcz-ls-eyebrow);text-transform:uppercase;color:var(--ptcz-accent)}
+.ptcz-steps{margin-top:14px;display:grid;gap:14px;position:relative}
+.ptcz-steps li{display:grid;grid-template-columns:32px 1fr;column-gap:12px;position:relative}
+.ptcz-steps li+li::before{content:"";position:absolute;left:15px;top:-14px;height:14px;border-left:1.5px dashed var(--ptcz-border-strong)}
+.ptcz-steps__n{width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;background:var(--ptcz-primary);color:#fff}
+.ptcz-steps h3{font-size:16px;line-height:1.3;font-weight:600;padding-top:5px}
+.ptcz-steps p{font-size:14px;line-height:1.4;color:var(--ptcz-muted);margin-top:2px}
+@media (min-width:600px){
+  .ptcz-hero__cta{flex-direction:row;flex-wrap:wrap}
+  .ptcz-hero__feat{grid-template-columns:repeat(2,max-content);column-gap:28px}
+}
+@media (min-width:900px){
+  .ptcz-hero{min-height:min(760px,88vh)}
+  .ptcz-hero__grid{grid-template-columns:7fr 5fr;align-items:center;gap:var(--ptcz-space-12);padding-top:calc(var(--ptcz-header-h) + 48px);padding-bottom:var(--ptcz-space-20);min-height:inherit}
+  .ptcz-hero__lead{max-width:34ch}
+  .ptcz-how{margin:0 0 0 auto;width:100%;max-width:440px;background:var(--ptcz-glass);color:#fff;box-shadow:none;padding:28px;border:1px solid rgba(255,255,255,.14)}
+  @supports ((-webkit-backdrop-filter:blur(12px)) or (backdrop-filter:blur(12px))){.ptcz-how{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}}
+  .ptcz-how__title{color:var(--ptcz-brand-cyan)}
+  .ptcz-steps{gap:18px;margin-top:18px}
+  .ptcz-steps li+li::before{top:-18px;height:18px;border-color:rgba(255,255,255,.35)}
+  .ptcz-steps__n{background:rgba(255,255,255,.14);color:#fff;border:1.5px solid rgba(255,255,255,.55)}
+  .ptcz-steps h3{font-size:17px}
+  .ptcz-steps p{color:rgba(255,255,255,.86)}
+}
+
+/* ---------- Úvodní odstavec pod hero ---------- */
+.ptcz-intro{padding:calc(56px + var(--ptcz-space-8)) 0 var(--ptcz-space-10)}
+.ptcz-intro p{max-width:var(--ptcz-prose);font-size:var(--ptcz-fs-lead);line-height:var(--ptcz-lh-lead);color:var(--ptcz-muted)}
+@media (min-width:900px){.ptcz-intro{padding:var(--ptcz-space-12) 0 var(--ptcz-space-6)}}
+
+/* ---------- Hlava sekce + výběr vozu ---------- */
+.ptcz-sec-head{display:grid;gap:var(--ptcz-space-5);margin-bottom:var(--ptcz-section-gap)}
+.ptcz-sec-head .ptcz-lead{margin-top:10px}
+@media (min-width:900px){.ptcz-sec-head{grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:var(--ptcz-space-8)}}
+
+.ptcz-vehicle{border:0;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:8px;min-width:0}
+@media (min-width:600px){.ptcz-vehicle{grid-template-columns:1fr 1fr}}
+.ptcz-vehicle legend{font-size:var(--ptcz-fs-meta);font-weight:600;color:var(--ptcz-muted);padding:0;margin-bottom:8px}
+.ptcz-vehicle__opt{position:relative;display:grid;grid-template-columns:28px minmax(0,1fr) 20px;column-gap:10px;align-items:center;min-height:60px;padding:10px 12px;border:1.5px solid var(--ptcz-border-strong);border-radius:var(--ptcz-r-md);background:#fff;cursor:pointer;transition:border-color var(--ptcz-ease),background-color var(--ptcz-ease),box-shadow var(--ptcz-ease)}
+.ptcz-vehicle__opt input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.ptcz-vehicle__ico{grid-row:1/span 2;width:28px;height:28px;color:var(--ptcz-muted)}
+.ptcz-vehicle__name{font-size:15px;font-weight:600;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ptcz-vehicle__meta{grid-column:2;font-size:13px;line-height:1.3;color:var(--ptcz-muted)}
+.ptcz-vehicle__check{grid-column:3;grid-row:1/span 2;width:20px;height:20px;color:var(--ptcz-primary);opacity:0;transform:scale(.8);transition:opacity var(--ptcz-ease),transform var(--ptcz-ease)}
+.ptcz-vehicle__opt:hover{border-color:var(--ptcz-primary)}
+.ptcz-vehicle__opt:has(input:checked){border-color:var(--ptcz-primary);background:var(--ptcz-primary-10)}
+.ptcz-vehicle__opt:has(input:checked) .ptcz-vehicle__ico{color:var(--ptcz-primary)}
+.ptcz-vehicle__opt:has(input:checked) .ptcz-vehicle__check{opacity:1;transform:none}
+.ptcz-vehicle__opt:has(input:focus-visible){box-shadow:0 0 0 3px var(--ptcz-ring)}
+.ptcz-vehicle__opt:has(input:disabled){opacity:.5;cursor:not-allowed}
+.ptcz-vehicle__tag{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ptcz-accent);white-space:nowrap}
+@media (min-width:900px){.ptcz-vehicle{grid-template-columns:repeat(2,232px)}}
+
+/* ---------- Karta výletu ---------- */
+.ptcz-cards{display:grid;gap:var(--ptcz-gutter)}
+.ptcz-card{position:relative;display:flex;flex-direction:column;background:#fff;border:1px solid var(--ptcz-border);border-radius:var(--ptcz-r-lg);box-shadow:var(--ptcz-shadow-card);overflow:hidden;transition:transform var(--ptcz-ease),box-shadow var(--ptcz-ease)}
+.ptcz-card:hover{transform:translateY(var(--ptcz-lift));box-shadow:var(--ptcz-shadow-card-hover)}
+.ptcz-card__media{position:relative;aspect-ratio:4/3;background:var(--ptcz-bg-band-2)}
+.ptcz-card__media img{width:100%;height:100%;object-fit:cover}
+.ptcz-pill{position:absolute;top:12px;right:12px;z-index:var(--ptcz-z-raised);display:inline-flex;align-items:center;gap:5px;min-height:28px;padding:0 10px;border-radius:var(--ptcz-r-pill);background:rgba(255,255,255,.92);color:var(--ptcz-ink);font-size:var(--ptcz-fs-pill);font-weight:700;letter-spacing:.01em;white-space:nowrap}
+.ptcz-pill .i{width:14px;height:14px;stroke-width:2}
+.ptcz-card__body{display:flex;flex-direction:column;flex:1;padding:16px 16px 18px}
+.ptcz-card__title{margin-top:6px;font-size:18px;line-height:1.3;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ptcz-card__link{color:inherit;text-decoration:none}
+.ptcz-card__link::after{content:"";position:absolute;inset:0;z-index:1} /* celá horní část karty je odkaz */
+.ptcz-card__stops{margin-top:8px;display:flex;align-items:flex-start;gap:6px;font-size:var(--ptcz-fs-meta);line-height:1.4;color:var(--ptcz-muted)}
+.ptcz-card__stops .i{width:16px;height:16px;margin-top:2px;color:var(--ptcz-primary)}
+.ptcz-card__stops span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ptcz-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.ptcz-chip{display:inline-flex;align-items:center;min-height:26px;padding:0 10px;border:1px solid var(--ptcz-border-strong);border-radius:var(--ptcz-r-pill);font-size:13px;font-weight:500;color:var(--ptcz-muted);background:#fff}
+.ptcz-card__price{margin-top:auto;padding-top:16px;display:flex;flex-wrap:wrap;align-items:baseline;column-gap:8px;font-variant-numeric:tabular-nums}
+.ptcz-card__from{font-size:var(--ptcz-fs-meta);color:var(--ptcz-muted)}
+.ptcz-card__amount{font-size:var(--ptcz-fs-price-card);font-weight:700;line-height:1.2;white-space:nowrap}
+.ptcz-card__unit{flex-basis:100%;font-size:13px;line-height:1.35;color:var(--ptcz-muted);margin-top:2px}
+.ptcz-card__alt{flex-basis:100%;font-size:13px;line-height:1.35;color:var(--ptcz-muted);margin-top:2px;min-height:1.35em}
+.ptcz-card__actions{position:relative;z-index:2;margin-top:14px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.ptcz-card__actions .ptcz-btn{min-height:var(--ptcz-tap);font-size:15px}
+.ptcz-card--all{justify-content:center;align-items:flex-start;padding:24px;background:var(--ptcz-bg-band);border-style:dashed;border-color:var(--ptcz-border-strong);box-shadow:none;text-decoration:none;color:var(--ptcz-ink)}
+.ptcz-card--all:hover{background:var(--ptcz-bg-band-2)}
+.ptcz-card--all .ptcz-h3{margin-top:14px}
+.ptcz-card--all .i{width:32px;height:32px;color:var(--ptcz-primary);transition:transform var(--ptcz-ease)}
+.ptcz-card--all:hover .i{transform:translateX(var(--ptcz-nudge))}
+.ptcz-cards__all-mobile{margin-top:var(--ptcz-space-5)}
+/* mobil: vodorovný posun */
+@media (max-width:899px){
+  .ptcz-scroller{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:var(--ptcz-margin-x);margin:0 calc(-1*var(--ptcz-margin-x));padding:4px var(--ptcz-margin-x) 12px;scrollbar-width:none}
+  .ptcz-scroller::-webkit-scrollbar{display:none}
+  .ptcz-scroller>*{flex:0 0 82%;scroll-snap-align:start}
+  .ptcz-scroller .ptcz-card--all{display:none}
+  .ptcz-counter{font-size:var(--ptcz-fs-meta);color:var(--ptcz-muted);font-variant-numeric:tabular-nums;text-align:right;margin-top:-4px}
+}
+@media (min-width:600px) and (max-width:899px){.ptcz-scroller>*{flex-basis:46%}}
+@media (min-width:900px){
+  .ptcz-cards{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ptcz-counter,.ptcz-cards__all-mobile{display:none}
+}
+@media (min-width:1200px){.ptcz-cards{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+/* ---------- Po svém: otázky + dlaždice cílů z plánovače ---------- */
+.ptcz-qa{display:grid;gap:0;margin-top:var(--ptcz-section-gap);border-top:1px solid var(--ptcz-border)}
+.ptcz-qa li{padding:16px 0;border-bottom:1px solid var(--ptcz-border)}
+.ptcz-qa h3{font-size:17px;line-height:1.3;font-weight:600}
+.ptcz-qa p{margin-top:4px;font-size:var(--ptcz-fs-small);line-height:var(--ptcz-lh-small);color:var(--ptcz-muted)}
+.ptcz-own__cta{margin-top:var(--ptcz-space-6)}
+.ptcz-own__start{margin-top:var(--ptcz-space-10);display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.ptcz-own__start p{font-size:var(--ptcz-fs-small);line-height:var(--ptcz-lh-small);color:var(--ptcz-muted);max-width:var(--ptcz-prose)}
+.ptcz-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:var(--ptcz-space-4)}
+.ptcz-tile{position:relative;display:block;aspect-ratio:16/12;border-radius:var(--ptcz-r-lg);overflow:hidden;background:var(--ptcz-ink);color:#fff;text-decoration:none;box-shadow:var(--ptcz-shadow-card);isolation:isolate}
+.ptcz-tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform var(--ptcz-ease-slow)}
+.ptcz-tile:hover img{transform:scale(var(--ptcz-zoom))}
+.ptcz-tile::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,28,46,0) 35%,rgba(28,28,46,.72) 100%)}
+.ptcz-tile__drive{position:absolute;top:10px;left:10px;z-index:2;display:inline-flex;align-items:center;gap:4px;min-height:26px;padding:0 9px;border-radius:var(--ptcz-r-pill);background:rgba(255,255,255,.92);color:var(--ptcz-ink);font-size:var(--ptcz-fs-pill);font-weight:700;white-space:nowrap}
+.ptcz-tile__drive .i{width:13px;height:13px;stroke-width:2}
+.ptcz-tile__add{position:absolute;top:4px;right:4px;z-index:2;width:var(--ptcz-tap);height:var(--ptcz-tap);display:inline-flex;align-items:center;justify-content:center}
+.ptcz-tile__add span{width:var(--ptcz-plus-circle);height:var(--ptcz-plus-circle);border-radius:50%;background:#fff;color:var(--ptcz-ink);display:inline-flex;align-items:center;justify-content:center;transition:background-color var(--ptcz-ease),color var(--ptcz-ease)}
+.ptcz-tile__add .i{width:18px;height:18px;stroke-width:2.25}
+.ptcz-tile:hover .ptcz-tile__add span{background:var(--ptcz-primary);color:#fff}
+.ptcz-tile__txt{position:absolute;left:12px;right:12px;bottom:10px;z-index:2;text-shadow:0 1px 2px rgba(0,0,0,.4)}
+.ptcz-tile__name{display:block;font-size:17px;line-height:1.25;font-weight:600}
+.ptcz-tile__sub{display:block;margin-top:2px;font-size:13px;line-height:1.3;color:rgba(255,255,255,.9);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+@media (min-width:900px){
+  .ptcz-own{display:grid;grid-template-columns:5fr 7fr;grid-template-rows:auto 1fr;column-gap:var(--ptcz-space-12);row-gap:0;align-items:start}
+  .ptcz-qa{margin-top:var(--ptcz-space-6)}
+  .ptcz-own__col{grid-column:1;grid-row:1/span 2}
+  .ptcz-own__start{margin-top:0;grid-column:2;grid-row:1;padding-top:14px}
+  .ptcz-tiles{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;grid-column:2;grid-row:2;margin-top:var(--ptcz-space-5)}
+}
+
+/* ---------- Patička ---------- */
+.ptcz-footer{background:var(--ptcz-bg-dark);color:var(--ptcz-on-dark-muted);padding:var(--ptcz-space-12) 0 calc(var(--ptcz-space-8) + var(--ptcz-bar-h))}
+.ptcz-footer__in{display:grid;gap:var(--ptcz-space-6)}
+.ptcz-footer img{height:24px;width:auto}
+.ptcz-footer a{color:#fff;text-decoration:none;display:inline-flex;min-height:var(--ptcz-tap);align-items:center}
+.ptcz-footer a:hover{text-decoration:underline;text-underline-offset:3px}
+.ptcz-footer__route{display:flex;align-items:center;gap:0;color:var(--ptcz-brand-cyan)}
+.ptcz-footer__route .i{width:44px;height:20px}
+.ptcz-footer small{font-size:13px}
+@media (min-width:900px){.ptcz-footer{padding-bottom:var(--ptcz-space-8)}.ptcz-footer__in{grid-template-columns:1fr auto;align-items:center}}
+
+/* ---------- Spodní lišta (mobil) + plovoucí WhatsApp (počítač) ---------- */
+.ptcz-bar{position:fixed;left:0;right:0;bottom:0;z-index:var(--ptcz-z-bar);display:grid;grid-template-columns:minmax(0,1fr) var(--ptcz-tap);align-items:center;column-gap:12px;height:calc(var(--ptcz-bar-h) + env(safe-area-inset-bottom,0px));padding:0 16px env(safe-area-inset-bottom,0px);background:#fff;border-top:1px solid var(--ptcz-border);box-shadow:var(--ptcz-shadow-bar);transition:transform var(--ptcz-ease-slow)}
+.ptcz-bar.is-hidden{transform:translateY(110%)}
+.ptcz-bar .ptcz-btn{min-height:var(--ptcz-btn-h)}
+.ptcz-wa{display:inline-flex;align-items:center;justify-content:center;width:var(--ptcz-tap);height:var(--ptcz-tap);border-radius:50%;background:var(--ptcz-whatsapp);color:#fff}
+.ptcz-wa .i{width:24px;height:24px}
+.ptcz-wa--fab{display:none}
+@media (min-width:900px){
+  .ptcz-bar{display:none}
+  .ptcz-wa--fab{display:inline-flex;position:fixed;right:20px;bottom:20px;z-index:var(--ptcz-z-wa);width:var(--ptcz-wa-size);height:var(--ptcz-wa-size);box-shadow:var(--ptcz-shadow-fab)}
+}
+
+
+/* =====================================================================
+   v3 — doplňky k ukázce design systému (sekce, které ukázka neměla)
+   Vše čte tokeny z ptcz-tokens.css. Hlavička, hero, Populární výlety,
+   Po svém, spodní lišta a WhatsApp jsou převzaty z ukázky beze změny.
+   ===================================================================== */
+
+/* ---------- Obecné ---------- */
+@media (max-width:899px){.demo-bar{font-size:11px;padding:6px 12px}}
+.ptcz-h2--sm{font-size:28px}                 /* podpůrné sekce (služby, FAQ, tipy): menší H2 i na počítači */
+.ptcz-sec-head--row{display:flex;align-items:baseline;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;margin-bottom:var(--ptcz-section-gap)}
+.ptcz-sec-head--row .ptcz-lead{flex-basis:100%}
+.ptcz-draft{display:inline-flex;align-items:center;vertical-align:middle;margin:0 0 0 6px;padding:0 6px;min-height:18px;border:1px solid var(--ptcz-accent);border-radius:var(--ptcz-r-pill);color:var(--ptcz-accent);background:rgba(255,255,255,.9);font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;line-height:1;text-shadow:none;cursor:help;white-space:nowrap}
+.ptcz-ico-circle{width:44px;height:44px;flex:none;border-radius:50%;background:var(--ptcz-bg-band);color:var(--ptcz-primary);display:inline-flex;align-items:center;justify-content:center}
+.ptcz-ico-circle .i{width:22px;height:22px}
+.ptcz-section--band .ptcz-ico-circle{background:#fff}
+
+/* ---------- Rozbalovací blok (details) ---------- */
+.ptcz-acc{border-bottom:1px solid var(--ptcz-border)}
+.ptcz-acc--card{border-top:1px solid var(--ptcz-border)}
+.ptcz-acc>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) 24px;align-items:center;column-gap:12px;min-height:56px;padding:12px 0;font-size:17px;line-height:1.3;font-weight:600;border-radius:var(--ptcz-r-sm)}
+.ptcz-acc>summary::-webkit-details-marker{display:none}
+.ptcz-acc>summary .i{width:24px;height:24px;color:var(--ptcz-primary);transition:transform var(--ptcz-ease)}
+.ptcz-acc[open]>summary .i{transform:rotate(180deg)}
+.ptcz-acc__body{padding:0 36px 18px 0;font-size:16px;line-height:1.55;color:var(--ptcz-text)}
+.ptcz-acc__body p+p{margin-top:8px}
+.ptcz-acc__body a{font-weight:600}
+.ptcz-acc--plain>summary{min-height:44px;font-size:var(--ptcz-fs-eyebrow);font-weight:600;letter-spacing:var(--ptcz-ls-eyebrow);text-transform:uppercase;color:var(--ptcz-accent);grid-template-columns:max-content 24px;justify-content:start}
+.ptcz-acc--plain{border:0}
+.ptcz-acc--plain .ptcz-acc__body{padding:0}
+
+/* ---------- v kostce: faktografická mřížka ---------- */
+.ptcz-facts{display:grid;gap:0;border-top:1px solid var(--ptcz-border);margin-top:var(--ptcz-section-gap)}
+.ptcz-fact{display:grid;grid-template-columns:36px minmax(0,1fr);column-gap:12px;align-items:start;padding:14px 0;border-bottom:1px solid var(--ptcz-border);font-size:15px;line-height:1.5}
+.ptcz-fact .ptcz-ico-circle{width:36px;height:36px}.ptcz-fact .ptcz-ico-circle .i{width:19px;height:19px}
+.ptcz-fact b{font-weight:600}
+.ptcz-facts__foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;margin-top:var(--ptcz-space-5)}
+.ptcz-facts__foot .ptcz-acc{flex:1 1 100%;border-bottom:1px solid var(--ptcz-border)}
+@media (min-width:900px){
+  .ptcz-facts{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--ptcz-space-10)}
+  .ptcz-fact{padding:22px 0;font-size:17px;grid-template-columns:44px minmax(0,1fr);column-gap:14px}
+  .ptcz-fact .ptcz-ico-circle{width:44px;height:44px}.ptcz-fact .ptcz-ico-circle .i{width:22px;height:22px}
+}
+
+/* ---------- Po svém: otázky jako odkazy ---------- */
+.ptcz-qa li{padding:0}
+.ptcz-qa__link{display:grid;grid-template-columns:minmax(0,1fr) 24px;column-gap:12px;align-items:start;padding:16px 0;color:inherit;text-decoration:none}
+.ptcz-qa__link .i{grid-column:2;grid-row:1/span 2;align-self:center;color:var(--ptcz-primary);transition:transform var(--ptcz-ease)}
+.ptcz-qa__link:hover h3{text-decoration:underline;text-underline-offset:3px}
+.ptcz-qa__link:hover .i{transform:translateX(var(--ptcz-nudge))}
+
+/* ---------- Plnoformátový obrazový předěl ---------- */
+.ptcz-break{position:relative;margin:0;aspect-ratio:2/1;background:var(--ptcz-bg-band-2);overflow:hidden}
+.ptcz-break img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 55%}
+@media (min-width:900px){.ptcz-break{aspect-ratio:16/6;max-height:560px}}
+
+/* ---------- Proč si nás hosté vybírají ---------- */
+.ptcz-why__grid{display:grid;gap:var(--ptcz-space-8);margin-top:var(--ptcz-section-gap)}
+.ptcz-why__media{display:grid;gap:16px}
+.ptcz-why__media figure img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:var(--ptcz-r-lg);background:var(--ptcz-bg-band-2)}
+.ptcz-why__media figcaption{margin-top:8px;font-size:var(--ptcz-fs-meta);line-height:var(--ptcz-lh-meta);color:var(--ptcz-muted)}
+.ptcz-why__media figure+figure{display:none}
+.ptcz-why__h3{font-size:22px;line-height:1.25;font-weight:600;letter-spacing:-0.01em}
+.ptcz-why__p{margin-top:12px;max-width:var(--ptcz-prose)}
+.ptcz-levels{margin-top:var(--ptcz-space-6);border-top:1px solid var(--ptcz-border)}
+.ptcz-levels li{display:grid;grid-template-columns:minmax(0,1fr);row-gap:3px;padding:14px 0;border-bottom:1px solid var(--ptcz-border)}
+.ptcz-levels h3{font-size:17px;font-weight:600;line-height:1.3}
+.ptcz-levels p{font-size:var(--ptcz-fs-small);line-height:var(--ptcz-lh-small);color:var(--ptcz-muted)}
+.ptcz-why .ptcz-acc--card{margin-top:var(--ptcz-space-4);border-top:0}
+.ptcz-trio{display:grid;gap:var(--ptcz-gutter);margin-top:var(--ptcz-space-10)}
+@media (max-width:899px){.ptcz-trio.ptcz-scroller{display:flex;margin-top:var(--ptcz-space-8)}.ptcz-trio.ptcz-scroller>*{flex-basis:84%}}
+.ptcz-trio__card{display:flex;flex-direction:column;background:var(--ptcz-bg-band);border-radius:var(--ptcz-r-lg);overflow:hidden}
+.ptcz-trio__card img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;background:var(--ptcz-bg-band-2)}
+.ptcz-trio__body{padding:18px 20px 20px}
+.ptcz-trio__body .ptcz-ico-circle{background:#fff;margin-bottom:12px}
+.ptcz-trio__title{font-size:17px;font-weight:600;line-height:1.3}
+.ptcz-trio__body p+p{margin-top:6px;font-size:var(--ptcz-fs-small);line-height:var(--ptcz-lh-small);color:var(--ptcz-muted)}
+.ptcz-trio__body .ptcz-link{margin-top:4px}
+@media (min-width:600px){
+  .ptcz-levels li{grid-template-columns:132px minmax(0,1fr);column-gap:16px;align-items:baseline}
+  .ptcz-levels li p{grid-column:2}
+}
+@media (min-width:900px){
+  .ptcz-why__grid{grid-template-columns:5fr 7fr;column-gap:var(--ptcz-space-12);align-items:start}
+  .ptcz-why__media{position:sticky;top:24px}
+  .ptcz-why__media figure+figure{display:block}
+  .ptcz-trio{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+/* ---------- Doplňkové služby ---------- */
+.ptcz-serv{display:grid;gap:0;border-top:1px solid var(--ptcz-border);margin-top:var(--ptcz-section-gap)}
+.ptcz-serv li{display:grid;grid-template-columns:44px minmax(0,1fr);column-gap:14px;padding:18px 0;border-bottom:1px solid var(--ptcz-border)}
+.ptcz-serv h3{font-size:17px;font-weight:600;line-height:1.3;padding-top:2px}
+.ptcz-serv p{margin-top:4px;font-size:var(--ptcz-fs-small);line-height:var(--ptcz-lh-small);color:var(--ptcz-muted)}
+.ptcz-serv+.ptcz-acc{border-top:0}
+@media (min-width:900px){.ptcz-serv{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--ptcz-space-10)}}
+
+/* ---------- FAQ ---------- */
+.ptcz-faq{display:grid;gap:0 var(--ptcz-space-12);margin-top:var(--ptcz-section-gap);border-top:1px solid var(--ptcz-border)}
+@media (min-width:900px){.ptcz-faq{grid-template-columns:1fr 1fr;grid-template-rows:repeat(5,auto);grid-auto-flow:column}}
+
+/* ---------- Naplánujte si: tmavý blok ---------- */
+.ptcz-plan{background:var(--ptcz-bg-dark);color:#fff}
+.ptcz-plan__route{color:var(--ptcz-brand-cyan);margin-bottom:14px}
+.ptcz-plan__route .i{width:72px;height:30px}
+.ptcz-plan .ptcz-h2{color:#fff;max-width:14ch}
+.ptcz-plan__lead{margin-top:12px;font-size:var(--ptcz-fs-lead);line-height:var(--ptcz-lh-lead);color:var(--ptcz-on-dark-muted);max-width:40ch}
+.ptcz-plan__cta{display:flex;flex-direction:column;gap:12px;margin-top:var(--ptcz-space-6)}
+.ptcz-btn--on-dark .i--wa{color:var(--ptcz-brand-cyan)}
+.ptcz-btn--on-dark:hover .i--wa{color:var(--ptcz-whatsapp)}
+@media (min-width:600px){.ptcz-plan__cta{flex-direction:row;flex-wrap:wrap}}
+@media (min-width:900px){
+  .ptcz-plan__in{display:grid;grid-template-columns:7fr 5fr;column-gap:var(--ptcz-space-12);align-items:center}
+  .ptcz-plan__cta{flex-direction:column;align-items:stretch;margin-top:0}
+}
+
+/* ---------- Tipy a inspirace ---------- */
+.ptcz-tips__pillar{margin:-8px 0 var(--ptcz-space-4)}
+.ptcz-arts{display:grid;gap:0;border-top:1px solid var(--ptcz-border);margin-top:10px}
+.ptcz-art{display:grid;grid-template-columns:104px minmax(0,1fr);column-gap:14px;align-items:start;padding:14px 0;border-bottom:1px solid var(--ptcz-border);text-decoration:none;color:inherit}
+.ptcz-art img{width:104px;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:var(--ptcz-r-md);background:var(--ptcz-bg-band-2)}
+.ptcz-art__meta,.ptcz-art__t,.ptcz-art__d{display:block}
+.ptcz-art__meta{font-size:var(--ptcz-fs-meta);color:var(--ptcz-muted);margin-bottom:2px}
+.ptcz-art__t{font-size:16px;font-weight:600;line-height:1.35}
+.ptcz-art__d{margin-top:4px;font-size:var(--ptcz-fs-meta);line-height:1.45;color:var(--ptcz-muted)}
+.ptcz-art:hover .ptcz-art__t{text-decoration:underline;text-underline-offset:3px}
+.ptcz-tips .ptcz-acc--plain{margin-top:var(--ptcz-space-5)}
+@media (min-width:900px){
+  .ptcz-arts{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:var(--ptcz-gutter);border-top:0}
+  .ptcz-art{grid-template-columns:minmax(0,1fr);padding:0;border-bottom:0}
+  .ptcz-art img{width:100%;aspect-ratio:16/10;border-radius:var(--ptcz-r-lg);margin-bottom:12px}
+}
+
+/* ---------- Patička ---------- */
+.ptcz-footer__grid{display:grid;gap:var(--ptcz-space-8)}
+.ptcz-footer__brand p{margin-top:14px;font-size:var(--ptcz-fs-meta);line-height:1.6}
+.ptcz-footer__brand p a{display:inline;min-height:0}
+.ptcz-footer__col{display:grid;align-content:start}
+.ptcz-footer__col a{font-size:15px}
+.ptcz-footer__bottom{margin-top:var(--ptcz-space-8);padding-top:var(--ptcz-space-6);border-top:1px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.ptcz-footer__bottom img{height:22px;width:auto;opacity:.9}
+@media (min-width:900px){.ptcz-footer__grid{grid-template-columns:1.5fr 1fr 1fr 1fr;column-gap:var(--ptcz-space-10)}}
+
+/* ---------- Oponentura 27. 10. 2026 (přístupnost, bez změny vzhledu) ---------- */
+/* Kroky „Jak to funguje“ jsou H4 (titulek panelu je H3, ne H2) – stejný vzhled jako dřívější H3 */
+.ptcz-steps h4{font-size:16px;line-height:1.3;font-weight:600;padding-top:5px}
+@media (min-width:900px){.ptcz-steps h4{font-size:17px}}
+/* Dlaždice „Všech 26 výletů“: role listitem nese obal, odkaz zůstává odkazem (4.1.2); odkaz vyplní celou dlaždici */
+.ptcz-card--all{padding:0}
+.ptcz-card--all__link{display:flex;flex:1 1 auto;flex-direction:column;justify-content:center;align-items:flex-start;padding:24px;color:inherit;text-decoration:none;border-radius:inherit}
+.ptcz-card--all__link:focus-visible{box-shadow:inset 0 0 0 3px var(--ptcz-ring)}
+
+/* ---------- Schváleno RF 27. 10. 2026 ---------- */
+/* Vizuálně skrytý text pro čtečky (WhatsApp „otevře se v nové záložce“; v produkci i doplněk dlaždic míst, zadání 3.1) */
+.ptcz-sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;clip-path:inset(50%)!important;white-space:nowrap!important;border:0!important}
+
+/* ---------- v4: Chcete řídit sami? Půjčte si auto (návrh; na webu za přepínačem popojedu_en) ---------- */
+.ptcz-rent{padding-top:0}
+.ptcz-rent__card{display:grid;background:var(--ptcz-bg-band);border-radius:var(--ptcz-r-lg);overflow:hidden}
+.ptcz-rent__media img{width:100%;height:100%;aspect-ratio:16/9;object-fit:cover;background:var(--ptcz-bg-band-2)}
+.ptcz-rent__body{padding:22px 20px 24px}
+.ptcz-rent__body .ptcz-h2{margin-top:10px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.ptcz-rent__p{margin-top:12px;font-size:var(--ptcz-fs-small);line-height:var(--ptcz-lh-small);color:var(--ptcz-text);max-width:52ch}
+.ptcz-rent__cta{margin-top:var(--ptcz-space-5)}
+.ptcz-rent__note{margin-top:10px;font-size:var(--ptcz-fs-meta);line-height:var(--ptcz-lh-meta);color:var(--ptcz-muted)}
+.ptcz-draft--long{font-size:10px;letter-spacing:.04em;text-transform:none;margin-left:0}
+@media (min-width:900px){
+  .ptcz-rent__card{grid-template-columns:5fr 7fr}
+  .ptcz-rent__media img{aspect-ratio:auto;min-height:100%}
+  .ptcz-rent__body{padding:32px 36px 34px}
+}

@@ -1,0 +1,225 @@
+/* ============================================================================
+   PrivateToursCzech v1 — sdílené tokeny (ptcz-tokens.css)
+   verze 1.0 · 26. 10. 2026 · Reports/Design/design-system-2026-10/
+
+   Jeden soubor pro homepage, katalog, stránku výletu i plánovač. Načíst
+   v hlavičce PŘED faze1.css, buttons.css, design-system-v1.css a šablonou.
+   Žádné selektory kromě :root a dvou @media — soubor nic nevykresluje,
+   jen definuje hodnoty. Komponenty z něj čtou přes var(--ptcz-*).
+
+   Kontrasty = WCAG 2.x poměry spočítané z hex hodnot (bílá #FFFFFF,
+   kámen #F5F3EE, inkoust #1C1C2E). Práh pro text 4,5 : 1, pro grafiku 3 : 1.
+
+   Obsah: 0 písmo · 1 barvy · 2 typografická škála · 3 mezery a mřížka ·
+          4 poloměry · 5 stíny · 6 pohyb · 7 z-indexy · 8 rozměry prvků ·
+          9 breakpointy · 10 mapa starý → nový název
+   ========================================================================== */
+
+:root {
+
+  /* ---------- 0. Písmo ---------------------------------------------------- */
+  /* Inter Tight: self-host v šabloně (google-fonts-local.css, variabilní
+     100–900). Povolené řezy: 400 · 500 · 600 · 700. Řez 800 se nepoužívá. */
+  --ptcz-font: "Inter Tight", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --ptcz-font-heading: var(--ptcz-font);
+
+  /* ---------- 1. Barvy ---------------------------------------------------- */
+  /* Značka = ikona loga (azurová) + inkoust slovní značky + jedna akční modrá. */
+  --ptcz-ink:            #1C1C2E;  /* inkoust ze slovní značky loga · na bílé 16,7 · na kameni 15,1 */
+  --ptcz-text:           var(--ptcz-ink);
+  --ptcz-muted:          #5B6070;  /* tlumený text (navy-šedá) · na bílé 6,27 · na kameni 5,65 */
+  --ptcz-primary:        #165f85;  /* akční modrá: tlačítka, odkazy · bílý text na ní 6,98 · jako text na bílé 6,98 · na kameni 6,29 */
+  --ptcz-primary-hover:  #0f4a69;  /* bílý text 9,53 */
+  --ptcz-primary-10:     rgba(22, 95, 133, .10);  /* podklad hoveru/výběru; text #165f85 na něm ≥ 6 */
+  --ptcz-ring:           rgba(22, 95, 133, .28);  /* fokus prstenec 3 px */
+  --ptcz-brand-cyan:     #00C5F9;  /* azurová ikony loga · JEN na tmavém (na inkoustu 8,25) nebo na fotce · na bílé 2,03 = nikdy text na světlém */
+  --ptcz-accent:         #9B2335;  /* český granát · eyebrow, štítek typu, drobná číslice · na bílé 7,82 · na kameni 7,05 · max. 5 % plochy, nikdy tlačítko */
+
+  --ptcz-bg:             #FFFFFF;
+  --ptcz-bg-band:        #F5F3EE;  /* teplý kámen – střídavé pruhy sekcí (místo studené #f3f6f9) */
+  --ptcz-bg-band-2:      #EBE7DF;  /* tmavší kámen – hover/hranice uvnitř pruhu · inkoust na něm 13,5 */
+  --ptcz-bg-dark:        var(--ptcz-ink);  /* patička, CTA blok, spodní list ceny v tmavé variantě */
+  --ptcz-on-dark:        #FFFFFF;          /* 16,7 na inkoustu */
+  --ptcz-on-dark-muted:  rgba(255, 255, 255, .80);  /* ≈ #D1D1D6 na inkoustu 11,2 */
+  --ptcz-border:         rgba(28, 28, 46, .10);  /* hranice karet, polí, oddělovače */
+  --ptcz-border-strong:  rgba(28, 28, 46, .24);  /* obrys sekundárního tlačítka v klidu lze i plný inkoust */
+  --ptcz-overlay:        rgba(28, 28, 46, .35);  /* ztmavení pod listem/dialogem */
+  --ptcz-glass:          rgba(28, 28, 46, .45);  /* skleněný panel v hero (+ backdrop-filter blur 12px) */
+
+  /* sémantické */
+  --ptcz-success:        #1f7a45;  /* na bílé 5,35 · obrys WhatsApp, fajfka „v ceně“ */
+  --ptcz-success-bg:     #EDF7F0;
+  --ptcz-error:          #d92d20;  /* na bílé 4,83 (z P1) */
+  --ptcz-error-bg:       #fef3f2;
+  --ptcz-error-ring:     rgba(217, 45, 32, .22);
+  --ptcz-warning:        #B45309;  /* na bílé 5,3 · štítek „dlouhý den“ */
+  --ptcz-warning-bg:     #FFF7ED;
+  --ptcz-disabled:       #c4c7cc;
+  --ptcz-whatsapp:       #1f9d55;  /* kruh s bílou ikonou 3,49 – jen grafika, nikdy bílý text */
+
+  /* ---------- 2. Typografická škála (mobil; počítač viz @media 900 px) ---- */
+  --ptcz-fs-h1:      34px;  --ptcz-lh-h1: 1.1;   --ptcz-fw-h1: 600;
+  --ptcz-fs-h2:      28px;  --ptcz-lh-h2: 1.15;  --ptcz-fw-h2: 600;
+  --ptcz-fs-h3:      20px;  --ptcz-lh-h3: 1.3;   --ptcz-fw-h3: 600;
+  --ptcz-fs-h4:      18px;  --ptcz-lh-h4: 1.3;   --ptcz-fw-h4: 600;
+  --ptcz-fs-lead:    17px;  --ptcz-lh-lead: 1.5;
+  --ptcz-fs-body:    17px;  --ptcz-lh-body: 1.55;
+  --ptcz-fs-small:   15px;  --ptcz-lh-small: 1.45;
+  --ptcz-fs-meta:    14px;  --ptcz-lh-meta: 1.4;   /* minimum pro čtenáře 40+; 13 px jen pilulky na fotce (700) */
+  --ptcz-fs-pill:    13px;
+  --ptcz-fs-eyebrow: 12px;  --ptcz-ls-eyebrow: .08em;  /* uppercase, 600 */
+  --ptcz-fs-price:   22px;  --ptcz-fw-price: 700;      /* font-variant-numeric: tabular-nums */
+  --ptcz-fs-price-card: 20px;
+  --ptcz-fs-stat:    40px;  /* velká číslice „v kostce“ (počítač 48) */
+  --ptcz-ls-tight:   -0.015em;  /* od 28 px výš */
+  --ptcz-fw-regular: 400;  --ptcz-fw-medium: 500;  --ptcz-fw-semibold: 600;  --ptcz-fw-bold: 700;
+
+  /* ---------- 3. Mezery (násobky 4) a mřížka ------------------------------ */
+  --ptcz-space-1:  4px;   --ptcz-space-2:  8px;   --ptcz-space-3: 12px;
+  --ptcz-space-4: 16px;   --ptcz-space-5: 20px;   --ptcz-space-6: 24px;
+  --ptcz-space-8: 32px;   --ptcz-space-10: 40px;  --ptcz-space-12: 48px;
+  --ptcz-space-16: 64px;  --ptcz-space-20: 80px;  --ptcz-space-24: 96px;
+
+  --ptcz-container: 1200px;   /* max. šířka obsahu (12 sloupců) */
+  --ptcz-cols: 12;
+  --ptcz-gutter: 16px;        /* mezera sloupců/karet; počítač 24 */
+  --ptcz-margin-x: 16px;      /* okraj stránky; počítač 20 */
+  --ptcz-prose: 720px;        /* šířka souvislého textu (680–760) */
+  --ptcz-section-y: 48px;     /* svislý padding sekce; počítač 64 */
+  --ptcz-section-gap: 24px;   /* mezi H2 a obsahem */
+
+  /* ---------- 4. Poloměry ------------------------------------------------- */
+  --ptcz-r-sm:   8px;    /* položka nabídky, chip, malé pole */
+  --ptcz-r-md:   12px;   /* popover, rozbalovací blok, miniatura */
+  --ptcz-r-lg:   16px;   /* karta, dlaždice, pole formuláře, spodní list na počítači */
+  --ptcz-r-xl:   20px;   /* spodní list na mobilu (horní rohy), systémový modál */
+  --ptcz-r-pill: 999px;  /* tlačítka, pilulky, štítky */
+  /* Zrušené hodnoty: 4 px (DS v1), 10 px (P1 item), 14 px (P1 pop), 18 px (v2 karta). */
+
+  /* ---------- 5. Stíny (vždy z inkoustu, ne z černé) --------------------- */
+  --ptcz-shadow-card:       0 2px 12px rgba(28, 28, 46, .06);   /* karta v klidu (+ 1 px hranice) */
+  --ptcz-shadow-card-hover: 0 8px 24px rgba(28, 28, 46, .10);   /* karta na hover (+ translateY(-2px)) */
+  --ptcz-shadow-pop:        0 12px 32px rgba(28, 28, 46, .14);  /* popover, spodní list, dialog */
+  --ptcz-shadow-bar:        0 -4px 16px rgba(28, 28, 46, .06);  /* pevná spodní lišta */
+  --ptcz-shadow-btn-hover:  0 4px 14px rgba(22, 95, 133, .30);  /* primární tlačítko jen na hover */
+  --ptcz-shadow-fab:        0 4px 14px rgba(28, 28, 46, .18);   /* plovoucí WhatsApp */
+  --ptcz-text-shadow-hero:  0 1px 2px rgba(0, 0, 0, .35);       /* pojistka bílého textu na fotce */
+
+  /* ---------- 6. Pohyb ---------------------------------------------------- */
+  --ptcz-ease:      200ms ease-out;                        /* barvy, hranice, stín, šipka */
+  --ptcz-ease-slow: 320ms cubic-bezier(.2, .7, .2, 1);     /* posun lišty, otevření bloku, zoom fotky */
+  --ptcz-lift:      -2px;                                  /* hover zdvih karty */
+  --ptcz-nudge:     2px;                                   /* posun šipky v tlačítku na hover */
+  --ptcz-zoom:      1.03;                                  /* zoom fotky dlaždice na hover */
+
+  /* ---------- 7. Z-indexy ------------------------------------------------- */
+  --ptcz-z-raised:  10;     /* štítky na fotce, překryv karty */
+  --ptcz-z-header:  100;    /* hlavička */
+  --ptcz-z-bar:     9000;   /* pevná spodní lišta */
+  --ptcz-z-wa:      9400;   /* plovoucí WhatsApp */
+  --ptcz-z-pop:     9500;   /* našeptávač, popover */
+  --ptcz-z-sheet:   9700;   /* spodní list, dialog, detail místa */
+  --ptcz-z-toast:   9800;   /* toast s Undo */
+  /* Cookie lišta Complianz zůstává nad vším (plugin má vlastní z-index). */
+
+  /* ---------- 8. Rozměry prvků -------------------------------------------- */
+  --ptcz-tap:        44px;  /* minimální dotykový cíl */
+  --ptcz-btn-h:      48px;  /* primární/sekundární tlačítko */
+  --ptcz-btn-h-lg:   52px;  /* tlačítka v hero na mobilu */
+  --ptcz-btn-h-sm:   40px;  /* kompaktní tlačítko v kartě (cíl doplnit na 44 paddingem) */
+  --ptcz-field-h:    52px;  /* pole formuláře (P1: 16 px text, 1,5 px hranice) */
+  --ptcz-bar-h:      72px;  /* pevná spodní lišta + env(safe-area-inset-bottom) */
+  --ptcz-header-h:   72px;  /* hlavička mobil; počítač 90 */
+  --ptcz-logo-h:     24px;  /* logo mobil; počítač 31 (originální SVG 159 × 24) */
+  --ptcz-icon:       20px;  /* ikona v textu; v tlačítku 24 */
+  --ptcz-icon-lg:    24px;
+  --ptcz-plus-circle: 32px; /* „+“ na dlaždici cíle (cíl 44) */
+  --ptcz-wa-size:    48px;  /* plovoucí WhatsApp (plánovač 44) */
+
+  /* ---------- 9. Breakpointy (dokumentační – v @media se píší čísly) ------ */
+  --ptcz-bp-sm: 600px;   /* 2 sloupce dlaždic → 3; kroky vedle sebe */
+  --ptcz-bp-md: 900px;   /* počítačová typografie, hlavička 90, skleněný panel, lišta mizí, karty 3 sloupce */
+  --ptcz-bp-lg: 1200px;  /* karty 4 sloupce, plná mřížka 12 sloupců s 24px gutterem */
+}
+
+/* Počítačová část škály a mřížky */
+@media (min-width: 900px) {
+  :root {
+    --ptcz-fs-h1: 48px;
+    --ptcz-fs-h2: 36px;
+    --ptcz-fs-lead: 19px;
+    --ptcz-fs-stat: 48px;
+    --ptcz-gutter: 24px;
+    --ptcz-margin-x: 20px;
+    --ptcz-section-y: 64px;
+    --ptcz-header-h: 90px;
+    --ptcz-logo-h: 31px;
+  }
+}
+
+/* Omezený pohyb: všechny přechody v systému čtou tyto hodnoty, takže zhasnou najednou */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ptcz-ease: 0ms linear;
+    --ptcz-ease-slow: 0ms linear;
+    --ptcz-lift: 0px;
+    --ptcz-nudge: 0px;
+    --ptcz-zoom: 1;
+  }
+}
+
+/* ============================================================================
+   10. Mapa starý → nový název (kompatibilita s faze1.css a design-system-v1.css)
+   Aliasy níže drží staré názvy naživu, aby faze1.css a DS v1 běžely bez
+   přepisu; nové komponenty používají jen nové názvy. Po přepisu P1 aliasy smazat.
+   ---------------------------------------------------------------------------
+   faze1.css (P1)                 → nový token              změna hodnoty
+   --ptcz-primary #1E88B5         → --ptcz-primary          #165f85 (4,0 → 6,98)
+   --ptcz-primary-hover #176F93   → --ptcz-primary-hover    #0f4a69
+   --ptcz-primary-10 rgba(30,136,181,.10) → --ptcz-primary-10  rgba(22,95,133,.10)
+   --ptcz-ring rgba(30,136,181,.28)       → --ptcz-ring        rgba(22,95,133,.28)
+   --ptcz-text #1c1c2e            → --ptcz-text (= --ptcz-ink) beze změny
+   --ptcz-muted #6B6B6B           → --ptcz-muted            #5B6070 (5,33 → 6,27)
+   --ptcz-border #e5e7eb          → --ptcz-border           rgba(28,28,46,.10)
+   --ptcz-success #12b76a         → --ptcz-success          #1f7a45 (2,3 → 5,35; použitelné i jako text)
+   --ptcz-r-field 16px            → --ptcz-r-lg             beze změny (alias níže)
+   --ptcz-r-pop 14px              → --ptcz-r-md             12 px
+   --ptcz-r-item 10px             → --ptcz-r-sm             8 px
+   --ptcz-shadow-card 0 2px 12px rgba(0,0,0,.05) → --ptcz-shadow-card  rgba(28,28,46,.06)
+   --ptcz-shadow-pop              → --ptcz-shadow-pop       beze změny
+   --ptcz-ease, --ptcz-bar-h, --ptcz-z-bar/-pop/-sheet/-wa → beze změny
+   ---------------------------------------------------------------------------
+   design-system-v1.css           → nový token
+   --ptcz-navy / --ptcz-gold #1c1c2e → --ptcz-ink (gold zrušit – název lže)
+   --ptcz-text #1A1A1A            → --ptcz-ink #1C1C2E
+   --ptcz-text-muted #555555      → --ptcz-muted
+   --ptcz-text-light #888888      → zrušit (na bílé 3,5 – neprochází)
+   --ptcz-bg-light #F7F8FA        → --ptcz-bg-band #F5F3EE
+   --ptcz-bg-medium #EEF0F4       → --ptcz-bg-band-2
+   --ptcz-border #E5E7EB          → --ptcz-border
+   --ptcz-radius-sm/md/lg/xl 4/8/12/16 → --ptcz-r-sm/-md/-lg 8/12/16 (4 px zrušit)
+   --ptcz-radius-full             → --ptcz-r-pill
+   --ptcz-shadow-sm/md/lg/xl      → --ptcz-shadow-card / -card-hover / -pop (xl zrušit)
+   --ptcz-transition-fast/normal/slow → --ptcz-ease / --ptcz-ease-slow
+   --ptcz-z-dropdown/sticky/modal → --ptcz-z-pop / -header / -sheet
+   --ptcz-content-wide-width 1200px → --ptcz-container
+   --ptcz-content-padding-x 1.25rem → --ptcz-margin-x
+   --ptcz-space-* (rem)           → --ptcz-space-* (px, stejná řada)
+   --ptcz-text-xs…5xl (rem)       → --ptcz-fs-* (role, ne velikosti)
+   ---------------------------------------------------------------------------
+   buttons.css / ptcz-ui.js (bez tokenů): .newbutton #1E88B5 !important → var(--ptcz-primary);
+   stín 0 4px 14px rgba(30,136,181,.35) stále → --ptcz-shadow-btn-hover jen na hover;
+   .newbuttono obrys 2px #1c1c2e → 1,5 px var(--ptcz-ink).
+   ========================================================================== */
+:root {
+  --ptcz-r-field: var(--ptcz-r-lg);
+  --ptcz-r-pop:   var(--ptcz-r-md);
+  --ptcz-r-item:  var(--ptcz-r-sm);
+  --ptcz-navy:    var(--ptcz-ink);
+  --ptcz-text-muted: var(--ptcz-muted);
+  --ptcz-bg-light: var(--ptcz-bg-band);
+  --ptcz-radius-md: var(--ptcz-r-sm);
+  --ptcz-radius-lg: var(--ptcz-r-md);
+  --ptcz-radius-xl: var(--ptcz-r-lg);
+  --ptcz-radius-full: var(--ptcz-r-pill);
+}

@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="img/logo-dark.svg">
+<title>Homepage v4 — náhled s plánovačem (CZ) · PrivateToursCzech v1</title>
+<meta name="description" content="PrivateToursCzech: soukromé výlety z Prahy autem s anglicky mluvícím řidičem, na přání i s průvodcem. Cena za celý vůz.">
+<!-- Statický náhled homepage v3 (design systém PrivateToursCzech v1). Jeden markup pro mobil i počítač.
+     Písmo: v produkci google-fonts-local.css (self-host); náhled vkládá tytéž soubory jako data: URI, aby šel otevřít z disku.
+     Obrázky = dnešní soubory z produkce. Ceny a délky = snímek k 25. 10. 2026; na webu se generují z dat.
+     Bez GTM: události jdou jen do window.dataLayer (ptcz-track.js = reference ze zadání, kap. 6). -->
+<link rel="preload" as="image" href="img/ext/charles-bridge-sunrise-prague-privatetoursczech.webp" fetchpriority="high">
+<link rel="stylesheet" href="fonts/inter-tight-embed.css">
+<link rel="stylesheet" href="css/ptcz-tokens.css">
+<link rel="stylesheet" href="css/ptcz-homepage.css">
+<script>
+/* Rozbalovací bloky (data-details-id): v HTML sbalené; na počítači (≥ 900 px) je otevře tento skript hned při parsování,
+   tj. před prvním vykreslením → bez posunu. FAQ zůstává sbalené všude. Automatické otevření se neměří (příznak __ptczAuto čte ptcz-track.js). */
+function ptczAutoOpen(d){
+  if(!d||d.tagName!=='DETAILS'||!window.matchMedia('(min-width: 900px)').matches)return;
+  d.__ptczAuto=true;d.open=true;
+  d.addEventListener('toggle',function(){d.__ptczAuto=false;},{once:true});
+}
+</script>
+</head>
+<body data-page-type="home">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="5" cy="18" r="2.25"/><circle cx="19" cy="6" r="2.25"/><path d="M7.2 17.2C12 16 12 8 16.8 6.8"/></symbol>
+    <symbol id="i-route-long" viewBox="0 0 48 20"><circle cx="4" cy="16" r="2.5"/><circle cx="24" cy="6" r="2.5"/><circle cx="44" cy="14" r="2.5"/><path d="M6.5 15.5c8-1 10-8 15-9m2.5 0c8 1 10 7 17.5 7.5" stroke-dasharray="3 3"/></symbol>
+    <symbol id="i-van" viewBox="0 0 24 24"><path d="M2.5 16v-4.4L4.9 7h10.6l4.2 4.6h1.8V16"/><path d="M4.9 11.6h15.6M9 7v4.6M15.5 7v4.6"/><path d="M9.2 16h5.6M2.5 16h2.3M19.2 16h2.3"/><circle cx="7" cy="16.5" r="2"/><circle cx="17" cy="16.5" r="2"/></symbol>
+    <symbol id="i-suv" viewBox="0 0 24 24"><path d="M2.5 16v-3.2l2.6-1 2.3-4h7.8l3.3 4.1 2.7.9V16"/><path d="M5.1 11.8h13.4"/><path d="M9.2 16h5.6M2.5 16h2.3M19.2 16h2.3"/><circle cx="7" cy="16.5" r="2"/><circle cx="17" cy="16.5" r="2"/><path d="M12.4 3.2 11 6h2.2l-1.3 2.6"/></symbol>
+    <symbol id="i-car" viewBox="0 0 24 24"><path d="M3 15.5v-3l2-.6 2.2-4.4h9.6L19 11.9l2 .6v3"/><path d="M5 11.9h14M3 15.5h2.2M18.8 15.5H21M9 15.5h6"/><circle cx="7" cy="16" r="1.9"/><circle cx="17" cy="16" r="1.9"/></symbol>
+    <symbol id="i-walk" viewBox="0 0 24 24"><circle cx="13.5" cy="4" r="1.75"/><path d="M9.5 21l2-6.2 2.6 2.4V21M8 11.5l2-3.1 3.2-.9 2.3 3.1 2.5 1.2M11.5 14.8l-1.3-3"/></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></symbol>
+
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21.5s-6.5-5.6-6.5-10.8a6.5 6.5 0 0 1 13 0C18.5 15.9 12 21.5 12 21.5Z"/><circle cx="12" cy="10.7" r="2.3"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1.3"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/></symbol>
+    <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="9" r="5.25"/><path d="M8.6 13.4 7.2 21l4.8-2.4 4.8 2.4-1.4-7.6"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.8 4.5 5.8v5.6c0 4.6 3.1 8.2 7.5 9.8 4.4-1.6 7.5-5.2 7.5-9.8V5.8L12 2.8Z"/><path d="m9 12 2 2 4-4.2"/></symbol>
+    <symbol id="i-seat" viewBox="0 0 24 24"><path d="M6 3h3.4l2.3 8.6H19l-1 4.4H10.2L6 3Z"/><circle cx="10.5" cy="20" r="1.5"/><circle cx="16.5" cy="20" r="1.5"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M3.5 7.5A2.5 2.5 0 0 1 6 5h12.5v3"/><path d="M3.5 7.5V17a2.5 2.5 0 0 0 2.5 2.5h14.5V8H6a2.5 2.5 0 0 1-2.5-.5Z"/><circle cx="16.5" cy="13.8" r="1.2"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4.5"/><path d="m11.2 11.8 8.3-8.3M16 7l2.5 2.5M19 4l1.5 1.5"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20h4l10.5-10.5a2.1 2.1 0 0 0-3-3L5 17v3Z"/><path d="m13.5 8.5 3 3"/></symbol>
+  </defs>
+</svg>
+
+<div class="demo-bar"><b>Náhled homepage v4 · PrivateToursCzech v1 · homepage + nový plánovač v jednom systému</b> · 27. 10. 2026 · texty a vzhled = schválená v3 (odchylky kvůli Tesle mají štítek „návrh“) · nově: tlačítka vedou do <a href="planovac.html" style="color:#fff">planovac.html</a> a sekce „Chcete řídit sami?“ (návrh, zapne se s EN webem Popojedu) · obrázky lokálně</div>
+
+<!-- oponentura 27. 10.: <main> = hlavní obsah (landmark pro čtečky); v produkci je hlavička s menu mimo <main> jako <header> (banner) -->
+<main id="obsah">
+<!-- ============ ÚVOD + HLAVIČKA + JAK TO FUNGUJE (z ukázky DS, beze změny vzhledu) ============ -->
+<section class="ptcz-hero" id="hero" data-section="hero">
+  <div class="ptcz-hero__media" aria-hidden="true">
+    <img src="img/ext/charles-bridge-sunrise-prague-privatetoursczech.webp" alt="" width="1920" height="1080" fetchpriority="high" decoding="async">
+    <div class="ptcz-hero__shade"></div>
+  </div>
+
+  <header class="ptcz-header">
+    <div class="ptcz-container ptcz-header__in">
+      <a class="ptcz-logo" href="index.html" aria-label="PrivateToursCzech – úvodní strana" data-cta-id="logo" data-cta-role="tertiary" data-placement="header"><img src="img/logo.svg" alt="PrivateToursCzech" width="159" height="24"></a>
+      <a class="ptcz-hbtn ptcz-hbtn--icon" href="en.html" hreflang="en" lang="en" aria-label="English version" data-cta-id="lang_switch" data-placement="header"><svg class="ptcz-flag" viewBox="0 0 26 26" aria-hidden="true"><clipPath id="fc"><circle cx="13" cy="13" r="13"/></clipPath><g clip-path="url(#fc)"><rect width="26" height="13" fill="#fff"/><rect y="13" width="26" height="13" fill="#D7141A"/><path d="M0 0l13 13L0 26Z" fill="#11457E"/></g></svg></a>
+      <button class="ptcz-hbtn" type="button" id="currencyDropdown" aria-haspopup="listbox" aria-expanded="false" aria-label="Měna: Kč">Kč</button>
+      <button class="ptcz-hbtn" type="button" aria-expanded="false"><svg class="i" aria-hidden="true"><use href="#i-menu"/></svg>Menu</button><!-- v produkci + aria-controls="<id dnešního menu ptcz-mm>" (náhled menu nemá) -->
+    </div>
+  </header>
+
+  <div class="ptcz-container ptcz-hero__grid">
+    <div class="ptcz-hero__copy">
+      <h1 class="ptcz-h1">Privátní výlety<br>po Česku a&nbsp;okolí</h1>
+      <p class="ptcz-hero__lead">Hotový výlet, nebo vlastní trasa. Cena za celý vůz – Tesla až pro 4, Staria až pro 8&nbsp;osob.<span class="ptcz-draft" title="Návrh textu kvůli Tesle – schválí Robert. Původně: Hotový výlet, nebo vlastní trasa. Cena za celý vůz až pro 8 osob.">návrh</span></p>
+      <div class="ptcz-hero__cta">
+        <a class="ptcz-btn ptcz-btn--primary ptcz-btn--lg" href="https://privatetoursczech.cz/vylety/" data-cta-id="browse_trips" data-cta-role="primary" data-placement="hero">Prohlédnout výlety <svg class="i i--arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="ptcz-btn ptcz-btn--on-dark ptcz-btn--lg" href="planovac.html#src=hero-build_own" data-cta-id="build_own" data-cta-role="secondary" data-placement="hero">Sestavit vlastní výlet</a>
+      </div>
+      <ul class="ptcz-hero__feat">
+        <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Jen pro vaši skupinu</li>
+        <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Anglicky mluvící řidič</li>
+        <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Vyzvednutí kdekoliv</li>
+        <li><svg class="i" aria-hidden="true"><use href="#i-check"/></svg>Platba až řidiči</li>
+      </ul>
+    </div>
+
+    <aside class="ptcz-how" id="how" data-section="how" aria-labelledby="how-title">
+      <!-- oponentura 27. 10.: H3, ne H2 – zadání kap. 0 dovoluje jen 7 dnešních H2 + „v kostce“; na produkci je „Jak to funguje?“ H3 -->
+      <h3 class="ptcz-how__title" id="how-title">Jak to funguje</h3>
+      <ol class="ptcz-steps">
+        <li><span class="ptcz-steps__n" aria-hidden="true">1</span><div><h4>Vyberte výlet, nebo trasu</h4><p>Cenu za celý vůz vidíte předem.</p></div></li>
+        <li><span class="ptcz-steps__n" aria-hidden="true">2</span><div><h4>Zvolte datum a vyzvednutí</h4><p>V Praze i mimo ni, čas si určíte sami.</p></div></li>
+        <li><span class="ptcz-steps__n" aria-hidden="true">3</span><div><h4>Rezervujte bez zálohy</h4><p>Platíte řidiči v den výletu, storno zdarma do 24 h.</p></div></li>
+      </ol>
+    </aside>
+  </div>
+</section>
+
+<div class="ptcz-intro">
+  <div class="ptcz-container">
+    <p>Soukromé jednodenní a dvoudenní výlety z Prahy autem s anglicky mluvícím řidičem, na přání i s průvodcem – po Česku i do Německa, Rakouska a dalších sousedních zemí. V Praze nabízíme pěší prohlídky s licencovaným průvodcem.</p>
+  </div>
+</div>
+
+<!-- ============ POPULÁRNÍ VÝLETY (z ukázky DS; bez přepínače vozu – RF 26. 10. O4: „od X Kč“ = cena Tesly, vůz volí host v plánovači) ============ -->
+<section class="ptcz-section" id="vylety" data-section="popular">
+  <div class="ptcz-container">
+    <div class="ptcz-sec-head">
+      <div>
+        <h2 class="ptcz-h2">Populární výlety</h2>
+        <p class="ptcz-lead">Cena je za celý vůz s řidičem – čím víc vás je, tím méně na osobu. Do 4 osob je levnější Tesla Model Y, pro 5–8 osob Hyundai Staria.<span class="ptcz-draft" title="Návrh textu kvůli Tesle – schválí Robert. Původně: Cena je za celý vůz s řidičem, až pro 8 osob – čím víc vás je, tím méně na osobu.">návrh</span></p>
+      </div>
+    </div>
+
+    <div class="ptcz-cards ptcz-scroller" id="cards" role="list" data-list-id="home_popular">
+      <article class="ptcz-card" role="listitem" data-tour-slug="cesky-krumlov-a-zamek-hluboka" data-position="1" data-card-type="car">
+        <div class="ptcz-card__media"><img src="img/ext/cesky-krumlov-hluboka-castle-private-tour-from-prague-privatetoursczech-3-aspect-ratio-748-550-3-748x550.jpg" alt="Český Krumlov se zámkem nad Vltavou za soumraku" width="748" height="550" decoding="async"><span class="ptcz-pill"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>9 h</span></div>
+        <div class="ptcz-card__body">
+          <span class="ptcz-eyebrow"><svg class="i" aria-hidden="true"><use href="#i-car"/></svg>Autem</span>
+          <h3 class="ptcz-card__title"><a class="ptcz-card__link" href="https://privatetoursczech.cz/vylet/cesky-krumlov-a-zamek-hluboka/" data-click-target="card">Český Krumlov a zámek Hluboká</a></h3>
+          <p class="ptcz-card__stops"><svg class="i" aria-hidden="true"><use href="#i-route"/></svg><span>Zámek Hluboká · Český Krumlov</span></p>
+          <ul class="ptcz-chips"><li class="ptcz-chip">Památky</li><li class="ptcz-chip">Příroda</li></ul>
+          <p class="ptcz-card__price"><span class="ptcz-card__from">od</span><span class="ptcz-card__amount"><span class="ptcz-money" data-czk="11407" data-dec="0">11 407 Kč</span></span><span class="ptcz-card__unit">Za vůz · až 4 osoby, větší skupiny Staria až 8<span class="ptcz-draft" title="Návrh textu kvůli Tesle – schválí Robert. Původně: Celé vozidlo · až 8 osob">návrh</span></span></p>
+          <div class="ptcz-card__actions"><a class="ptcz-btn ptcz-btn--secondary ptcz-btn--block" href="https://privatetoursczech.cz/vylet/cesky-krumlov-a-zamek-hluboka/" data-click-target="button">Prohlédnout výlet</a><a class="ptcz-link" href="planovac.html?from=cesky-krumlov-a-zamek-hluboka#src=popular-customize" data-click-target="customize">Upravit na míru <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+        </div>
+      </article>
+      <article class="ptcz-card" role="listitem" data-tour-slug="kutna-hora-sedlecka-kostnice" data-position="2" data-card-type="car">
+        <div class="ptcz-card__media"><img src="img/ext/kutna-hora-jesuit-college-st-barbara-cathedral-panorama-privatetoursczech-aspect-ratio-748-550-1-748x550.jpg" alt="Kutná Hora, chrám svaté Barbory a Jezuitská kolej" width="748" height="550" loading="lazy" decoding="async"><span class="ptcz-pill"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>4 h</span></div>
+        <div class="ptcz-card__body">
+          <span class="ptcz-eyebrow"><svg class="i" aria-hidden="true"><use href="#i-car"/></svg>Autem</span>
+          <h3 class="ptcz-card__title"><a class="ptcz-card__link" href="https://privatetoursczech.cz/vylet/kutna-hora-sedlecka-kostnice/" data-click-target="card">Kutná Hora</a></h3>
+          <p class="ptcz-card__stops"><svg class="i" aria-hidden="true"><use href="#i-route"/></svg><span>Sedlecká kostnice · Chrám sv. Barbory</span></p>
+          <ul class="ptcz-chips"><li class="ptcz-chip">Památky</li><li class="ptcz-chip">UNESCO</li></ul>
+          <p class="ptcz-card__price"><span class="ptcz-card__from">od</span><span class="ptcz-card__amount"><span class="ptcz-money" data-czk="5354" data-dec="0">5 354 Kč</span></span><span class="ptcz-card__unit">Za vůz · až 4 osoby, větší skupiny Staria až 8<span class="ptcz-draft" title="Návrh textu kvůli Tesle – schválí Robert. Původně: Celé vozidlo · až 8 osob">návrh</span></span></p>
+          <div class="ptcz-card__actions"><a class="ptcz-btn ptcz-btn--secondary ptcz-btn--block" href="https://privatetoursczech.cz/vylet/kutna-hora-sedlecka-kostnice/" data-click-target="button">Prohlédnout výlet</a><a class="ptcz-link" href="planovac.html?from=kutna-hora-sedlecka-kostnice#src=popular-customize" data-click-target="customize">Upravit na míru <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+        </div>
+      </article>
+      <article class="ptcz-card" role="listitem" data-tour-slug="ceske-svycarsko" data-position="3" data-card-type="car">
+        <div class="ptcz-card__media"><img src="img/ext/5.-Ceske-svycarsko-748x550.png" alt="Skalní města Českého Švýcarska" width="748" height="550" loading="lazy" decoding="async"><span class="ptcz-pill"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>8 h 30 min</span></div>
+        <div class="ptcz-card__body">
+          <span class="ptcz-eyebrow"><svg class="i" aria-hidden="true"><use href="#i-car"/></svg>Autem</span>
+          <h3 class="ptcz-card__title"><a class="ptcz-card__link" href="https://privatetoursczech.cz/vylet/ceske-svycarsko/" data-click-target="card">České Švýcarsko a Saské Švýcarsko</a></h3>
+          <p class="ptcz-card__stops"><svg class="i" aria-hidden="true"><use href="#i-route"/></svg><span>Pravčická brána · Bastei (Německo)</span></p>
+          <ul class="ptcz-chips"><li class="ptcz-chip">Příroda</li><li class="ptcz-chip">Dobrodružství</li></ul>
+          <p class="ptcz-card__price"><span class="ptcz-card__from">od</span><span class="ptcz-card__amount"><span class="ptcz-money" data-czk="9884" data-dec="0">9 884 Kč</span></span><span class="ptcz-card__unit">Za vůz · až 4 osoby, větší skupiny Staria až 8<span class="ptcz-draft" title="Návrh textu kvůli Tesle – schválí Robert. Původně: Celé vozidlo · až 8 osob">návrh</span></span></p>
+          <div class="ptcz-card__actions"><a class="ptcz-btn ptcz-btn--secondary ptcz-btn--block" href="https://privatetoursczech.cz/vylet/ceske-svycarsko/" data-click-target="button">Prohlédnout výlet</a><a class="ptcz-link" href="planovac.html?from=ceske-svycarsko#src=popular-customize" data-click-target="customize">Upravit na míru <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+        </div>
+      </article>
+      <article class="ptcz-card" role="listitem" data-tour-slug="adventni-kouzlo-drazdan-a-pirny" data-position="4" data-card-type="car">
+        <div class="ptcz-card__media"><img src="img/ext/dresden-frauenkirche-christmas-market-snow-panorama-privatetoursczech-aspect-ratio-748-550-1-748x550.jpg" alt="Drážďany, Frauenkirche a vánoční trh ve sněhu" width="748" height="550" loading="lazy" decoding="async"><span class="ptcz-pill"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>8 h 30 min</span></div>
+        <div class="ptcz-card__body">
+          <span class="ptcz-eyebrow"><svg class="i" aria-hidden="true"><use href="#i-car"/></svg>Autem</span>
+          <h3 class="ptcz-card__title"><a class="ptcz-card__link" href="https://privatetoursczech.cz/vylet/adventni-kouzlo-drazdan-a-pirny/" data-click-target="card">Adventní kouzlo Drážďan a Pirny</a></h3>
+          <p class="ptcz-card__stops"><svg class="i" aria-hidden="true"><use href="#i-route"/></svg><span>Pirna · Drážďany</span></p>
+          <ul class="ptcz-chips"><li class="ptcz-chip">Památky</li><li class="ptcz-chip">Advent</li></ul>
+          <p class="ptcz-card__price"><span class="ptcz-card__from">od</span><span class="ptcz-card__amount"><span class="ptcz-money" data-czk="9982" data-dec="0">9 982 Kč</span></span><span class="ptcz-card__unit">Za vůz · až 4 osoby, větší skupiny Staria až 8<span class="ptcz-draft" title="Návrh textu kvůli Tesle – schválí Robert. Původně: Celé vozidlo · až 8 osob">návrh</span></span></p>
+          <div class="ptcz-card__actions"><a class="ptcz-btn ptcz-btn--secondary ptcz-btn--block" href="https://privatetoursczech.cz/vylet/adventni-kouzlo-drazdan-a-pirny/" data-click-target="button">Prohlédnout výlet</a><a class="ptcz-link" href="planovac.html?from=adventni-kouzlo-drazdan-a-pirny#src=popular-customize" data-click-target="customize">Upravit na míru <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+        </div>
+      </article>
+      <article class="ptcz-card" role="listitem" data-tour-slug="karlovy-vary-a-hrad-loket" data-position="5" data-card-type="car">
+        <div class="ptcz-card__media"><img src="img/ext/4.-Karlovy-vary-hrad-loket-748x550.png" alt="Hrad Loket nad Ohří" width="748" height="550" loading="lazy" decoding="async"><span class="ptcz-pill"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>7 h 30 min</span></div>
+        <div class="ptcz-card__body">
+          <span class="ptcz-eyebrow"><svg class="i" aria-hidden="true"><use href="#i-car"/></svg>Autem</span>
+          <h3 class="ptcz-card__title"><a class="ptcz-card__link" href="https://privatetoursczech.cz/vylet/karlovy-vary-a-hrad-loket/" data-click-target="card">Karlovy Vary a hrad Loket</a></h3>
+          <p class="ptcz-card__stops"><svg class="i" aria-hidden="true"><use href="#i-route"/></svg><span>Karlovy Vary · Hrad Loket</span></p>
+          <ul class="ptcz-chips"><li class="ptcz-chip">Relax</li><li class="ptcz-chip">Památky</li></ul>
+          <p class="ptcz-card__price"><span class="ptcz-card__from">od</span><span class="ptcz-card__amount"><span class="ptcz-money" data-czk="9061" data-dec="0">9 061 Kč</span></span><span class="ptcz-card__unit">Za vůz · až 4 osoby, větší skupiny Staria až 8<span class="ptcz-draft" title="Návrh textu kvůli Tesle – schválí Robert. Původně: Celé vozidlo · až 8 osob">návrh</span></span></p>
+          <div class="ptcz-card__actions"><a class="ptcz-btn ptcz-btn--secondary ptcz-btn--block" href="https://privatetoursczech.cz/vylet/karlovy-vary-a-hrad-loket/" data-click-target="button">Prohlédnout výlet</a><a class="ptcz-link" href="planovac.html?from=karlovy-vary-a-hrad-loket#src=popular-customize" data-click-target="customize">Upravit na míru <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+        </div>
+      </article>
+      <article class="ptcz-card" role="listitem" data-tour-slug="puldenni-trasa-praha-to-nejlepsi" data-position="6" data-card-type="walking">
+        <div class="ptcz-card__media"><img src="img/ext/prague-charles-bridge-sunrise-view-old-town-tower-privatetoursczech-aspect-ratio-748-550-1-748x550.jpg" alt="Karlův most a Staroměstská mostecká věž za svítání" width="748" height="550" loading="lazy" decoding="async"><span class="ptcz-pill"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>5 h 30 min</span></div>
+        <div class="ptcz-card__body">
+          <span class="ptcz-eyebrow"><svg class="i" aria-hidden="true"><use href="#i-walk"/></svg>Pěší prohlídka</span>
+          <h3 class="ptcz-card__title"><a class="ptcz-card__link" href="https://privatetoursczech.cz/vylet/puldenni-trasa-praha-to-nejlepsi/" data-click-target="card">To nejlepší z Prahy – půldenní trasa</a></h3>
+          <p class="ptcz-card__stops"><svg class="i" aria-hidden="true"><use href="#i-route"/></svg><span>Pražský hrad · Nový Svět · Petřín</span></p>
+          <ul class="ptcz-chips"><li class="ptcz-chip">Pěšky s licencovaným průvodcem</li></ul>
+          <p class="ptcz-card__price"><span class="ptcz-card__amount"><span class="ptcz-money" data-czk="8500" data-dec="0">8 500 Kč</span></span><span class="ptcz-card__unit">Celá skupina · až 4 osoby · průvodce v ceně</span></p>
+          <div class="ptcz-card__actions"><a class="ptcz-btn ptcz-btn--secondary ptcz-btn--block" href="https://privatetoursczech.cz/vylet/puldenni-trasa-praha-to-nejlepsi/" data-click-target="button">Prohlédnout výlet</a></div>
+        </div>
+      </article>
+      <article class="ptcz-card" role="listitem" data-tour-slug="hrad-karlstejn-a-lom-velka-amerika" data-position="7" data-card-type="car">
+        <div class="ptcz-card__media"><img src="img/ext/karlstejn-castle-morning-fog-aerial-view-privatetoursczech-aspect-ratio-748-550-5-748x550.jpg" alt="Hrad Karlštejn na podzim" width="748" height="550" loading="lazy" decoding="async"><span class="ptcz-pill"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>5 h</span></div>
+        <div class="ptcz-card__body">
+          <span class="ptcz-eyebrow"><svg class="i" aria-hidden="true"><use href="#i-car"/></svg>Autem</span>
+          <h3 class="ptcz-card__title"><a class="ptcz-card__link" href="https://privatetoursczech.cz/vylet/hrad-karlstejn-a-lom-velka-amerika/" data-click-target="card">Hrad Karlštejn a lom Velká Amerika</a></h3>
+          <p class="ptcz-card__stops"><svg class="i" aria-hidden="true"><use href="#i-route"/></svg><span>Hrad Karlštejn · Lom Velká Amerika</span></p>
+          <ul class="ptcz-chips"><li class="ptcz-chip">Památky</li><li class="ptcz-chip">Příroda</li></ul>
+          <p class="ptcz-card__price"><span class="ptcz-card__from">od</span><span class="ptcz-card__amount"><span class="ptcz-money" data-czk="3282" data-dec="0">3 282 Kč</span></span><span class="ptcz-card__unit">Za vůz · až 4 osoby, větší skupiny Staria až 8<span class="ptcz-draft" title="Návrh textu kvůli Tesle – schválí Robert. Původně: Celé vozidlo · až 8 osob">návrh</span></span></p>
+          <div class="ptcz-card__actions"><a class="ptcz-btn ptcz-btn--secondary ptcz-btn--block" href="https://privatetoursczech.cz/vylet/hrad-karlstejn-a-lom-velka-amerika/" data-click-target="button">Prohlédnout výlet</a><a class="ptcz-link" href="planovac.html?from=hrad-karlstejn-a-lom-velka-amerika#src=popular-customize" data-click-target="customize">Upravit na míru <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+        </div>
+      </article>
+      <div class="ptcz-card ptcz-card--all" role="listitem"><a class="ptcz-card--all__link" href="https://privatetoursczech.cz/vylety/" data-cta-id="all_trips" data-cta-role="secondary"><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg><span class="ptcz-h3">Všech 26 výletů z Prahy</span></a></div>
+    </div>
+    <p class="ptcz-counter" id="counter" aria-live="polite">1 / 7</p>
+    <a class="ptcz-btn ptcz-btn--secondary ptcz-btn--block ptcz-cards__all-mobile" href="https://privatetoursczech.cz/vylety/" data-cta-id="all_trips" data-cta-role="secondary">Všech 26 výletů z Prahy</a>
+    <p class="demo-note">Poznámka k náhledu: „od X Kč za vůz“ na kartách je cena Tesly Model Y (RF 26. 10., O4: bez přepínače vozu, cena Starie je na stránce výletu a v plánovači). Zde ukázkově 0,8 × cena Starie zaokrouhlená na koruny; v produkci ji počítá server stejnou funkcí se sazbami Tesly (27 Kč/km, 5,6 Kč/min, 80 Kč/zastávka; nocleh a minimum se nenásobí) – kontrolně Kutná Hora 5 319 Kč, Český Krumlov 11 335 Kč, Karlštejn 3 266 Kč (×0,8 by dalo 5 354 / 11 407 / 3 282).</p>
+  </div>
+</section>
+
+<!-- ============ V KOSTCE: faktografická mřížka ============ -->
+<section class="ptcz-section" id="o-nas-kratce" data-section="about_short">
+  <div class="ptcz-container">
+    <h2 class="ptcz-h2">PrivateToursCzech v kostce</h2>
+    <ul class="ptcz-facts" role="list">
+      <li class="ptcz-fact"><span class="ptcz-ico-circle"><svg class="i" aria-hidden="true"><use href="#i-pin"/></svg></span><span><b>PrivateToursCzech</b> je pražská firma, která nabízí soukromé jednodenní a dvoudenní výlety autem z Prahy po Česku i do Německa, Rakouska, na Slovensko, do Maďarska a Polska.</span></li>
+      <li class="ptcz-fact"><span class="ptcz-ico-circle"><svg class="i" aria-hidden="true"><use href="#i-car"/></svg></span><span>Jedete jen vy: Hyundai Staria 4×4 až pro 8 osob, nebo levnější Tesla Model Y až pro 4 osoby, a místní anglicky mluvící řidič.<span class="ptcz-draft" title="Návrh textu kvůli Tesle – schválí Robert. Původně: Jedete jen vy: vůz Hyundai Staria 4×4 až pro 8 osob a místní anglicky mluvící řidič.">návrh</span></span></li>
+      <li class="ptcz-fact"><span class="ptcz-ico-circle"><svg class="i" aria-hidden="true"><use href="#i-tag"/></svg></span><span>Cena je za celý vůz, ne za osobu: jednodenní výlety od <span class="ptcz-money" data-czk="3282" data-dec="0">3&nbsp;282&nbsp;Kč</span> za vůz (Tesla Model Y, až 4 osoby), se Stariou pro 5–8 osob od <span class="ptcz-money" data-czk="4102" data-dec="0">4&nbsp;102&nbsp;Kč</span>, typický jednodenní výlet <span class="ptcz-money" data-czk-from="5000" data-czk-to="14000" data-dec="0">5&nbsp;000–14&nbsp;000&nbsp;Kč</span> (ceny z dat výletů k <time datetime="2026-10-25">25.&nbsp;10.&nbsp;2026</time>).<span class="ptcz-draft" title="Návrh textu kvůli Tesle – schválí Robert. Původně: Cena je za celý vůz, ne za osobu: jednodenní výlety od 4 102 Kč za vůz, typický jednodenní výlet 5 000–14 000 Kč (ceny z dat výletů k 25. 10. 2026).">návrh</span></span></li>
+      <li class="ptcz-fact"><span class="ptcz-ico-circle"><svg class="i" aria-hidden="true"><use href="#i-user"/></svg></span><span>Řidič vás doveze a cestou poradí. Za 200 Kč/h vás jako řidič-průvodce provede po místech, odborný výklad zajistí na přání licencovaný průvodce – na místě, nebo s vámi celý den autem.</span></li>
+      <li class="ptcz-fact"><span class="ptcz-ico-circle"><svg class="i" aria-hidden="true"><use href="#i-walk"/></svg></span><span>Pěší prohlídky Prahy mají licencovaného průvodce v ceně, za skupinu až 4 osob.</span></li>
+      <li class="ptcz-fact"><span class="ptcz-ico-circle"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span><span>Rezervace bez zálohy, platíte řidiči v den výletu, storno zdarma do 24 hodin.</span></li>
+    </ul>
+    <div class="ptcz-facts__foot">
+      <details class="ptcz-acc" data-details-id="included"><summary><span>Co je v ceně a co ne</span><svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg></summary><div class="ptcz-acc__body"><b>V ceně:</b> vůz s řidičem, palivo, dálniční poplatky, parkovné, vyzvednutí v místě, které zadáte (cenu podle něj spočítá plánovač), dětské sedačky a voda. <b>Na přání:</b> řidič-průvodce, který vás provede po místech (+200 Kč/h), nebo licencovaný průvodce (na místě, nebo s vámi autem). <b>Platíte sami:</b> vstupné a jídlo; vstupenky ani restaurace předem nerezervujeme, rádi poradíme.</div></details><script>ptczAutoOpen(document.currentScript.previousElementSibling)</script>
+      <a class="ptcz-link" href="https://privatetoursczech.cz/o-nas/" data-cta-id="about" data-cta-role="tertiary">Více o nás <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PO SVÉM + DLAŽDICE CÍLŮ Z PLÁNOVAČE (z ukázky DS) ============ -->
+<section class="ptcz-section ptcz-section--band" id="produkty" data-section="own_way">
+  <div class="ptcz-container ptcz-own">
+    <div class="ptcz-own__col">
+      <h2 class="ptcz-h2">Pro ty, kteří chtějí cestovat po svém</h2>
+      <ul class="ptcz-qa">
+        <li><a class="ptcz-qa__link" href="planovac.html#src=own_way-own_way_card" data-cta-id="own_way_card" data-cta-role="tertiary" data-cta-position="1"><h3>Chcete si cestu poskládat podle sebe?</h3><p>Vyberte místa a v plánovači hned uvidíte trasu, čas i cenu za celý vůz.</p><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li><a class="ptcz-qa__link" href="planovac.html#src=own_way-own_way_card" data-cta-id="own_way_card" data-cta-role="tertiary" data-cta-position="2"><h3>Máte vlastní plán?</h3><p>Zadejte ho do plánovače, nebo nám ho napište. Řízení, navigaci a domluvu v angličtině zařídíme.</p><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li><a class="ptcz-qa__link" href="https://privatetoursczech.cz/vylety/" data-cta-id="own_way_card" data-cta-role="tertiary" data-cta-position="3"><h3>Chcete víc než turistická klišé?</h3><p>Hrady, příroda, menší města a místní restaurace podle vašich zájmů.</p><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li><a class="ptcz-qa__link" href="https://privatetoursczech.cz/vylety/" data-cta-id="own_way_card" data-cta-role="tertiary" data-cta-position="4"><h3>Přijíždíte ze zahraničí?</h3><p>Vyzvedneme vás, kde potřebujete, a cenu za celý vůz znáte předem.</p><svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      </ul>
+      <p class="ptcz-own__cta"><a class="ptcz-btn ptcz-btn--primary" href="planovac.html#src=own_way-build_own" data-cta-id="build_own" data-cta-role="primary">Sestavit vlastní výlet <svg class="i i--arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+    </div>
+
+    <div class="ptcz-own__start" data-render-if="planner_v2"><p>Začněte místem, které chcete vidět – trasu a cenu za vůz vám spočítá plánovač:</p></div>
+    <ul class="ptcz-tiles" role="list" data-render-if="planner_v2">
+      <li><a class="ptcz-tile" href="planovac.html?stops=kutna#src=own_way-stop_kutna" data-id="kutna" data-cta-id="stop_kutna" data-cta-role="tertiary" data-cta-position="1" aria-label="Kutná Hora – přidat do plánovače">
+        <img src="img/ext/kutna-hora-barborska-street-medieval-cobblestone-748x550.jpg" alt="" width="748" height="550" loading="lazy" decoding="async">
+        <span class="ptcz-tile__drive"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>1 h 18 min</span>
+        <span class="ptcz-tile__add" aria-hidden="true"><span><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></span></span>
+        <span class="ptcz-tile__txt"><span class="ptcz-tile__name">Kutná Hora</span><span class="ptcz-tile__sub">Stříbrné město UNESCO · kostnice</span></span>
+      </a></li>
+      <li><a class="ptcz-tile" href="planovac.html?stops=krumlov#src=own_way-stop_krumlov" data-id="krumlov" data-cta-id="stop_krumlov" data-cta-role="tertiary" data-cta-position="2" aria-label="Český Krumlov – přidat do plánovače">
+        <img src="img/ext/cesky-krumlov-sunset-vltava-view-privatetoursczech-748x550.jpg" alt="" width="748" height="550" loading="lazy" decoding="async">
+        <span class="ptcz-tile__drive"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>2 h 22 min</span>
+        <span class="ptcz-tile__add" aria-hidden="true"><span><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></span></span>
+        <span class="ptcz-tile__txt"><span class="ptcz-tile__name">Český Krumlov</span><span class="ptcz-tile__sub">Staré město UNESCO v zákrutu Vltavy</span></span>
+      </a></li>
+      <li><a class="ptcz-tile" href="planovac.html?stops=karlstejn#src=own_way-stop_karlstejn" data-id="karlstejn" data-cta-id="stop_karlstejn" data-cta-role="tertiary" data-cta-position="3" aria-label="Hrad Karlštejn – přidat do plánovače">
+        <img src="img/ext/karlstejn-castle-autumn-morning-mist-768.jpg" alt="" width="748" height="550" loading="lazy" decoding="async">
+        <span class="ptcz-tile__drive"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>47 min</span>
+        <span class="ptcz-tile__add" aria-hidden="true"><span><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></span></span>
+        <span class="ptcz-tile__txt"><span class="ptcz-tile__name">Hrad Karlštejn</span><span class="ptcz-tile__sub">Hrad Karla IV. pro korunovační klenoty</span></span>
+      </a></li>
+      <li><a class="ptcz-tile" href="planovac.html?stops=dresden#src=own_way-stop_dresden" data-id="dresden" data-cta-id="stop_dresden" data-cta-role="tertiary" data-cta-position="4" aria-label="Drážďany – přidat do plánovače">
+        <img src="img/ext/dresden-frauenkirche-spring-pexels-748x550.jpg" alt="" width="748" height="550" loading="lazy" decoding="async">
+        <span class="ptcz-tile__drive"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>1 h 52 min</span>
+        <span class="ptcz-tile__add" aria-hidden="true"><span><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></span></span>
+        <span class="ptcz-tile__txt"><span class="ptcz-tile__name">Drážďany</span><span class="ptcz-tile__sub">Barokní staré město na Labi</span></span>
+      </a></li>
+      <li><a class="ptcz-tile" href="planovac.html?stops=kvary#src=own_way-stop_kvary" data-id="kvary" data-cta-id="stop_kvary" data-cta-role="tertiary" data-cta-position="5" aria-label="Karlovy Vary – přidat do plánovače">
+        <img src="img/ext/ptcz-1776102146-1-748x550.jpg" alt="" width="748" height="550" loading="lazy" decoding="async">
+        <span class="ptcz-tile__drive"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>1 h 48 min</span>
+        <span class="ptcz-tile__add" aria-hidden="true"><span><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></span></span>
+        <span class="ptcz-tile__txt"><span class="ptcz-tile__name">Karlovy Vary</span><span class="ptcz-tile__sub">Lázeňské kolonády a horké prameny</span></span>
+      </a></li>
+      <li><a class="ptcz-tile" href="planovac.html?stops=bswitz#src=own_way-stop_bswitz" data-id="bswitz" data-cta-id="stop_bswitz" data-cta-role="tertiary" data-cta-position="6" aria-label="České Švýcarsko – přidat do plánovače">
+        <img src="img/ext/pravcicka-brana-sandstone-arch-pexels-748x550.jpg" alt="" width="748" height="550" loading="lazy" decoding="async">
+        <span class="ptcz-tile__drive"><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg>2 h</span>
+        <span class="ptcz-tile__add" aria-hidden="true"><span><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></span></span>
+        <span class="ptcz-tile__txt"><span class="ptcz-tile__name">České Švýcarsko</span><span class="ptcz-tile__sub">Největší pískovcová brána Evropy</span></span>
+      </a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ CHCETE ŘÍDIT SAMI? PŮJČTE SI AUTO (návrh, RF 27. 10.; na webu zapnout až s EN webem Popojedu – data-render-if="popojedu_en") ============ -->
+<section class="ptcz-section ptcz-rent" id="pujceni" data-section="self_drive" data-render-if="popojedu_en">
+  <div class="ptcz-container">
+    <div class="ptcz-rent__card">
+      <div class="ptcz-rent__media"><img src="img/ext/hyundai-staria-4x4-private-driver-prague-768.jpg" alt="Hyundai Staria 4×4 zepředu" width="768" height="576" loading="lazy" decoding="async"></div>
+      <div class="ptcz-rent__body">
+        <span class="ptcz-eyebrow"><svg class="i" aria-hidden="true"><use href="#i-key"/></svg>Bez řidiče</span>
+        <h2 class="ptcz-h2 ptcz-h2--sm">Chcete řídit sami? Půjčte si auto<span class="ptcz-draft ptcz-draft--long" title="návrh · zapne se s EN webem Popojedu">návrh · zapne se s EN webem Popojedu</span></h2>
+        <p class="ptcz-rent__p">Vůz bez řidiče na dny i týdny si půjčíte u naší sesterské půjčovny Popojedu v Praze‑Čakovicích – Hyundai Staria a další vozy. Podrobnosti najdete na webu Popojedu.</p>
+        <p class="ptcz-rent__cta"><a class="ptcz-btn ptcz-btn--secondary" href="https://www.popojedu.cz/" target="_blank" rel="noopener" data-cta-id="rent_car" data-cta-role="secondary" data-placement="self_drive">Půjčit auto u Popojedu <svg class="i i--arrow" aria-hidden="true"><use href="#i-arrow"/></svg><span class="ptcz-sr-only"> (otevře se v nové záložce)</span></a></p>
+        <p class="ptcz-rent__note">Sesterská firma Popojedu s.r.o. · vlastní podmínky pronájmu</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PLNOFORMÁTOVÝ OBRAZOVÝ PŘEDĚL ============ -->
+<figure class="ptcz-break"><img src="img/ext/karlstejn-castle-village-view-central-bohemia-privatetoursczech-1800.jpg" alt="Hrad Karlštejn nad vesnicí ve středních Čechách" width="1800" height="1200" loading="lazy" decoding="async"></figure>
+
+<!-- ============ PROČ SI NÁS HOSTÉ VYBÍRAJÍ ============ -->
+<section class="ptcz-section ptcz-why" id="why-us" data-section="why_us">
+  <div class="ptcz-container">
+    <h2 class="ptcz-h2">Proč si nás hosté vybírají</h2>
+    <p class="ptcz-lead" style="margin-top:10px">Řidič se o vás celou cestu postará: poradí, pomůže a cestou zavolá, kam bude potřeba – restaurace, zajímavosti, výhledy.</p>
+    <div class="ptcz-why__grid">
+      <div class="ptcz-why__media">
+        <figure><img src="img/ext/guests-bastei-saxon-switzerland-private-tours-czech-768.jpg" alt="" width="768" height="576" loading="lazy" decoding="async"><figcaption>Naši hosté na vyhlídce Bastei v Saském Švýcarsku</figcaption></figure>
+        <figure><img src="img/ext/hyundai-staria-leather-rear-seats-768.jpg" alt="" width="768" height="576" loading="lazy" decoding="async"></figure>
+      </div>
+      <div>
+        <h3 class="ptcz-why__h3">Výlety z Prahy s řidičem, nebo s řidičem-průvodcem</h3>
+        <p class="ptcz-why__p">Na každý výlet autem z Prahy s vámi jede místní anglicky mluvící řidič, který zná místa, kam jedete. Cestou poradí, co stihnete vidět, kde jsou nejlepší vyhlídky a kde se dobře najíst.</p>
+        <ul class="ptcz-levels" role="list">
+        <li><span class="ptcz-eyebrow">V ceně</span><h3>Místní řidič</h3><p>Řídí, cestou poradí, pomůže se vstupenkami a obědem.</p></li>
+        <li><span class="ptcz-eyebrow">+200 Kč/h</span><h3>Řidič-průvodce</h3><p>Je s vámi pěšky na zastávkách a provede vás po místech jako místní.</p></li>
+        <li><span class="ptcz-eyebrow">Na přání</span><h3>Licencovaný průvodce</h3><p>Odborný výklad: čeká na vás na místě, nebo jede celý den s vámi autem.</p></li>
+        </ul>
+        <details class="ptcz-acc ptcz-acc--card" data-details-id="driver_more"><summary><span>Více o řidiči a průvodcích</span><svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg></summary><div class="ptcz-acc__body"><p><b>Co dělá řidič?</b> Řídí, cestou poradí, pomůže se vstupenkami a obědem a je po ruce, kdykoli ho potřebujete. V ceně.</p><p><b>Co přidá řidič-průvodce?</b> Je s vámi pěšky po celou dobu zastávek a provede vás po místech – jako místní, ne jako licencovaný průvodce. 200 Kč za každou hodinu výletu, připočte se k ceně za celý vůz.</p><p><b>Kdy se hodí licencovaný průvodce?</b> Na odborný výklad ve městech a u památek. Licencovaného průvodce zajistíme na přání: čeká na vás na místě, kde je to možné, nebo jede celý den s vámi autem (pak jede až 7 hostů ve Starii, 3 v Tesle<span class="ptcz-draft" title="Návrh textu kvůli Tesle – schválí Robert. Původně: (pak jede až 7 hostů)">návrh</span>). Pošleme cenu na váš termín a obvykle potvrdíme do 24 hodin; když průvodce nenajdeme, výlet jede beze změny a za průvodce nic neplatíte. Průvodci platíte přímo. Interiéry zámků provázejí zámečtí průvodci.</p><p style="color:var(--ptcz-muted)">Nevíte? Rezervujte s řidičem – řidiče-průvodce přidáte při rezervaci, licencovaného průvodce na přání.</p><p><b>Jak řidiče vybíráme:</b> řidiči jsou pečlivě vybraní, dodržují naše zásady bezpečné přepravy a jsou pravidelně kontrolovaní.</p></div></details><script>ptczAutoOpen(document.currentScript.previousElementSibling)</script>
+      </div>
+    </div>
+    <div class="ptcz-trio ptcz-scroller">
+      <div class="ptcz-trio__card"><img src="img/ext/hyundai-staria-4x4-private-driver-prague-768.jpg" alt="Vůz Hyundai Staria 4×4 zepředu" width="768" height="576" loading="lazy" decoding="async"><div class="ptcz-trio__body"><p class="ptcz-trio__title">Dva vozy: Hyundai Staria 4×4 až pro 8 osob, nebo Tesla Model Y až pro 4<span class="ptcz-draft" title="Návrh textu kvůli Tesle – schválí Robert. Původně: Hyundai Staria 4×4 až pro 8 osob">návrh</span></p><p>Staria: místo i na zavazadla, klimatizace, kožená sedadla, USB a voda zdarma. Tesla Model Y: levnější, nejvýš 4 zavazadla a 2 dětské sedačky. Vůz zvolíte v plánovači.<span class="ptcz-draft" title="Návrh textu kvůli Tesle – schválí Robert. Původně: Místo i na zavazadla, klimatizace, kožená sedadla, USB a voda zdarma.">návrh</span></p></div></div>
+      <div class="ptcz-trio__card"><div class="ptcz-trio__body"><span class="ptcz-ico-circle"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span><p class="ptcz-trio__title">Bezpečnost a pohodlí</p><p>Dětské sedačky Britax Römer zdarma, moderní bezpečnostní systémy, řidiči proškolení podle našich zásad.</p><a class="ptcz-link" href="https://privatetoursczech.cz/zasady-bezpecne-prepravy-a-skoleni-ridicu/" data-cta-id="safety" data-cta-role="tertiary">Bezpečná přeprava <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a></div></div>
+      <div class="ptcz-trio__card"><div class="ptcz-trio__body"><span class="ptcz-ico-circle"><svg class="i" aria-hidden="true"><use href="#i-wallet"/></svg></span><p class="ptcz-trio__title">Jedna cena za celý vůz</p><p>Cenu znáte předem a nemění se podle počtu osob. Platíte až řidiči, hotově nebo kartou.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DOPLŇKOVÉ SLUŽBY ============ -->
+<section class="ptcz-section" id="sluzby" data-section="services" style="padding-top:0">
+  <div class="ptcz-container">
+    <h2 class="ptcz-h2 ptcz-h2--sm">Doplňkové služby</h2>
+    <ul class="ptcz-serv" role="list">
+      <li><span class="ptcz-ico-circle"><svg class="i" aria-hidden="true"><use href="#i-user"/></svg></span><div><h3>Řidič-průvodce</h3><p>+200 Kč za hodinu výletu, přidáte při rezervaci.</p></div></li>
+      <li><span class="ptcz-ico-circle"><svg class="i" aria-hidden="true"><use href="#i-award"/></svg></span><div><h3>Licencovaný průvodce</h3><p>Na místě, nebo celý den s vámi autem (pak až 7 hostů ve Starii, 3 v Tesle<span class="ptcz-draft" title="Návrh textu kvůli Tesle – schválí Robert. Původně: (pak až 7 hostů)">návrh</span>). Cenu pošleme na váš termín.</p></div></li>
+      <li><span class="ptcz-ico-circle"><svg class="i" aria-hidden="true"><use href="#i-seat"/></svg></span><div><h3>Dětské sedačky zdarma</h3><p>Britax Römer pro všechny věkové skupiny, v Tesle Model Y nejvýš 2<span class="ptcz-draft" title="Návrh textu kvůli Tesle – schválí Robert. Původně: Britax Römer pro všechny věkové skupiny.">návrh</span>.</p></div></li>
+    </ul>
+    <details class="ptcz-acc" data-details-id="seats"><summary><span>Jaké sedačky máme</span><svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg></summary><div class="ptcz-acc__body">Britax Römer Swivel (otočná, od narození), Britax Römer Kidfix (pro starší děti) a podsedák iBooster. Věk dětí uveďte při rezervaci.</div></details><script>ptczAutoOpen(document.currentScript.previousElementSibling)</script>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="ptcz-section ptcz-section--band" id="faq" data-section="faq">
+  <div class="ptcz-container">
+    <h2 class="ptcz-h2 ptcz-h2--sm">Často kladené dotazy</h2>
+    <div class="ptcz-faq">
+      <details class="ptcz-acc" data-faq-id="plan" data-faq-position="1"><summary><span>Jak si naplánuji a zarezervuji výlet?</span><svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg></summary><div class="ptcz-acc__body">Vyberte hotový výlet, nebo si v plánovači zvolte místo vyzvednutí, datum a místa, která chcete vidět. Plánovač ukáže trasu, čas a cenu za celý vůz. Rezervujete online bez zálohy.</div></details>
+      <details class="ptcz-acc" data-faq-id="price" data-faq-position="2"><summary><span>Kolik stojí soukromý výlet z Prahy?</span><svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg></summary><div class="ptcz-acc__body">Cena je za celý vůz, ne za osobu – Tesla Model Y až pro 4 osoby, Hyundai Staria až pro 8.<span class="ptcz-draft" title="Návrh textu kvůli Tesle – schválí Robert. Původně: Cena je za celý vůz až pro 8 osob, ne za osobu.">návrh</span> Jednodenní výlety stojí od <span class="ptcz-money" data-czk="3282" data-dec="0">3&nbsp;282&nbsp;Kč</span> za vůz (Karlštejn a Velká Amerika, Tesla Model Y, až 4 osoby), se Stariou pro 5–8 osob od <span class="ptcz-money" data-czk="4102" data-dec="0">4&nbsp;102&nbsp;Kč</span><span class="ptcz-draft" title="Návrh textu kvůli Tesle – schválí Robert. Původně: od 4 102 Kč za vůz (Karlštejn a Velká Amerika)">návrh</span>, typický jednodenní výlet <span class="ptcz-money" data-czk-from="5000" data-czk-to="14000" data-dec="0">5&nbsp;000–14&nbsp;000&nbsp;Kč</span>. Dvoudenní výlety a pěší prohlídky Prahy mají vlastní ceny. Ceny jsou k <time datetime="2026-10-25">25.&nbsp;10.&nbsp;2026</time>, závazná je cena v plánovači. Podrobně v článku <a href="https://privatetoursczech.cz/kolik-stoji-soukromy-vylet-z-prahy/" data-cta-id="article" data-cta-role="tertiary">Kolik stojí soukromý výlet z Prahy</a>.</div></details>
+      <details class="ptcz-acc" data-faq-id="included" data-faq-position="3"><summary><span>Co je v ceně a co ne?</span><svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg></summary><div class="ptcz-acc__body">V ceně je vůz s řidičem, palivo, dálniční poplatky, parkovné, vyzvednutí v místě, které zadáte (v Praze i mimo ni), dětské sedačky a voda. Na přání přidáte řidiče-průvodce, který vás provede po místech (+200 Kč/h), nebo licencovaného průvodce, který na vás počká na místě, nebo jede s vámi autem. Vstupné a jídlo platíte sami; vstupenky ani restaurace předem nerezervujeme.</div></details>
+      <details class="ptcz-acc" data-faq-id="pay_cancel" data-faq-position="4"><summary><span>Jak se platí a jak zruším rezervaci?</span><svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg></summary><div class="ptcz-acc__body">Platíte řidiči v den výletu, hotově nebo kartou, v Kč, eurech nebo dolarech podle dohody. Zálohu nechceme. Storno je zdarma nejpozději 24 hodin před vyzvednutím, odkazem v potvrzovacím e-mailu. Změnu rezervace uděláme na e-mail nebo v chatu.</div></details>
+      <details class="ptcz-acc" data-faq-id="driver_guide" data-faq-position="5"><summary><span>Je řidič zároveň průvodce?</span><svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg></summary><div class="ptcz-acc__body">Řidič vás doveze a cestou poradí. Za 200 Kč za hodinu výletu vás jako řidič-průvodce provede po místech. Odborný výklad zajistí na přání licencovaný průvodce: počká na vás na místě, kde je to možné, nebo jede celý den s vámi autem (pak jede až 7 hostů ve Starii, 3 v Tesle<span class="ptcz-draft" title="Návrh textu kvůli Tesle – schválí Robert. Původně: (pak jede až 7 hostů)">návrh</span>). Více v článku <a href="https://privatetoursczech.cz/ridic-nebo-pruvodce-praha/" data-cta-id="article" data-cta-role="tertiary">Řidič, nebo průvodce v Praze</a>.</div></details>
+      <details class="ptcz-acc" data-faq-id="car" data-faq-position="6"><summary><span>Jaký vůz a kolik osob se vejde?</span><svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg></summary><div class="ptcz-acc__body">Vybíráte ze dvou vozů. Hyundai Staria 4×4 až pro 8 osob se zavazadly: kožená sedadla, klimatizace, USB, tmavá skla a voda zdarma. Tesla Model Y až pro 4 osoby (s licencovaným průvodcem v autě 3) je levnější: vejdou se nejvýš 4 zavazadla a 2 dětské sedačky. Vůz zvolíte v plánovači, hotové výlety mají cenu pro oba vozy.<span class="ptcz-draft" title="Návrh textu kvůli Tesle – schválí Robert. Původně: Hyundai Staria 4×4 až pro 8 osob se zavazadly: kožená sedadla, klimatizace, USB, tmavá skla a voda zdarma.">návrh</span></div></details>
+      <details class="ptcz-acc" data-faq-id="children" data-faq-position="7"><summary><span>Můžeme jet s dětmi?</span><svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg></summary><div class="ptcz-acc__body">Ano. Dětské sedačky Britax Römer pro všechny věkové skupiny máme zdarma, věk dětí uveďte při rezervaci.</div></details>
+      <details class="ptcz-acc" data-faq-id="customize" data-faq-position="8"><summary><span>Jde výlet upravit, nebo jet vlastní trasu?</span><svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg></summary><div class="ptcz-acc__body">Každý hotový výlet upravíte v plánovači: pořadí a délku zastávek nebo další místa. Cena hotového výletu platí, dokud trasu nezměníte; po úpravě plánovač spočítá novou cenu za celý vůz. Trasu lze po domluvě s řidičem měnit i během dne; delší trasa nebo čekání navíc může být za příplatek, který s vámi řidič odsouhlasí předem.</div></details>
+      <details class="ptcz-acc" data-faq-id="special" data-faq-position="9"><summary><span>Máte speciální požadavky?</span><svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg></summary><div class="ptcz-acc__body">Asistenci pro osoby s omezenou pohyblivostí, sportovní vybavení nebo úpravu trasy uveďte při rezervaci do poznámky, nebo nám napište.</div></details>
+      <details class="ptcz-acc" data-faq-id="vs_group" data-faq-position="10"><summary><span>Čím se lišíte od skupinových zájezdů?</span><svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg></summary><div class="ptcz-acc__body">Jedete jen vy: cena je za celý vůz, ne za osobu, a čas vyzvednutí, tempo i délku zastávek určujete sami.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NAPLÁNUJTE SI: tmavý blok ============ -->
+<section class="ptcz-section ptcz-plan" id="naplanujte" data-section="plan_cta">
+  <div class="ptcz-container ptcz-plan__in">
+    <div>
+      <div class="ptcz-plan__route" aria-hidden="true"><svg class="i" viewBox="0 0 48 20"><use href="#i-route-long"/></svg></div>
+      <h2 class="ptcz-h2">Naplánujte si cestu podle sebe</h2>
+      <p class="ptcz-plan__lead">Vy rozhodujete, kde zastavit a jak dlouho. Cenu za celý vůz uvidíte hned.</p>
+    </div>
+    <div class="ptcz-plan__cta">
+      <a class="ptcz-btn ptcz-btn--primary" href="planovac.html#src=plan_cta-build_own" data-cta-id="build_own" data-cta-role="primary">Sestavit vlastní výlet <svg class="i i--arrow" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a class="ptcz-btn ptcz-btn--on-dark" href="https://privatetoursczech.cz/poptavka-na-miru/" data-cta-id="travel_idea" data-cta-role="secondary">Popište nám svůj výlet</a>
+      <a class="ptcz-btn ptcz-btn--on-dark" href="https://wa.me/420737194194?text=Dobr%C3%BD%20den%2C%20m%C3%A1m%20dotaz%20k%20va%C5%A1im%20v%C3%BDlet%C5%AFm." target="_blank" rel="noopener" data-cta-id="whatsapp"><svg class="i i--fill i--wa" aria-hidden="true"><use href="#i-wa"/></svg>Napsat na WhatsApp<span class="ptcz-sr-only"> (otevře se v nové záložce)</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIPY A INSPIRACE ============ -->
+<section class="ptcz-section ptcz-tips" id="tipy" data-section="articles">
+  <div class="ptcz-container">
+    <div class="ptcz-sec-head--row">
+      <h2 class="ptcz-h2 ptcz-h2--sm">Tipy a inspirace</h2>
+      <a class="ptcz-link" href="https://privatetoursczech.cz/blog/" data-cta-id="articles_all" data-cta-role="tertiary">Všechny tipy <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+    <p class="ptcz-tips__pillar"><a class="ptcz-link" href="https://privatetoursczech.cz/vylety-z-prahy/" data-cta-id="pillar" data-cta-role="tertiary">Výlety z Prahy: TOP 12 tipů na rok 2026 <svg class="i" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+    <p class="ptcz-eyebrow">Začněte tady</p>
+    <div class="ptcz-arts">
+      <a class="ptcz-art" href="https://privatetoursczech.cz/kolik-stoji-soukromy-vylet-z-prahy/" data-cta-id="article_fixed" data-cta-role="tertiary" data-cta-position="1"><img src="img/ext/private-day-trip-cost-autumn-road-czech-featured-748x550.jpg" alt="" width="748" height="550" loading="lazy" decoding="async"><span><span class="ptcz-art__t">Kolik stojí soukromý výlet z Prahy?</span><span class="ptcz-art__d">Jedna cena za celý vůz až pro 8 osob: co je v ceně a kolik stojí hotové výlety.</span></span></a>
+      <a class="ptcz-art" href="https://privatetoursczech.cz/ridic-nebo-pruvodce-praha/" data-cta-id="article_fixed" data-cta-role="tertiary" data-cta-position="2"><img src="img/ext/bouzov-castle-knights-hall-interior-featured-748x550.jpg" alt="" width="748" height="550" loading="lazy" decoding="async"><span><span class="ptcz-art__t">Řidič, nebo průvodce v Praze: jaký je rozdíl?</span><span class="ptcz-art__d">Co dělá anglicky mluvící řidič na výletě a co přidá licencovaný průvodce.</span></span></a>
+      <a class="ptcz-art" href="https://privatetoursczech.cz/nejlepsi-jednodenni-vylety-z-prahy-srovnani/" data-cta-id="article_fixed" data-cta-role="tertiary" data-cta-position="3"><img src="img/ext/top-5-day-trips-from-prague-compared-2026-748x550.jpg" alt="" width="748" height="550" loading="lazy" decoding="async"><span><span class="ptcz-art__t">5 nejlepších jednodenních výletů z Prahy — srovnání (2026)</span><span class="ptcz-art__d">Krumlov, Kutná Hora, Drážďany a další vedle sebe: čas, cena a pro koho.</span></span></a>
+    </div>
+    <details class="ptcz-acc ptcz-acc--plain" data-details-id="articles_more"><summary><span>Nově na blogu</span><svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg></summary><div class="ptcz-acc__body"><div class="ptcz-arts">
+      <a class="ptcz-art" href="https://privatetoursczech.cz/praha-v-zime-prosinec-leden-unor/" data-cta-id="article_new" data-cta-role="tertiary" data-cta-position="1"><img src="img/ext/prague-in-winter-lesser-town-st-nicholas-snow-night-featured-748x550.jpg" alt="" width="748" height="550" loading="lazy" decoding="async"><span><span class="ptcz-art__meta"><time datetime="2026-10-22">22. 10. 2026</time></span><span class="ptcz-art__t">Praha v zimě: prosinec, leden a únor</span><span class="ptcz-art__d">Zimní otevírací doby, masopust 2027 a výlety, které fungují i v mrazu.</span></span></a>
+      <a class="ptcz-art" href="https://privatetoursczech.cz/vanocni-trhy-praha-2026/" data-cta-id="article_new" data-cta-role="tertiary" data-cta-position="2"><img src="img/ext/prague-christmas-markets-old-town-square-snow-featured-748x550.jpg" alt="" width="748" height="550" loading="lazy" decoding="async"><span><span class="ptcz-art__meta"><time datetime="2026-10-14">14. 10. 2026</time></span><span class="ptcz-art__t">Vánoční trhy v Praze 2026: termíny, jídlo a tipy</span><span class="ptcz-art__d">Kde a kdy trhy jsou a co ochutnat.</span></span></a>
+      <a class="ptcz-art" href="https://privatetoursczech.cz/pamatnik-lidice-navsteva-z-prahy-2026/" data-cta-id="article_new" data-cta-role="tertiary" data-cta-position="3"><img src="img/ext/lidice-memorial-children-bronze-group-autumn-featured-unsplash-748x550.jpg" alt="" width="748" height="550" loading="lazy" decoding="async"><span><span class="ptcz-art__meta"><time datetime="2026-10-02">2. 10. 2026</time></span><span class="ptcz-art__t">Památník Lidice: návštěva místa tragédie z roku 1942 z Prahy</span><span class="ptcz-art__d">Jak se do Lidic dostat a co tam vidět.</span></span></a>
+    </div></div></details><script>ptczAutoOpen(document.currentScript.previousElementSibling)</script>
+  </div>
+</section>
+</main>
+
+<!-- ============ PATIČKA ============ -->
+<footer class="ptcz-footer">
+  <div class="ptcz-container">
+    <div class="ptcz-footer__grid">
+      <div class="ptcz-footer__brand">
+        <img src="img/logo.svg" alt="PrivateToursCzech" width="159" height="24">
+        <p>MAJESTIC s.r.o., IČO 02016699<br><a href="tel:+420737194194" data-cta-id="phone" data-cta-role="tertiary" data-placement="footer">+420 737 194 194</a> · <a href="https://wa.me/420737194194?text=Dobr%C3%BD%20den%2C%20m%C3%A1m%20dotaz%20k%20va%C5%A1im%20v%C3%BDlet%C5%AFm." target="_blank" rel="noopener" data-cta-id="whatsapp" data-placement="footer">WhatsApp<span class="ptcz-sr-only"> (otevře se v nové záložce)</span></a></p>
+      </div>
+      <nav class="ptcz-footer__col"><a href="https://privatetoursczech.cz/o-nas/" data-cta-id="about" data-cta-role="tertiary" data-placement="footer">O nás</a><a href="https://privatetoursczech.cz/vylety/" data-cta-id="all_trips" data-cta-role="tertiary" data-placement="footer">Všechny výlety</a><a href="https://privatetoursczech.cz/vylety-z-prahy/" data-cta-id="pillar" data-cta-role="tertiary" data-placement="footer">Výlety z Prahy: TOP 12</a><a href="planovac.html#src=footer-build_own" data-cta-id="build_own" data-cta-role="tertiary" data-placement="footer">Plánovač výletů</a></nav>
+      <nav class="ptcz-footer__col"><a href="https://privatetoursczech.cz/vylety/#pesi" data-cta-id="walking_tours" data-cta-role="tertiary" data-placement="footer">Pěší prohlídky Prahy</a><a href="https://privatetoursczech.cz/vylety/#dvoudenni" data-cta-id="two_day_trips" data-cta-role="tertiary" data-placement="footer">Dvoudenní výlety</a><a href="https://privatetoursczech.cz/blog/" data-cta-id="articles_all" data-cta-role="tertiary" data-placement="footer">Tipy a inspirace</a><a href="https://privatetoursczech.cz/partnersky-program/" data-cta-id="partner" data-cta-role="tertiary" data-placement="footer">Partnerský program</a></nav>
+      <nav class="ptcz-footer__col"><a href="https://privatetoursczech.cz/podminky-sluzby/" data-cta-id="terms" data-cta-role="tertiary" data-placement="footer">Podmínky služby</a><a href="https://privatetoursczech.cz/zasady-bezpecne-prepravy-a-skoleni-ridicu/" data-cta-id="safety" data-cta-role="tertiary" data-placement="footer">Bezpečná přeprava</a><a href="https://privatetoursczech.cz/zasady-nulove-tolerance/" data-cta-id="zero_tolerance" data-cta-role="tertiary" data-placement="footer">Nulová tolerance</a><a href="https://privatetoursczech.cz/gdpr/" data-cta-id="gdpr" data-cta-role="tertiary" data-placement="footer">GDPR a cookies</a></nav>
+    </div>
+    <div class="ptcz-footer__bottom">
+      <img src="img/ext/visitczechia_logo.png" alt="#VisitCzechia" width="1296" height="209" loading="lazy" decoding="async">
+      <div class="ptcz-footer__route" aria-hidden="true"><svg class="i" viewBox="0 0 48 20"><use href="#i-route-long"/></svg></div>
+    </div>
+  </div>
+</footer>
+
+<!-- spodní lišta (mobil): objeví se po odscrollování úvodu; jedna primární akce + WhatsApp -->
+<div class="ptcz-bar is-hidden" id="bar" data-placement="sticky_bar">
+  <a class="ptcz-btn ptcz-btn--primary" href="planovac.html#src=sticky_bar-build_own" data-cta-id="build_own" data-cta-role="primary" data-placement="sticky_bar">Sestavit vlastní výlet</a>
+  <a class="ptcz-wa" href="https://wa.me/420737194194?text=Dobr%C3%BD%20den%2C%20m%C3%A1m%20dotaz%20k%20va%C5%A1im%20v%C3%BDlet%C5%AFm." aria-label="WhatsApp (otevře se v nové záložce)" target="_blank" rel="noopener" data-cta-id="whatsapp" data-placement="sticky_bar"><svg class="i i--fill" aria-hidden="true"><use href="#i-wa"/></svg></a>
+</div>
+<a class="ptcz-wa ptcz-wa--fab" href="https://wa.me/420737194194?text=Dobr%C3%BD%20den%2C%20m%C3%A1m%20dotaz%20k%20va%C5%A1im%20v%C3%BDlet%C5%AFm." aria-label="WhatsApp (otevře se v nové záložce)" target="_blank" rel="noopener" data-cta-id="whatsapp" data-placement="floating"><svg class="i i--fill" aria-hidden="true"><use href="#i-wa"/></svg></a>
+
+<script src="ptcz-track.js"></script>
+<script>
+(function(){
+  'use strict';
+  var LANG=document.documentElement.lang;
+  /* Přepínač vozu na homepage zrušen (RF 26. 10., O4): karta ukazuje cenu Tesly, vůz volí host v plánovači podle počtu osob. */
+
+  // čítač karuselu (jen mobil – prvek je na počítači skrytý)
+  var sc=document.getElementById('cards'),ct=document.getElementById('counter');
+  if(sc&&ct){
+    var items=[].slice.call(sc.querySelectorAll('.ptcz-card')).filter(function(el){return !el.classList.contains('ptcz-card--all');});
+    var upd=function(){var w=items[0].getBoundingClientRect().width+12;var i=Math.min(items.length,Math.round(sc.scrollLeft/w)+1);ct.textContent=i+' / '+items.length;};
+    sc.addEventListener('scroll',function(){window.requestAnimationFrame(upd);},{passive:true});
+    upd();
+  }
+
+  // spodní lišta: zobrazit po odscrollování úvodu
+  var bar=document.getElementById('bar'),hero=document.getElementById('hero');
+  if(bar&&hero&&'IntersectionObserver'in window){
+    new IntersectionObserver(function(en){bar.classList.toggle('is-hidden',en[0].isIntersecting);},{threshold:0.05}).observe(hero);
+  }else if(bar){bar.classList.remove('is-hidden');}
+})();
+</script>
+<script>if(location.hash==="#varianty")location.replace("varianty.html");if(location.hash==="#pesi")location.replace("pesi-udaje.html?pesi=1&trip=7458");if(location.hash==="#texty")location.replace("texty.html");</script>
+</body>
+</html>
